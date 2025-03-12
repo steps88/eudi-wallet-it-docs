@@ -3,7 +3,7 @@
 .. _introduction.rst:
 
 Introduction
-------------
+************
 
 Over the last decade, digitalization has radically transformed the way citizens and businesses interact with public and private services, introducing new secure, accessible and user-friendly forms of service access. 
 
@@ -16,7 +16,7 @@ What distinguishes the IT-Wallet System from previous Authentication systems is 
 
 
 Normative References
-+++++++++++++
+===========
 
 Below the normative references and respective acronyms included in these Technical Specifications: 
 
@@ -37,7 +37,7 @@ Design Guidelines for  websites and digital services provided by public administ
 
 
 Defined Terms and Acronyms
-+++++++++++++
+===========
 
 The terms *User*, *Trust Service*, *Trust Model*, *Trusted List*, *Trust Framework*, *Attribute*, *Electronic Attestations of Attributes Provider* or *Trust Service Provider (TSP)*, *Person Identification Data (PID)*, *Revocation List*, *Qualified Electronic Attestations of Attributes Provider* or *Qualified Trust Service Provider (QTSP)*, *Electronic Attestation of Attributes (EAA)*, are defined in the `EIDAS-ARF`_.
 
@@ -371,12 +371,12 @@ Below are the main acronyms used in the document:
 
 
 Normative Language and Conventions
---------
+===========
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
 
 Scope 
-------------
+===========
 
 The following Technical Specifications has two main focus: 
 
