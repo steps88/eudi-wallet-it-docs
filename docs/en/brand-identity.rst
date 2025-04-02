@@ -32,7 +32,7 @@ The IT-Wallet System has its own Visual Identity. All actors within the ecosyste
 
 - The IT-Wallet System Visual Identity MUST NOT be used to represent any Technical Solution within the System or any other solution. 
 
-Official graphic resources defining the IT-Wallet System Visual Identity, along with the associated guidelines for its application across various components, are available on the website www.wallet.gov.it. The following sections detail the key requirements.
+Official graphic resources defining the IT-Wallet System Visual Identity, along with the associated recommendations for its application across various components, are available on the website www.wallet.gov.it. The following sections detail the key requirements.
 
 
 Logo
@@ -44,19 +44,19 @@ The following requirements apply to its use in both physical and digital context
 
 - The Logo MUST be used exclusively to represent the IT-Wallet System and MUST NOT be used to identify a specific IT-Wallet Solution; 
 
-- The Logo MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the supporting guidelines; 
+- The Logo MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the supporting recommendations; 
 
 - The Logo MUST NOT be altered, distorted, modified, or replaced by unofficial logos; 
 
-- The Logo MUST maintain the minimum clear space as defined in the supporting guidelines to ensure visibility and recognizability. No other graphic or textual elements MUST interfere with this space; 
+- The Logo MUST maintain the minimum clear space as defined in the supporting recommendations to ensure visibility and recognizability. No other graphic or textual elements MUST interfere with this space; 
 
-- The Logo MUST NOT be resized below the minimum dimensions specified in the supporting guidelines to maintain legibility across formats and devices; 
+- The Logo MUST NOT be resized below the minimum dimensions specified in the supporting recommendations to maintain legibility across formats and devices; 
 
-- The Logo MUST NOT be placed on backgrounds that compromise its visibility or legibility. Adequate contrast between the Logo and the background MUST be ensured, in line with the supporting guidelines; 
+- The Logo MUST NOT be placed on backgrounds that compromise its visibility or legibility. Adequate contrast between the Logo and the background MUST be ensured, in line with the supporting recommendations; 
 
-- The Logo MAY be displayed alongside other actors’ logos, trademarks, or symbols, in accordance with the coexistence specifications regarding proportions and visibility, as defined in the supporting guidelines. 
+- The Logo MAY be displayed alongside other actors’ logos, trademarks, or symbols, in accordance with the coexistence specifications regarding proportions and visibility, as defined in the supporting recommendations. 
 
-For the relative resources and supporting guidelines, refer to: www.wallet.gov.it. 
+For further details and resources refer to: www.wallet.gov.it. 
 
 
 Trust Mark
@@ -69,29 +69,29 @@ The following requirements apply to its use in both physical and digital context
 
 - The Trust Mark MUST only be displayed by Technical Solutions that have successfully completed the certification process; 
 
-- The Trust Mark MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the supporting guidelines to ensure proper visibility throughout all the stages of the User Experience; 
+- The Trust Mark MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the supporting recommendations to ensure proper visibility throughout all the stages of the User Experience; 
 
 - The Trust Mark MUST NOT be altered, distorted, modified, or replaced by unofficial elements; 
 
-- The Trust Mark MUST NOT be resized below the minimum dimensions specified in the supporting guidelines to maintain legibility across formats and devices; 
+- The Trust Mark MUST NOT be resized below the minimum dimensions specified in the supporting recommendations to maintain legibility across formats and devices; 
 
-- The Trust Mark MUST maintain the minimum clear space as defined in the supporting guidelines to ensure visibility and recognizability. Other graphic or textual elements MUST NOT interfere with this space; 
+- The Trust Mark MUST maintain the minimum clear space as defined in the supporting recommendations to ensure visibility and recognizability. Other graphic or textual elements MUST NOT interfere with this space; 
 
-- The Trust Mark MUST NOT be placed on backgrounds that compromise its visibility or legibility. Adequate contrast between the Trust Mark and the background MUST be ensured, in line with the supporting guidelines; 
+- The Trust Mark MUST NOT be placed on backgrounds that compromise its visibility or legibility. Adequate contrast between the Trust Mark and the background MUST be ensured, in line with the supporting recommendations; 
 
-- The Trust Mark MAY be displayed alongside other actors’ logos, trademarks, or symbols, in accordance with the coexistence specifications regarding proportions and visibility, as defined in the supporting guidelines. 
+- The Trust Mark MAY be displayed alongside other actors’ logos, trademarks, or symbols, in accordance with the coexistence specifications regarding proportions and visibility, as defined in the supporting recommendations. 
 
-For the relative resources and supporting guidelines, refer to: www.wallet.gov.it. 
+For further details and resources refer to: www.wallet.gov.it. 
 
 
 Components
 ==========
 
-Components are the elements of the IT-Wallet System that enable the User to interact with several Technical Solutions via its IT-Wallet Instance, during the different phases of the User Experience. Official graphic resources defining the visual design of these components along with the associated guidelines for their application are available on the website www.wallet.gov.it. 
+Components are the elements of the IT-Wallet System that enable the User to interact with several Technical Solutions via its IT-Wallet Instance, during the different phases of the User Experience. Official graphic resources defining the visual design of these components along with the associated recommendations for their application are available on the website www.wallet.gov.it. 
 
 These resources provide both complex components, such as templates to support entire workflows, and atomic components, like individual elements (e.g. Engagement Buttons) to be integrated into existing interfaces. The key requirements are as follows: 
 
-- Primary Actors MUST use official resources and MUST comply with the usage specifications outlined in the supporting guidelines; 
+- Primary Actors MUST use official resources and MUST comply with the usage specifications outlined in the supporting recommendations; 
 
 - Primary Actors MAY choose from the available configurations, but MUST ensure the correct use of atomic components, such as the "Engagement Buttons"; 
 
@@ -102,16 +102,16 @@ Authentication Button
 =====================
 
 The Authentication Button is a type of Engagement Button. 
-Verifiers MUST make the Authentication Button available within the digital Interface of their Technical Solutions to allow the User to log into their services through its IT-Wallet Instance. Official graphic resources defining the visual appearance of the Authentication Button along with the associated guidelines for its proper implementation are available on the website www.wallet.gov.it. 
+Verifiers MUST make the Authentication Button available within the digital Interface of their Technical Solutions to allow the User to log into their services through its IT-Wallet Instance. Official graphic resources defining the visual appearance of the Authentication Button along with the associated recommendations for its proper implementation are available on the website www.wallet.gov.it. 
 
 The following are general requirements: 
 
-- The Authentication Button MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the supporting guidelines; 
+- The Authentication Button MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the supporting recommendations; 
 
 - The Authentication Button MUST be visually distinguishable from other Authentication Buttons or action buttons; 
 
-- The Authentication Button MUST be used only in the shapes, sizes, and proportions defined by the supporting guidelines and MUST NOT be altered, distorted, or hidden; 
+- The Authentication Button MUST be used only in the shapes, sizes, and proportions defined by the supporting recommendations and MUST NOT be altered, distorted, or hidden; 
 
 - The Authentication Button MUST be responsive to all screen resolutions and MUST meet minimum usability and accessibility requirements. 
 
-For the relative resources and supporting guidelines, refer to: www.wallet.gov.it. 
+For further details and resources refer to: www.wallet.gov.it. 
