@@ -24,7 +24,7 @@ Below are the functional requirements to support the User Experience related to 
 - The User MUST set up an unlocking method through a recognition mode (e.g., OTP, biometric authentication, Face ID, PIN). The User MUST use the selected recognition method each time they access the service to ensure security and protect their information; 
 - The User MUST review all relevant information regarding the activation process and service usage. Additionally, the User MUST read any policy from the Provider and PID Provider and/or the service's terms and conditions. The User MUST give their consent to proceed or MAY decline to cancel the operation; 
 - The User MUST select an Authentication option from those available; 
-- The User MUST complete the Authentication flow with the Digital Identity Provider’s service; 
+- The User MUST complete the Authentication flow with the National Identity Provider’s service; 
 - The User MUST receive confirmation of the Authentication process outcome. If successful, the User MUST view a preview of their PID. The User MUST confirm the previewed information to proceed with Wallet Instance activation, or MAY cancel the operation; 
 - The User MUST authorize the operation using the unlocking method previously set; 
 - The User MUST receive confirmation of the successful activation of the Wallet Instance.
@@ -305,8 +305,8 @@ Below is a non-exhaustive list of the main error cases, with reference to the ac
      - Wallet Provider 
    * - The PID Provider's services are unresponsive (e.g. technical errors) 
      - PID Provider
-   * - The Authentication process on the Digital Identity Provider's service was unsuccessful (e.g. technical errors, unrecognized identity, etc.) 
-     - Digital Identity Provider 
+   * - The Authentication process on the National Identity Provider's service was unsuccessful (e.g. technical errors, unrecognized identity, etc.) 
+     - National Identity Provider 
 
 **Issuance of Electronic Attestations of Attributes **
 
