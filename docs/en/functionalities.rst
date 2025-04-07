@@ -68,7 +68,7 @@ If the User encounters incorrect data in an already obtained or in-progress Elec
 
 In case of errors, the User MUST receive clear, consistent messages that inform them and guide them toward resolution. For further details, please refer to the `Error Management`_ section. 
 
-If an Authentic Source (or an Electronic Attestation of Attributes Provider, should it coincide with the Authentic Source) intends to implement an Engagement Button to initiate the request process from their Touchpoint, they MUST ensure compliance with the graphical appearance and implementation requirements for the Engagement Button, as outlined in the IT-Wallet System `Brand Identity`_ section. 
+If an Authentic Source (or an Electronic Attestation of Attributes Provider, should it coincide with the Authentic Source) intends to implement an Engagement Button to initiate the request process from their Touchpoint, they MUST ensure compliance with the graphical appearance and implementation requirements for the Engagement Button, as outlined in the `IT-Wallet System Brand Identity`_ section. 
 
 Layout of Electronic Attestations 
 ==================================
@@ -180,7 +180,7 @@ The Authentication process can be carried out using both the same-device and cro
 
 From a User Experience perspective, the Authentication process differs only in how it is initiated, which is through a dedicated Authentication Button. 
 
-To ensure a consistent and seamless Authentication process across all Relying Parties, each Relying Party MUST adhere to the graphical and implementation requirements for the Authentication Button outlined in the IT-Wallet System `Brand Identity`_ section. Additionally, they SHOULD follow the relative technical requirements and use the open-source resources available at www.wallet.gov.it. 
+To ensure a consistent and seamless Authentication process across all Relying Parties, each Relying Party MUST adhere to the graphical and implementation requirements for the Authentication Button outlined in the `IT-Wallet System Brand Identity`_ section. Additionally, they SHOULD follow the relative technical requirements and use the open-source resources available at www.wallet.gov.it. 
 
 Management of Electronic Attestations 
 **************************************
