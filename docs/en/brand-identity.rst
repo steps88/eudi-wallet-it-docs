@@ -93,7 +93,7 @@ These resources provide both complex components, such as templates to support en
 
 - Primary Actors MUST use official resources and MUST comply with the usage specifications outlined in the supporting recommendations; 
 
-- Primary Actors MAY choose from the available configurations, but MUST ensure the correct use of atomic components, such as the "Engagement Buttons"; 
+- Primary Actors MAY choose from the available configurations, but MUST ensure the correct use of atomic components, such as the Engagement Buttons; 
 
 - Primary Actors MUST keep components up to date, in line with the latest available version. 
  
