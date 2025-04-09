@@ -285,7 +285,7 @@ Below are the main defined terms and definitions related to User Experience aspe
      - Extended display mode of the Digital Credentials, showing all the Attributes included.
      - 
    * - Engagement Button
-     - Interactive element of the Interface that allows the User to trigger a process (e.g. to Authenticate, to request the issuance of a Digital Credential, etc).
+     - Interactive element of the Interface that allows the User to trigger a process (e.g. to Authenticate, to request the issuance of a Digital Credential, etc.).
      - 
    * - Interaction Model
      - A set of characteristics that define how the User interacts with the Interface of one or multiple Touchpoints in order to complete a task or operation and achieve a specific goal.
