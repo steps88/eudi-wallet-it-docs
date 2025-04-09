@@ -28,7 +28,7 @@ The document, by distinguishing between mandatory regulatory aspects and good de
  - ensure design consistency across macro-functionalities and single interactions between the User and the service Touchpoints; 
  - maintain an adequate level of quality, promoting the principles of usability, accessibility and inclusivity. 
 
-Additional documentation, tools and resources  for the development of the IT-Wallet System Technical Solutions are made available at www.wallet.gov.it.
+Additional documentation, tools and resources for the design and development of the IT-Wallet System Technical Solutions are made available at `www.wallet.gov.it` <https://www.wallet.gov.it>.
 
 The second focus is to define the technical architecture and reference framework that will serve as a guideline for all the parties involved in the development of the IT-Wallet System. 
 This documentation defines the national implementation profile of the IT-Wallet System, detailing the technical specifications of its components, as listed below: 

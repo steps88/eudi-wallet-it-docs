@@ -46,6 +46,8 @@ The following requirements apply to its use in both physical and digital context
 
 - The Logo MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the supporting recommendations; 
 
+- The Logo MUST be in the application/svg+xml data format;
+
 - The Logo MUST NOT be altered, distorted, modified, or replaced by unofficial logos; 
 
 - The Logo MUST maintain the minimum clear space as defined in the supporting recommendations to ensure visibility and recognizability. No other graphic or textual elements MUST interfere with this space; 
@@ -62,7 +64,7 @@ For further details and resources, please refer to `www.wallet.gov.it <https://w
 Trust Mark
 ==========
 
-The Trust Mark is the official graphic element that certifies the belonging of Primary Actors and their respective Technical Solutions to the IT-Wallet System. 
+The Trust Mark is the official graphic element that guarantees the belonging of Primary Actors and their respective Technical Solutions to the IT-Wallet System. 
 The following requirements apply to its use in both physical and digital contexts (e.g., websites, apps, documents, printed materials, videos, etc.): 
 
 - The Trust Mark MUST be used exclusively to certify the belonging to the IT-Wallet System and MUST NOT be used for any other purpose; 
@@ -87,7 +89,7 @@ For further details and resources, please refer to `www.wallet.gov.it <https://w
 Components
 ==========
 
-Components are the elements of the IT-Wallet System that enable the User to interact with several Technical Solutions via its IT-Wallet Instance, during the different phases of the User Experience. Official graphic resources defining the visual design of these components along with the associated recommendations for their application are available on the website www.wallet.gov.it. 
+Components are the elements of the IT-Wallet System that enable the User to interact with several Technical Solutions via their Wallet Instance. Official graphic resources defining the visual design of these components along with the associated recommendations for their application are available on the website `www.wallet.gov.it`<https://www.wallet.gov.it>`_. 
 
 These resources provide both complex components, such as templates to support entire workflows, and atomic components, like individual elements (e.g. Engagement Buttons) to be integrated into existing interfaces. The key requirements are as follows: 
 
@@ -104,14 +106,14 @@ Authentication Button
 The Authentication Button is a type of Engagement Button. 
 Verifiers MUST make the Authentication Button available within the digital Interface of their Technical Solutions to allow the User to log into their services through its IT-Wallet Instance. Official graphic resources defining the visual appearance of the Authentication Button along with the associated recommendations for its proper implementation are available on the website `www.wallet.gov.it <https://www.wallet.gov.it>`_. 
 
-The following are general requirements: 
+The Authentication Button has the following requirements:
 
-- The Authentication Button MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the supporting recommendations; 
+- The Authentication Button MUST be used exactly as outlined in the official resources; 
 
 - The Authentication Button MUST be visually distinguishable from other Authentication Buttons or action buttons; 
 
-- The Authentication Button MUST be used only in the shapes, sizes, and proportions defined by the supporting recommendations and MUST NOT be altered, distorted, or hidden; 
+- The Authentication Button MUST be used only in the shapes, sizes, and proportions defined by the official resources and MUST NOT be altered, distorted, or hidden; 
 
 - The Authentication Button MUST be responsive to all screen resolutions and MUST meet minimum usability and accessibility requirements. 
 
-For further details and resources, please refer to `www.wallet.gov.it <https://www.wallet.gov.it>`_. 
+For further details and official resources, please refer to `www.wallet.gov.it <https://www.wallet.gov.it>`_. 

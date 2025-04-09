@@ -225,7 +225,7 @@ For further details and resources, please refer to www.wallet.gov.it.
 History of Electronic Attestations 
 ===================================
 
-To ensure the principles of visibility and transparency, the User MUST be able to view the history of all presentations performed, in other words, the use of Electronic Attribute Attestations through their IT-Wallet Instance. In particular: 
+To ensure the principles of visibility and transparency, the User MUST be able to view the history of all Electronic Attestations presentations performed using their Wallet Instance. In particular: 
 
 - The User MUST see which Relying Party they have interacted with and which Electronic Attestations have been presented and verified; 
 - The User MUST be able to easily request the Relying Party to delete their information related to previous presentations. 
