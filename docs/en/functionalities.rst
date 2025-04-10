@@ -364,7 +364,7 @@ Assistance
 
 For effective error management and the resolution of any other issues, the Primary Actors MUST ensure adequate support to the User by structuring a simple and effective assistance model. For this purpose, good practices are proposed on which such a model SHOULD be based: 
 
-- **Self-resolution**: The User SHOULD be able to consult frequently asked questions (FAQs) about the content and functionalities of the Wallet Instance, in order to resolve any error cases or issues independently. 
+- **Self-resolution**: Wallet Providers SHOULD allow the User to consult frequently asked questions (FAQs) about the content and functionalities of the Wallet Instance, in order to resolve any error cases or issues independently. 
 - **Guided issue reporting**: The User SHOULD be guided through the process of opening an assistance request, in order to clearly define the issue and facilitate its resolution. 
 - **Collaboration between actors**: Each actor involved (Wallet Provider, Electronic Attestations of Attributes Provider, PID Provider, and Authentic Source) SHOULD ensure the availability of dedicated back-office channels, configured according to their specific roles and operational procedures. The Wallet Provider SHOULD ensure that every request is directed to the appropriate actor in order to provide a prompt and accurate response, avoid overloading the actors involved, and improve the overall effectiveness of the assistance system. 
 - **Efficient communication**: The User MAY track and MUST be updated on the status of their request throughout all stages of processing, with clear, continuous, and coordinated communication between all the actors involved. 
