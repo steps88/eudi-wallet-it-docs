@@ -118,12 +118,12 @@ If an error occurs, the User MUST receive clear and consistent messages informin
 
 **Unsupervised Mode** 
 
-- The User MUST access their Wallet Instance using the unlock method previously set; 
-- The User MUST navigate to the feature dedicated to QR Code generation; 
-- The User MUST present the generated QR Code to the designated device (e.g., a turnstile) of the Relying Party for scanning; 
-- The User MUST review the requested PID data and/or Attributes, the name of the requesting Relying Party, and any related policy. The User MUST decide whether to share any non-mandatory PID data and/or Attributes (Selective Disclosure). The User MUST provide consent to proceed or MAY cancel the operation; 
-- The User MUST authorize the operation using the unlock method previously set; 
-- The User MUST receive confirmation of the successful presentation. 
+- the User MUST access their Wallet Instance using the unlock method previously set; 
+- the User MUST navigate to the feature dedicated to QR Code generation; 
+- the User MUST present the generated QR Code to the designated device (e.g., a turnstile) of the Relying Party for scanning; 
+- the User MUST review the requested PID data and/or Attributes, the name of the requesting Relying Party, and any related policy. The User MUST decide whether to share any non-mandatory PID data and/or Attributes (Selective Disclosure). The User MUST provide consent to proceed or MAY cancel the operation; 
+- the User MUST authorize the operation using the unlock method previously set; 
+- the User MUST receive confirmation of the successful presentation. 
 
 If an error occurs, the User MUST receive clear and consistent messages informing them of the issue and guiding them toward resolution. For further details, please refer to the `Error Management`_ section. 
 
@@ -305,7 +305,8 @@ Activation of the Wallet Instance
    * - The Authentication process on the National Identity Provider's service was unsuccessful (e.g. technical errors, unrecognized identity, etc.) 
      - National Identity Provider 
 
-**Issuance of Electronic Attestations of Attributes**
+Issuance of Electronic Attestations of Attributes
+****************************************************************
 
 .. list-table::
    :header-rows: 1
@@ -319,7 +320,8 @@ Activation of the Wallet Instance
    * - The User is unable to obtain a specific Electronic Attestation of Attributes in their Wallet Instance (e.g. no eligibility, invalid or expired physical version, etc.) 
      - Authentic Source 
 
-**Presentation of Electronic Attestations** 
+Presentation of Electronic Attestations
+**********************************************************
 
 .. list-table::
    :header-rows: 1
@@ -331,7 +333,8 @@ Activation of the Wallet Instance
     * - The Wallet Provider's services or the Relying Party’s services are unresponsive (e.g. technical errors or lack of connection)  
      - Wallet Provider, Relying Party  
 
-**Management of Electronic Attestations** 
+Management of Electronic Attestations
+**********************************************************
 
 .. list-table::
    :header-rows: 1
@@ -343,7 +346,8 @@ Activation of the Wallet Instance
    * - The service for revocation of PID is unavailable (e.g. technical errors) 
      - PID Provider 
 
-**Deactivation of the Wallet Instance** 
+Deactivation of the Wallet Instance
+***************************************************
 
 .. list-table::
    :header-rows: 1
