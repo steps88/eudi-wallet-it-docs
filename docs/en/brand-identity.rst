@@ -104,21 +104,21 @@ Authentication Button
 The Authentication Button is a type of Engagement Button. 
 Verifiers MUST make the Authentication Button available within the Discovery Page of their Technical Solutions to allow the User to get authenticated into their services through the Wallet Instance.  
 
-The integration of the Authentication Button within the Discovery Page may vary depending on the page layout. Below are illustrative, non-exhaustive examples of Discovery Pages using grid, tabbed, and list layouts, respectively. 
+The integration of the Authentication Button within the Discovery Page may vary depending on the page layout. Below are illustrative, non-exhaustive examples of Discovery Pages using grid, tab, and list layouts, respectively. 
 
 ..  figure:: ../../images/discovery-page-layouts.svg
     :name: Examples of Discovery Page layouts: grid, tab, and list
     :alt: examples of Discovery Page layouts: grid, tab, and list
     :width: 100%
 
-For further details on the use of the Authentication Button, refer to the :ref:`Authentication`  section. 
+For further details on the use of the Authentication Button, please refer to the :ref:`Authentication`  section. 
 
 The Authentication Button has the following requirements:
 
-- The Authentication Button MUST be used exactly as outlined in the Official Resources; 
+- the Authentication Button MUST be used exactly as outlined in the Official Resources; 
 
-- The Authentication Button MUST be visually distinguishable from other Authentication Buttons or action buttons; 
+- the Authentication Button MUST be visually distinguishable from other Authentication Buttons or action buttons; 
 
-- The Authentication Button MUST be used only in the shapes, sizes, and proportions defined by the Official Resources and MUST NOT be altered, distorted, or hidden; 
+- the Authentication Button MUST be used only in the shapes, sizes, and proportions defined by the Official Resources and MUST NOT be altered, distorted, or hidden; 
 
-- The Authentication Button MUST be responsive to all screen resolutions and MUST meet minimum usability and accessibility requirements. 
+- the Authentication Button MUST be responsive to all screen resolutions and MUST meet minimum usability and accessibility requirements. 
