@@ -28,13 +28,7 @@ Naming
 Visual Identity
 ***************
 
-The IT-Wallet System has its own Visual Identity. All actors within the ecosystem MUST ensure that their Visual Identity and that of their Technical Solutions are distinct yet compatible and cohesive with the Visual Identity of IT-Wallet System. Specifically: 
-
-- Primary Actors MUST define the Visual Identity of their Technical Solutions; 
-
-- The Visual Identity of the Technical Solutions MUST clearly differ from the IT-Wallet Sistem Visual Identity; 
-
-- The IT-Wallet System Visual Identity MUST NOT be used to represent any Technical Solution within the System or any other solution. 
+The IT-Wallet System has its own Visual Identity. All actors within the ecosystem MUST ensure that their Visual Identity and that of their Technical Solutions are distinct yet compatible and cohesive with the Visual Identity of IT-Wallet System. Specifically, all Primary Actors MAY use the Official Resources related to the Visual Identity of the IT-Wallet System. Their use MUST be exclusively aimed at representing the participation in the IT-Wallet System and not at replacing the Visual Identity of their own Technical Solutions.
 
 
 Logo
@@ -44,7 +38,9 @@ The Logo is the official graphic element that ensures immediate recognition of t
 
 The following requirements apply to its use in both physical and digital contexts (e.g., websites, apps, documents, printed materials, videos, etc.): 
 
-- The Logo MUST be used exclusively to represent the IT-Wallet System and MUST NOT be used to identify a specific Wallet Solution; 
+- the Logo MAY be used by anyone referring to the IT-Wallet System; 
+
+- the Logo MUST be used to represent the IT-Wallet System or the participation to the IT-Wallet System and MUST NOT be used to identify a specific Technical Solution; 
 
 - The Logo MUST be used exactly as provided in the official resources and MUST comply with the usage specifications outlined in the Official Resources; 
 
@@ -67,7 +63,7 @@ Trust Mark
 The Trust Mark is the official graphic element that guarantees the belonging of Primary Actors and their respective Technical Solutions to the IT-Wallet System. 
 The following requirements apply to its use in both physical and digital contexts (e.g., websites, apps, documents, printed materials, videos, etc.): 
 
-- The Trust Mark MUST be used exclusively to certify the belonging to the IT-Wallet System and MUST NOT be used for any other purpose; 
+- The Trust Mark MUST be used exclusively to certify the participation in the IT-Wallet System and MUST NOT be used for any other purpose; 
 
 - The Trust Mark MUST only be displayed by Technical Solutions that have successfully completed the certification process; 
 

@@ -22,7 +22,7 @@ Activation enables the User to access the Wallet Solution's functionalities for 
 Below are the functional and the User Experience requirements that the Wallet Provider MUST guarantee via their Wallet Solution:  
 
 - the User downloads the Wallet Solution onto their device to generate their Wallet Instance; 
-- the User sets an unlock method through a recognition mode (e.g., OTP, biometric authentication, Face ID, PIN). The User uses the unlock method each time they access the service to ensure security and protect their information; 
+- the User sets an unlock method for their Wallet Instance (e.g., OTP, biometric authentication, Face ID, PIN). The User uses the unlock method whenever an authorization is required to ensure security and protect their information;  
 - the User reviews all relevant information regarding the activation process and service usage. Additionally, the User reads any policy from the Provider and PID Provider and/or the service's terms and conditions. The User gives their consent to proceed or declines to cancel the operation; 
 - the User selects an Authentication option from those available; 
 - the User completes the Authentication flow with the National Identity Provider’s service; 
@@ -31,7 +31,7 @@ Below are the functional and the User Experience requirements that the Wallet Pr
 - the User receives confirmation of the successful activation of the Wallet Instance. 
 
 
-The Wallet Provider MUST allow the User to always have the option to request the deactivation of their Wallet Instance, even in the absence of the device on which it was installed. For further details, please refer to the `Deactivation of the Wallet Instance`_ section.
+The Wallet Provider MUST allow the User to remove the PID issued during the activation phase. In addition, the PID Provider SHOULD allow the User to revoke the issued PID through a specific Touchpoint. The Wallet Provider MUST allow the User to always have the option to request the deactivation of their Wallet Instance, even in the absence of the device on which it was installed. For further details, please refer to the `Deactivation of the Wallet Instance`_ and `Management of the Wallet Instance`_ sections.
 
 In case of errors using the Wallet Instance, the Wallet Provider MUST guarantee that the User receives consistent messages that inform them and guide them toward resolving the issue. For further details, please refer to the `Error Management`_ section. 
 
@@ -51,16 +51,16 @@ Although the initiation methods for requesting the issuance may differ, the requ
 
 - the User accesses their Wallet Instance using the unlock method previously set; 
 - the User selects the Electronic Attestation of Attributes they wish to request from the available options in the Catalog; 
-- the User reviews certain minimum information before confirming the operation: PID data, if required by the Authentic Source for the request of the Electronic Attestation of Attributes, the name of the related Electronic Attestation of Attributes Provider, and any related information policy. The User chooses whether to disclose any additional non-mandatory data for the request (Selective Disclosure). The User gives their consent to proceed or cancels the operation; 
+- the User views the PID data, if required by the Authentic Source for the request of the Electronic Attestation of Attributes, the name of the related Electronic Attestation of Attributes Provider, and any related information policy. The User gives their consent to proceed, presenting their PID data to the Electronic Attestation of Attributes Provider, or cancels the operation;  
 - the User views a preview of the Electronic Attestation of Attributes. The User confirms the data shown in the preview to proceed with the request or cancels the operation; 
 - the User authorizes the operation using the unlock method previously set; 
 - the User views the positive outcome of the request; 
 - the User views the details of the requested Electronic Attestation of Attributes, including: the data contained in it, the name of the Electronic Attestation of Attributes Provider who issued the Attestation, and the name of the Authentic Source; 
-- the User has access to all issued Electronic Attestations by navigating the Preview View of the Wallet Instance.  
+- the User has access to all issued Electronic Attestations by navigating the Wallet Instance.  
 
-The Wallet Provider MUST allow the User to request the revocation of the Electronic Attestation of Attributes at any moment, even in the absence of the device where the Wallet Instance was activated. For more details, please refer to the `Management of Electronic Attestations`_ section. 
+The Wallet Provider MUST allow the User to remove an Electronic Attestation of Attributes through their Wallet Instance at any moment. In case of absence of the device where the Wallet Instance was activated, the Wallet Provider MUST allow the User to deactivate the entire Wallet Instance through a specific Touchpoint. In addition, the Electronic Attestation of Attributes Providers SHOULD allow the User to revoke the issued Digital Credentials through specific Touchpoints. For more details, please refer to the `Deactivation of the Wallet Instance`_ and `Management of Electronic Attestations`_ sections.  
 
-In the event of communication issues between the systems of the Electronic Attestation of Attributes Provider and the Authentic Source, or if administrative or technical processes prevent the immediate issuance of the Electronic Attestation of Attributes, the actors involved MUST support a deferred issuance process. In this case the Wallet Provider MUST guarantee that: 
+In the event of communication issues between the systems of the Electronic Attestation of Attributes Provider and the Authentic Source, or if administrative or technical processes prevent the immediate issuance of the Electronic Attestation of Attributes, the actors involved MAY support a deferred issuance process. In this case the Wallet Provider MUST guarantee that: 
 
 - upon reaching the final step of the process, the User visualizes a message prompting them to wait until the Electronic Attestation of Attributes can be issued. 
 - The User is informed by the Electronic Attestation of Attributes Provider once the Electronic Attestation of Attributes becomes available.  
@@ -78,7 +78,7 @@ The Electronic Attestations obtained within the Wallet Instance SHOULD be displa
 
 - the Electronic Attestation MUST be displayed correctly across all devices, ensuring a consistent experience on screens of varying sizes; 
 - the name of the Electronic Attestation MUST be clearly visible and always displayed in both the Detail View and the Preview View; 
-- the Electronic Attestation, in the Preview View, MUST display its validity status and MAY also include additional attributes to enhance the User experience and management; for example, it MAY display the name or logo of the Electronic Attestation of Attributes Provider or the PID Provider; 
+- the Electronic Attestation, both in the Preview View and the Detailed View, MUST display its status if different from valid and MAY display it if valid. The Preview View MAY also include additional attributes to enhance the User Experience and management; for example, it MAY display the name or logo of the Electronic Attestation of Attributes Provider or the PID Provider; 
 - the layout of elements in the Preview View of the Electronic Attestation MUST be optimized for scalability and usability, especially when multiple Electronic Attestations are displayed on the same screen; 
 - the Electronic Attestation MAY adopt a card format, in line with approaches already used by other Wallets in the market, to mirror the appearance of a corresponding physical document. When applicable, the digital nature of the document MAY be indicated, such as by labeling it as a "digital version" in the layout; 
 - the Electronic Attestation MUST display the same information in the Detail View as shown in the Preview View and MAY include additional details; 
@@ -123,7 +123,7 @@ In case of errors using the Wallet Instance, the Wallet Provider MUST guarantee 
 - The User accesses their Wallet Instance using the unlock method previously set; 
 - the User navigates to the feature dedicated to QR Code generation; 
 - the User presents the generated QR Code to the designated device (e.g., a turnstile) of the Relying Party for scanning; 
-- the User reviews the requested PID and/or EAA data, the name of the requesting Relying Party, and any related policy. The User MUST decide whether to present any non-mandatory PID and/or EAA (Selective Disclosure). The User provides consent to proceed or cancels the operation; 
+- the User reviews the requested PID and/or EAA data, the name of the requesting Relying Party, and any related policy. The User decides whether to present any non-mandatory PID and/or EAA (Selective Disclosure). The User provides consent to proceed or cancels the operation; 
 - the User authorizes the operation using the unlock method previously set; 
 - the User receives confirmation of the successful presentation. 
 
@@ -452,20 +452,23 @@ In addition to error management, all Primary Actors MUST also deal with negative
 User Assistance 
 ********************************
 
-For effective error management and the resolution of any other issues, Primary Actors MUST ensure adequate support to the User by structuring a simple and effective assistance model. For this purpose, good practices are proposed on which such a model SHOULD be based: 
+For effective error management and the resolution of any other issues, Primary Actors MUST ensure adequate support to the User by structuring a simple and effective assistance model based on the following principles: 
 
-- **Self-resolution**: the User consults the frequently asked questions (FAQs) about the content and functionalities of the Wallet Instance, in order to resolve any error cases or issues independently. 
-- **Guided issue reporting**: the User is guided through the process of opening an assistance ticket, in order to clearly define the issue and facilitate its resolution. 
-- **Collaboration between actors**: Each actor involved (Wallet Provider, Electronic Attestations of Attributes Provider, PID Provider, and Authentic Source) SHOULD ensure the availability of dedicated back-office channels, configured according to their specific roles and operational procedures. The Wallet Provider SHOULD ensure that every request is directed to the appropriate actor in order to provide a prompt and accurate response, avoid overloading the actors involved, and improve the overall effectiveness of the assistance system. 
-- **Efficient communication**: all the actors involved MUST guarantee that the User can track the updated status of their request throughout all stages of processing, with clear, continuous, and coordinated communication. 
+- **Self-resolution**: to allow the User to consult the frequently asked questions (FAQs) about the content and functionalities of the Wallet Instance, in order to resolve any error cases or issues independently. 
+
+- **Guided issue reporting**: to guide the User through the process of opening an assistance ticket, in order to clearly define the issue and facilitate its resolution. 
+
+- **Collaboration between actors**: to allow the coordination among each actor involved (Wallet Provider, Electronic Attestations of Attributes Provider, PID Provider, and Authentic Source), according to their specific roles and operational procedures.  
+
+- **Efficient communication**: to allow the User to track the updated status of their request throughout all stages of processing, with clear, continuous, and coordinated communication.  
 
 To implement these best practices, the Wallet Provider SHOULD establish a hierarchical assistance model: 
 
-	1. **Level I | Self-management**: the User has access to a Frequently Asked Questions (FAQ) section within their Wallet Instance to clarify doubts and resolve certain issues independently. Each actor SHOULD create specific FAQs and corresponding answers regarding the data and functionalities they provide. For certain error cases, the Wallet Provider MAY provide another actor's direct channel of support to facilitate timely management and avoid opening an assistance request within the Wallet Instance. 
+	1. **Level I | Self-management**: the Wallet Provider SHOULD allow the User to access to a Frequently Asked Questions (FAQ) section within their Wallet Instance to clarify doubts and resolve certain issues independently. Each actor SHOULD create specific FAQs and corresponding answers regarding the data and functionalities they provide to the Wallet Provider or in their Touchpoints. For certain error cases, the Wallet Provider SHOULD provide another actor's direct channel of support to facilitate timely management and avoid opening an assistance request within the Wallet Instance. 
 	
-	2. **Level II | Requesting assistance** from the Wallet Provider:  if Level I is insufficient, the Wallet Provider MUST give the User the possibility to open one or more assistance requests. These requests SHOULD be managed through the Wallet Instance or other Wallet Provider Touchpoints. The Wallet Provider MUST diagnose and resolve the issue if it falls under their responsibility. 
+	2. **Level II | Requesting assistance** from the Wallet Provider: if Level I is insufficient, the Wallet Provider MUST give the User the possibility to open one or more assistance requests. These requests SHOULD be managed through the Wallet Instance or other Wallet Provider Touchpoints. The Wallet Provider MUST diagnose and resolve the issue if it falls under their responsibility. 
 	
-	3. **Level III | Forwarding the request to the responsible actor**: if Level II is insufficient, the Wallet Provider SHOULD ensure that the request is forwarded to the responsible actor (Electronic Attestations of Attributes Provider, PID Provider, or Authentic Source), who MUST take charge of resolving the issue and communicate the outcome to the User.  
+	3. **Level III | Forwarding the request to the responsible actor**: if Level II is insufficient, the Wallet Provider SHOULD ensure that the request is forwarded to the responsible actor (Electronic Attestations of Attributes Provider, PID Provider, or Authentic Source), who MUST ensure the availability of dedicated back-office channels to resolve the issue and communicate the outcome to the User.  
 
 Here are the functional and User Experience requirements that the Wallet Provider MUST guarantee via their Wallet Solution: 
 
