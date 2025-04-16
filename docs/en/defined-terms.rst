@@ -264,7 +264,6 @@ Below is the description of acronyms and definitions which are useful for furthe
      -
    * - Wallet Secure Cryptographic Application (WSCA)
      - An application that manages Critical Assets utilizing the cryptographic functions provided by the
-     .
      - | The type of WSCAs depends on the type of WSCD. For example, it might be an eUICC or JavaCard applet for a local UICC or an external JavaCard-based smart card solution, while in a local Android hardware-backed Keystore solution, native trusted applications may function as the WSCA.
        |
        | Revised from Implementing Act.

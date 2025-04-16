@@ -31,7 +31,7 @@ Below are the functional and the User Experience requirements that the Wallet Pr
 - the User receives confirmation of the successful activation of the Wallet Instance.
 
 
-The Wallet Provider MUST allow the User to remove the PID issued during the activation phase. In addition, the PID Provider SHOULD allow the User to revoke the issued PID through a specific Touchpoint. The Wallet Provider MUST allow the User to always have the option to request the deactivation of their Wallet Instance, even in the absence of the device on which it was installed. For further details, please refer to the `Deactivation of the Wallet Instance`_ and `Management of the Wallet Instance`_ sections.
+The Wallet Provider MUST allow the User to remove the PID issued during the activation phase. In addition, the PID Provider SHOULD allow the User to revoke the issued PID through a specific Touchpoint. The Wallet Provider MUST allow the User to always have the option to request the deactivation of their Wallet Instance, even in the absence of the device on which it was installed. For further details, please refer to the `Deactivation of the Wallet Instance`_ and `Management of Electronic Attestations`_ sections.
 
 In case of errors using the Wallet Instance, the Wallet Provider MUST guarantee that the User receives consistent messages that inform them and guide them toward resolving the issue. For further details, please refer to the `Error Management`_ section.
 
@@ -262,7 +262,6 @@ Relying Parties SHOULD implement the error page provided in the Official Resourc
 - the page MUST include the visual identity elements of the IT-Wallet System, including the logo and an icon or graphical element that conveys the type of error;
 - the page MUST include a clear and concise message explaining the nature of the error, the error code, and a simple description;
 - the page MUST include one or more Call To Action guiding the User toward the appropriate next step (e.g., retry, contact support, etc.).
-
 
 Management of Electronic Attestations
 **************************************
