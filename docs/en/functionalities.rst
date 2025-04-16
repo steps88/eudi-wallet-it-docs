@@ -22,7 +22,7 @@ Activation enables the User to access the Wallet Solution's functionalities for 
 Below are the functional and the User Experience requirements that the Wallet Provider MUST guarantee via their Wallet Solution:  
 
 - the User downloads the Wallet Solution onto their device to generate their Wallet Instance; 
-- the User sets an unlock method for their Wallet Instance (e.g., OTP, biometric authentication, Face ID, PIN). The User uses the unlock method whenever an authorization is required to ensure security and protect their information;  
+- the User sets an unlock PIN for their Wallet Instance if one has not been previously set in the app. In addition to the PIN, the User can decide to use their own unlock mechanism used within the device and managed at the operating system level (e.g., biometric authentication) as an alternative to the PIN. The User uses the unlock method whenever an authorization is required to ensure security and protect their information;  
 - the User reviews all relevant information regarding the activation process and service usage. Additionally, the User reads any policy from the Provider and PID Provider and/or the service's terms and conditions. The User gives their consent to proceed or declines to cancel the operation; 
 - the User selects an Authentication option from those available; 
 - the User completes the Authentication flow with the National Identity Provider’s service; 
