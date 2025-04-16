@@ -20,6 +20,7 @@ Index of content
    issuer-solution.rst
    relying-party-solution.rst
    pid-eaa-data-model.rst
+   registry-catalogue.rst
    pid-eaa-issuance.rst
    pid-eaa-presentation.rst
    credential-revocation.rst
@@ -29,4 +30,5 @@ Index of content
    security-privacy-considerations.rst
    log-retention-policy.rst
    standards.rst
+   test-plans.rst
    contribute.rst
