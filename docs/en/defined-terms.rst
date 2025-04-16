@@ -271,7 +271,7 @@ Below is the description of acronyms and definitions which are useful for furthe
        | *Differences:* editorial.
    * - Wallet Secure Cryptographic Device (WSCD)
      - It is a tamper-resistant device that provides an environment that is linked to and used by the WSCA to protect Critical Assets and provide cryptographic functions for the secure execution of critical operations.
-     - | Example of WSCD type are: remote solutions (e.g., HSMs), local external solutions (e.g., smart cards), local device-integrated solutions (e.g., UICC or native cryptographic hardware, such as the iOS Secure Enclave, Android Hardware Backed Keystore or StrongBox), and hybrid solutions that combine two  or more of these types.
+     - | Example of WSCD type are: remote solutions (e.g., HSMs), local external solutions (e.g., smart cards), local device-integrated solutions (e.g., UICC or native cryptographic hardware, such as the iOS Secure Enclave, Android Hardware Backed Keystore or StrongBox), and hybrid solutions that combine two or more of these types.
        | 
        | Aligned with Implementing Act.
    * - Wallet Solution
