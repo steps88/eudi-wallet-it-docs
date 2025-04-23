@@ -362,7 +362,7 @@ Di seguito vengono presentati i requisiti e le principali buone pratiche di gest
 Di seguito, una lista non esaustiva delle principali casistiche di errore, con riferimento all’attore responsabile della loro gestione, per ciascuna fase dell’Esperienza Utente.  
 
 Errori di Attivazione dell’Istanza IT-Wallet 
-*********************************************
+=============================================
  
 .. list-table::
    :header-rows: 1
@@ -379,7 +379,7 @@ Errori di Attivazione dell’Istanza IT-Wallet
      - National Identity Provider 
 
 Errori di ottenimento degli Attestati Elettronici di Attributi
-***************************************************************
+================================================================
 
 .. list-table::
    :header-rows: 1
@@ -394,7 +394,7 @@ Errori di ottenimento degli Attestati Elettronici di Attributi
      - Titolare di Fonte Autentica  
 
 Errori di presentazione degli Attestati Elettronici
-*****************************************************
+=========================================================
 
 .. list-table::
    :header-rows: 1
@@ -407,7 +407,7 @@ Errori di presentazione degli Attestati Elettronici
      - Fornitore di Soluzione IT-Wallet, Verificatore di Attestati Elettronici 
 
 Errori di gestione degli Attestati Elettronici
-***********************************************
+===================================================
 
 .. list-table::
    :header-rows: 1
@@ -420,7 +420,7 @@ Errori di gestione degli Attestati Elettronici
      - Fornitore di Dati di Identificazione Personale 
 
 Errori di disattivazione dell’Istanza IT-Wallet
-***************************************************
+================================================================
 
 .. list-table::
    :header-rows: 1
