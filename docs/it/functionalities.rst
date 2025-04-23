@@ -249,4 +249,243 @@ Il Verificatore di Attestati Elettronici DOVREBBE implementare la error page res
 - la pagina DEVE includere gli elementi propri dell'Identità Visiva del Sistema IT-Wallet, tra cui il Logo e un’icona o altro elemento grafico che aiuti a veicolare la natura dell'errore; 
 - la pagina DEVE prevedere un testo sintetico e chiaro che spieghi all’Utente la natura dell’errore, il codice errore e una sua spiegazione semplice; 
 - la pagina DEVE prevedere una o più Call to Action che invitino l’Utente a intraprendere le azioni previste (es. riprova, contatta l'assistenza, etc.). 
+
+Gestione degli Attestati Elettronici
+*************************************
+
+Il Fornitore di Soluzione IT-Wallet, attraverso la propria Soluzione IT-Wallet, e il Fornitore di Dati di Identificazione Personale o il Fornitore di Attestati Elettronici di Attributi, attraverso Touchpoint dedicati, DEVONO dare all’Utente la possibilità di gestire in ogni momento i propri Attestati Elettronici.  
+
+In questa sezione sono illustrate tre diverse categorie di requisiti per la gestione del ciclo di vita di ogni Attestato Elettronico e nello specifico per la gestione: 
+
+- **del suo stato**: per consentire all’Utente di appurare la condizione di validità o invalidità di un Attestato Elettronico; 
+- **dei suoi utilizzi**: per consentire all’Utente di visualizzare e gestire lo storico delle transazioni effettuate con un Attestato Elettronico; 
+- **dei suoi dati**: per consentire all’Utente di archiviare e ripristinare ogni Attestato Elettronico di Attributi in linea col principio di *data portability*. 
+
+Di seguito i principali aspetti che impattano e determinano l’Esperienza Utente nell’ambito della gestione degli Attestati Elettronici per mezzo di un’Istanza IT-Wallet e i requisiti funzionali riferiti a ciascuna categoria. 
+
+Stato degli Attestati Elettronici 
+==================================
+
+Per garantire l'affidabilità e promuovere il corretto utilizzo della propria Soluzione IT-Wallet, il Fornitore di Soluzione IT-Wallet DEVE dare all’Utente visibilità dello stato degli Attestati Elettronici ottenuti nella propria Istanza IT-Wallet sulla base delle informazioni ricevute dal Fornitore di Attestati Elettronici, gestore del loro ciclo di vita.  
+
+Ogni Attestato Elettronico può assumere lo stato valido o non valido, con conseguenti impatti circa le sue possibilità di utilizzo, in particolare: 
+
+- **valido**: gli Attestati Elettronici validi DEVONO essere utilizzabili quindi presentabili. Tra questi rientrano anche gli Attestati Elettronici in scadenza. Qualora un Attestato Elettronico fosse in scadenza, l’Istanza IT-Wallet DOVREBBE informare l’Utente con un adeguato preavviso utile ad avviare per tempo una richiesta di ri-ottenimento o, se necessario, di revoca; 
+
+- **non valido**: gli Attestati Elettronici non validi NON DEVONO essere utilizzabili quindi presentabili. Rientrano in questa categoria gli Attestati Elettronici scaduti o revocati. In questi casi l’Istanza IT-Wallet DEVE essere informare l’Utente circa lo stato di non validità e DOVREBBE dare evidenza della motivazione. Qualora l’Attestato Elettronico non fosse più valido, e non fosse quindi più possibile alcuno scenario di utilizzo, l’Istanza IT-Wallet PUÒ prevedere dei meccanismi per inibire la Vista di Dettaglio di tale Attestato Elettronico, al fine di incoraggiare l’Utente ad aggiornarlo o cancellarlo tramite apposito testo informativo e Call To Action. 
+
+Revoca degli Attestati Elettronici 
+....................................
+
+La revoca si configura come quel meccanismo che determina il passaggio di un Attestato Elettronico da uno stato valido a uno stato non valido. La revoca può avvenire in modalità attiva o passiva: 
+
+- **Revoca attiva**: ovvero la revoca di un Attestato Elettronico su richiesta dell’Utente. Tale processo comporta la sola revoca dell’Attestato Elettronico e non del corrispettivo documento fisico, se esistente. Di seguito un elenco esemplificativo di scenari in cui il Fornitore di Soluzione IT-Wallet DEVE dare possibilità all’Utente di richiedere la revoca di un Attestato Elettronico:  
+
+   - l’Utente decide di non voler più possedere uno specifico Attestato Elettronico;
+   - l’Utente decide di disattivare la propria Istanza IT-Wallet e, di conseguenza, tutti gli Attestati Elettronici precedentemente ottenuti; 
+   - l’Utente non è più in possesso del dispositivo su cui è installata la propria Istanza IT-Wallet a causa di uno smarrimento o un furto. 
+
+- **Revoca passiva**: ovvero la revoca di un Attestato Elettronico gestita dal relativo Fornitore di Attestati Elettronici per conto del Titolare di Fonte Autentica. In questo caso l’Istanza IT-Wallet DEVE informare l’Utente del cambiamento di stato dell’Attestato Elettronico e, in aggiunta, il Fornitore di Attestati Elettronici PUÒ informare l’Utente attraverso altri Touchpoint. Di seguito un elenco esemplificativo di scenari che porterebbero alla revoca di un Attestato Elettronico: 
+
+   - il documento fisico corrispondente all’Attestato Elettronico è stato dichiarato smarrito o danneggiato da parte dell’Utente tramite apposito canale/ Touchpoint; 
+   - il documento fisico corrispondente all’Attestato Elettronico è stato revocato dalle autorità competenti; 
+   - non sussistono più i requisiti minimi di sicurezza e/o affidabilità di una o più delle parti coinvolte; 
+   - il dispositivo dell'Utente non soddisfa più i requisiti minimi di sicurezza (dispositivo rootato o jailbroken). 
  
+Storico degli Attestati Elettronici 
+====================================
+
+Al fine di garantire i principi di visibilità e trasparenza, il Fornitore di Soluzione IT-Wallet DEVE permettere all’Utente di visualizzare lo storico di tutte le transazioni effettuate, ovvero l’utilizzo degli Attestati Elettronici di Attributi tramite l'Istanza IT-Wallet. In particolare: 
+
+- l’Istanza IT-Wallet DEVE mostrare all’Utente con quali Verificatori di Attestati Elettronici ha interagito e quali Attestati Elettronici sono stati oggetto di presentazione e verifica; 
+- l’Istanza IT-Wallet DEVE permettere all’Utente di richiedere facilmente al Verificatore di Attestati Elettronici la cancellazione delle proprie informazioni oggetto delle precedenti presentazioni. 
+
+Archiviazione e ripristino degli Attestati Elettronici di Attributi 
+====================================================================
+
+Con l’obiettivo di garantire il principio di data portability, la Soluzione IT-Wallet DEVE garantire all’Utente l’accesso a specifiche funzionalità per: 
+
+- richiedere l’archiviazione, quindi il salvataggio, degli Attestati Elettronici di Attributi ottenuti su una specifica Istanza IT-Wallet; 
+- richiedere il ripristino dei propri Attestati Elettronici di Attributi su un’altra Istanza IT-Wallet. 
+
+Disattivazione dell’Istanza IT-Wallet 
+**************************************
+
+La disattivazione dell’Istanza IT-Wallet è la funzionalità che rende l’Istanza IT-Wallet disattiva e quindi non più operativa. La disattivazione dell’Istanza IT-Wallet può essere scatenata da attori differenti a seconda delle circostanze, in particolare: 
+
+- da parte dell’Utente nel caso in cui, ad esempio: 
+
+   - il dispositivo sia stato smarrito o rubato; 
+   - il dispositivo risulti compromesso; 
+   - il dispositivo sia stato resettato alle impostazioni di fabbrica. 
+
+- da parte di un ente terzo titolato nel caso in cui, ad esempio: 
+
+   - la Soluzione IT-Wallet non rispetti più i requisiti minimi di sicurezza. 
+ 
+Il Fornitore di Soluzione IT-Wallet DEVE, quindi, garantire all’Utente la possibilità di disattivare volontariamente la propria Istanza IT-Wallet tramite: 
+
+- l’Istanza IT-Wallet stessa; 
+- un Touchpoint (e.g. un sito web) fornito dal Fornitore di Soluzione IT-Wallet; 
+- l’app store del proprio dispositivo, disinstallando l’Istanza IT-Wallet. 
+
+Di seguito i requisiti funzionali a supporto dell’Esperienza Utente relativi alla disattivazione dell’Istanza IT-Wallet che il Fornitore di Soluzione IT-Wallet DEVE garantire attraverso la propria Soluzione IT-Wallet: 
+
+- l’Utente accede alla propria Istanza IT-Wallet utilizzando la modalità di sblocco precedentemente impostata oppure si Autentica presso il Touchpoint reso disponibile dal Fornitore di Soluzione IT-Wallet; 
+- l’Utente seleziona la funzionalità di disattivazione dell'Istanza IT-Wallet; 
+- l'Utente viene informato che la disattivazione dell’Istanza IT-Wallet renderà non più utilizzabili gli Attestati Elettronici precedentemente ottenuti; 
+- l'Utente conferma l'azione per procedere con la disattivazione oppure annulla l’operazione; 
+- l’Utente visualizza l’esito positivo della disattivazione avvenuta; 
+- l’Utente, in caso di nuovo accesso, prende visione del fatto che l’Istanza IT-Wallet è disattiva; 
+- l'Utente ha la possibilità di riattivare l’Istanza IT-Wallet riscaricando l’app dall’app store, in caso di cancellazione, e/o ripercorrendo il processo di attivazione. Per approfondimenti si rimanda alla sezione :ref:`Attivazione dell’Istanza IT-Wallet`. 
+
+Una volta riattivata l’Istanza IT-Wallet, gli Attestati Elettronici di Attributi potranno essere ri-ottenuti avviando nuovamente il processo di ottenimento o di ripristino. Per approfondimenti si rimanda rispettivamente alle sezioni :ref:`Ottenimento degli Attestati Elettronici di Attributi` e :ref:`Archiviazione e ripristino degli Attestati Elettronici di Attributi`. 
+
+In caso di errori nell’utilizzo dell’Istanza IT-Wallet, il Fornitore di Soluzione IT-Wallet DEVE garantire all’Utente la visualizzazione di messaggi coerenti che lo informino e guidino alla loro risoluzione. Per approfondimenti si rimanda alla sezione :ref:`Gestione degli errori`. 
+
+Gestione degli errori 
+**********************
+
+Il Sistema IT-Wallet prevede l’interazione di una molteplicità di servizi erogati da diversi attori. È quindi importante che venga definito un modello di gestione degli errori efficace, con l’obiettivo di migliorare la percezione e il senso di affidabilità dell’interno ecosistema e permettere all'Utente di sentirsi guidato nell'interazione con le diverse Soluzioni Tecniche e nella gestione consapevole di eventuali criticità durante la fruizione del servizio. 
+
+Una comunicazione efficace in caso di errore determina un vantaggio anche per gli attori coinvolti, in quanto concorre alla riduzione delle richieste di assistenza e, quindi, alla minimizzazione dell’impatto sui sistemi.  
+
+Di seguito vengono presentati i requisiti e le principali buone pratiche di gestione dell’errore, riferite alle modalità di interazione tra l’Utente e la propria Istanza IT-Wallet. Tutti gli Attori Primari coinvolti nell'erogazione del servizio DEVONO inviare all’Utente, tramite l’Istanza IT-Wallet, input puntuali e granulari, ciascuno per i propri ambiti di competenza. Ciascun attore coinvolto DEVE, quindi, definire una lista di errori così da garantire al Fornitore di Soluzione IT-Wallet di approntare un modello efficace per la loro gestione all’interno della Soluzione IT-Wallet basato sulle seguenti dimensioni e variabili: 
+
+- **la fase dell'Esperienza Utente** in cui l’errore può verificarsi: attivazione o disattivazione dell’Istanza IT-Wallet, ottenimento, presentazione o gestione degli Attestati Elettronici; 
+- **la tipologia di errore**: di sistema, di comunicazione tra attori, etc.; 
+- **l’attore responsabile dell’errore**: Fornitore di Soluzione IT-Wallet, Fornitore di Dati di Identificazione Personale, Fornitore di Attestati Elettronici di Attributi, Titolare di Fonte Autentica; 
+- **la modalità di restituzione dell’errore**: messaggio in pagina, banner, toast message, etc.;   
+- **le azioni suggerite all’Utente per risolvere l’errore**: suggerimento di attesa, richiesta di effettuare un nuovo tentativo, rimando alle domande frequenti e/o al servizio di assistenza, etc.; 
+- **le modalità di presa in carico dell’errore**: apertura di una richiesta di assistenza tramite l’Istanza IT-Wallet, rimando ad altri canali di approfondimento, etc. Per approfondimenti si rimanda alla sezione Assistenza Utente. 
+
+Di seguito, una lista non esaustiva delle principali casistiche di errore, con riferimento all’attore responsabile della loro gestione, per ciascuna fase dell’Esperienza Utente.  
+
+Errori di Attivazione dell’Istanza IT-Wallet 
+*********************************************
+ 
+.. list-table::
+   :header-rows: 1
+
+   * - Tipologia di errore
+     - Attore responsabile 
+   * - Il dispositivo non supporta la Soluzione IT-Wallet (e.g. assenza dei requisiti minimi di sicurezza o tecnologici)
+     - Fornitore di Soluzione IT-Wallet 
+   * - I servizi del Fornitore di Soluzione IT-Wallet non rispondono (e.g. errori tecnici o assenza connessione) 
+     - Fornitore di Soluzione IT-Wallet 
+   * - I servizi del Fornitore di Dati di Identificazione Personale non rispondono (e.g. errori tecnici) 
+     - Fornitore di Dati di Identificazione Personale
+   * - Il processo di Autenticazione sul servizio del National Identity Provider non è andato a buon fine (e.g. errori tecnici, identità non riconosciuta, etc.)
+     - National Identity Provider 
+
+Errori di ottenimento degli Attestati Elettronici di Attributi
+***************************************************************
+
+.. list-table::
+   :header-rows: 1
+
+   * - Tipologia di errore
+     - Attore responsabile 
+   * - L’Istanza IT-Wallet e/o il PID non risultano attivi 
+     - Fornitore di Soluzione IT-Wallet
+   * - Il servizio di ottenimento di un Attestato Elettronico di Attributi non è disponibile (e.g. errori tecnici) 
+     - Fornitore di Attestati Elettronici di Attributi, Titolare di Fonte Autentica
+   * - L’Utente non riesce ad ottenere nella propria Istanza IT-Wallet un certo Attestato Elettronico di Attributi (e.g. assenza di titolarità, versione fisica non valida o scaduta, etc.) 
+     - Titolare di Fonte Autentica  
+
+Errori di presentazione degli Attestati Elettronici
+*****************************************************
+
+.. list-table::
+   :header-rows: 1
+
+   * - Tipologia di errore
+     - Attore responsabile 
+   * - L’Utente non possiede all’interno della propria Istanza IT-Wallet gli Attributi contenuti in uno o più Attestati Elettronici richiesti per la fruizione di un determinato servizio 
+     - Fornitore di Soluzione IT-Wallet 
+   * - I servizi del Fornitore di Soluzione IT-Wallet e/o del Verificatore di Attestati Elettronici non rispondono (e.g. errori tecnici o assenza connessione) 
+     - Fornitore di Soluzione IT-Wallet, Verificatore di Attestati Elettronici 
+
+Errori di gestione degli Attestati Elettronici
+***********************************************
+
+.. list-table::
+   :header-rows: 1
+
+   * - Tipologia di errore
+     - Attore responsabile
+   * - Il servizio di revoca / archiviazione/ ripristino di un Attestato Elettronico di Attributi non è disponibile (e.g. errori tecnici) 
+     - Fornitore di Attestati Elettronici di Attributi 
+   * - Il servizio di revoca del PID non è disponibile (e.g. errori tecnici) 
+     - Fornitore di Dati di Identificazione Personale 
+
+Errori di disattivazione dell’Istanza IT-Wallet
+***************************************************
+
+.. list-table::
+   :header-rows: 1
+
+   * - Tipologia di errore
+     - Attore responsabile
+   * - Il servizio di disattivazione dell’Istanza IT-Wallet non è disponibile (e.g. errori tecnici) 
+     - Fornitore di Soluzione IT-Wallet 
+
+Oltre alla gestione degli errori, DEVE essere garantita da parte di tutti gli Attori Primari anche la gestione di esiti negativi dovuti alla volontà dell’Utente di abbandonare o annullare un flusso (es. attivazione, ottenimento, presentazione, etc.). In questi casi DEVE essere previsto un feedback che dia conferma all’Utente della scelta intrapresa e che PUÒ includere una Call to Action per proseguire.
+
+Assistenza Utente 
+******************
+
+Per un’efficace gestione degli errori e di eventuali altre problematiche, gli Attori Primari DEVONO garantire un’adeguata assistenza all’Utente, strutturando un modello di assistenza semplice ed efficace basato sui seguenti principi: 
+
+- **Risoluzione autonoma**: permettere all’Utente di consultare domande frequenti (FAQ) sui contenuti e sulle funzionalità dell’Istanza IT-Wallet, al fine di risolvere eventuali casistiche di errore o problematiche in maniera autonoma. 
+
+- **Apertura guidata di una segnalazione**: guidare l’Utente all’eventuale apertura di una segnalazione, in modo da circoscrivere la problematica e facilitare la sua gestione. 
+
+- **Collaborazione tra attori**: rendere possibile un adeguato coordinamento tra tutti gli attori coinvolti (Fornitore di Soluzione IT-Wallet, Fornitore di Attestati Elettronici di Attributi, Fornitore di Dati di Identificazione Personale e Titolare di Fonte Autentica) in base al proprio ruolo e alle modalità operative specifiche. 
+
+- **Comunicazione efficiente**: garantire all’Utente la possibilità di monitorare lo stato aggiornato della propria richiesta durante tutte le fasi di lavorazione, attraverso una comunicazione chiara, continua e coordinata.  
+
+Per applicare queste buone pratiche, gli attori coinvolti DOVREBBERO attuare i seguenti requisiti in modo da strutturare un modello di assistenza a livelli gerarchici: 
+
+	1. **I Livello – Gestione autonoma**: il Fornitore di Soluzione IT-Wallet DOVREBBE permettere all’Utente di disporre di una sezione di domande frequenti (FAQ) all’interno della propria Istanza IT-Wallet per chiarire dubbi e risolvere in autonomia alcune problematiche. Ogni attore DOVREBBE formulare delle domande frequenti e relative risposte specifiche rispetto a dati e funzionalità messe a disposizione al Fornitore di Soluzione IT-Wallet o nei propri Touchpoint. Per alcune casistiche di errore, il Fornitore di Soluzione IT-Wallet DOVREBBE rendere direttamente disponibile il canale di assistenza di un altro attore, per facilitare una gestione tempestiva ed evitare l’apertura di una richiesta di assistenza nell’Istanza IT-Wallet. 
+
+	2. **II Livello – Richiesta di assistenza al Fornitore di Soluzione IT-Wallet**: se il I livello non fosse sufficiente, il Fornitore di Soluzione IT-Wallet DEVE permettere all’Utente di aprire una o più richieste di assistenza.  Tali richieste DOVREBBERO essere gestite tramite l’Istanza IT-Wallet o altri Touchpoint del Fornitore di Soluzione IT-Wallet. Il Fornitore di Soluzione IT-Wallet DEVE effettuare una diagnosi e procedere alla risoluzione della problematica, se di sua competenza. 
+
+	3. **III Livello – Inoltro della richiesta all’attore responsabile della problematica**: se il II livello non fosse sufficiente, il Fornitore di Soluzione IT-Wallet DOVREBBE garantire che la richiesta sia inoltrata all’attore responsabile (Fornitore di Attestati Elettronici di Attributi, Fornitore di Dati di Identificazione Personale e Titolare di Fonte Autentica) che DEVE farsi carico della risoluzione della problematica e comunicare l’esito all’Utente. 
+
+Di seguito i requisiti funzionali a supporto dell’Esperienza Utente relativi all’Assistenza che il Fornitore di Soluzione IT-Wallet DEVE garantire attraverso la propria Soluzione IT-Wallet: 
+
+- l’Utente ha accesso a modalità di assistenza in ogni momento dell’Esperienza Utente, attraverso una chiara indicazione del punto di accesso;  
+- l’Utente ha la possibilità di aprire una richiesta di assistenza tramite la propria Istanza IT-Wallet o altri Touchpoint messi a disposizione dal Fornitore di Soluzione IT-Wallet;  
+- nel caso di apertura di una richiesta di assistenza, l’Utente riceve conferma tempestiva dell’avvenuta presa in carico;  
+- l’Utente è informato preventivamente nel caso in cui sia necessario condividere i propri dati con soggetti terzi;  
+- l’Utente è informato nei casi in cui la richiesta di assistenza debba essere gestita al di fuori della propria Istanza IT-Wallet, quindi su canali terzi; 
+- l’Utente monitora l’esito della richiesta in ogni momento attraverso funzionalità che DEVONO essere messe a disposizione dagli attori che hanno preso in carico la richiesta. 
+
+Feedback Utente 
+****************
+
+La raccolta dei feedback degli Utenti permette di monitorare l’Esperienza Utente, identificare le aree per una possibile ottimizzazione e misurare l’efficacia del servizio in maniera continuativa. Ogni Fornitore di Soluzione IT-Wallet DOVREBBE predisporre un sistema strutturato di raccolta feedback, per monitorare e migliorare l’Esperienza Utente. 
+
+Tale sistema di feedback POTREBBE essere alimentato da due diverse tipologie di raccolta feedback: 
+
+- **feedback transazionali** (Customer Effort Score, Customer Satisfaction): raccolta contestuale ad azioni specifiche, come l’aggiunta di un Attestato Elettronico o il completamento di un’operazione di presentazione e verifica;  
+
+- **feedback relazionali** (Net Promoter Score): raccolta non contestuale ad azioni specifiche, per la misurazione della percezione generale dell'Utente, in termini di soddisfazione, fedeltà e possibile raccomandazione ad Utenti terzi. 
+
+Di seguito, le indicazioni proposte per l’implementazione di tali tipologie di feedback: 
+
+**Raccolta di feedback transazionale** 
+
+- **Customer Effort Score (CES)**: per misurare la facilità di utilizzo delle funzionalità POSSONO essere predisposti questionari, ad esempio tramite componenti quali modali o pop-up nell’Istanza IT-Wallet, al termine di azioni specifiche o specifici processi, ad esempio: 
+
+   - a conclusione del processo di ottenimento di un Attestato Elettronico;  
+   - a conclusione del processo di Autenticazione, se positivo; 
+   - a conclusione del processo di presentazione, in particolare a conclusione della prima occasione di presentazione e non più di una volta ogni 6 mesi; 
+   - a conclusione dei processi di revoca e disattivazione, per approfondirne le motivazioni. 
+
+- **Customer Satisfaction Survey (CSAT)**: per misurare la soddisfazione generale dell'Utente dopo un periodo prolungato di utilizzo dell’Istanza IT-Wallet POSSONO essere predisposti questionari, ad esempio tramite componenti quali modali o pop-up nell’Istanza IT-Wallet. Si consiglia di utilizzare il CSAT ad intervalli non inferiori a sei mesi e come alternativa al CES, per evitare di somministrare questionari con troppa frequenza. 
+
+**Raccolta di feedback relazionale** 
+
+- **Net Promoter Score (NPS)**: per misurare la fedeltà dell'Utente e la probabilità di raccomandazione ad Utenti terzi, si PUÒ richiedere di esprimere una valutazione una o due volte l'anno attraverso lo stesso canale di erogazione del servizio (e.g. l’Istanza IT-Wallet) o canali esterni, quali e-mail o SMS, e comunque in linea con la strategia di raccolta feedback adottata.
