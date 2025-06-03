@@ -311,6 +311,9 @@ Di seguito le descrizioni di acronimi e definizioni, correlati al presente docum
       Conforme con ARF 1.10.
 
     **Attestato di Istanza del Wallet**
+    **Wallet Unit Attestation**
+    **Wallet Attestation**
+    **Wallet Instance Attestation**
       Oggetto emesso da un Fornitore di Wallet che descrive le caratteristiche e i componenti della Istanza del Wallet.
       Conforme con ARF 1.10.
 
