@@ -4,6 +4,8 @@ from cryptography.x509.oid import ExtensionOID
 
 from cryptography.hazmat.primitives.asymmetric import rsa, ec
 
+from pyeudiw.tests.x509.test_x509 import gen_chain
+
 import binascii
 import textwrap
 
@@ -208,7 +210,7 @@ def format_certificate(cert):
     return "\n".join(lines)
 
 # Example usage:
-der_certs = gen_chain() # from pyeudiw.tests.x509.test_x509 import gen_chain
+der_certs = gen_chain()
 
 for der in der_certs:
     cert = x509.load_der_x509_certificate(der)
