@@ -12,12 +12,18 @@ Depending on whether the User is using a mobile device or a workstation, the Rel
 Once the Wallet Instance establishes the trust with the Relying Party and evaluates the request, the User gives the consent for the disclosure of the Digital Credentials, in the form of a Verifiable Presentation.
 
 .. _fig_High-Level-Flow-Presentation:
-.. figure:: ../../images/High-Level-Flow-Presentation.svg
-    :figwidth: 100%
-    :align: center
-    :target: https://www.plantuml.com/plantuml/svg/TL9TJy8m57tlhpZXHLcYYz-61uCXnF34d11UJCZS6bQPRMtlRF3NspB0JUBJidlEFH-v7LhA3DKV5TF-AtAXCqdeBRAgueI9zB3CUG-PXUjIKbvjX5mXySFDbc0qOqRZx05kW8jpHD5ZJQKouZiZeIHI_bbpIr64KmVJ_2nh8_gWqgXwLVfX8GpF2ShWEKMk2WwRPnAlafHdSSHn4-t4eYi-beLMGb8SC-P21gC7k0mXThQOfvDsXAVnBDWaqvTP7mVrDF7AxOssxg7SrR6krKfQtdJR8zEtTr-cpvZRxLs7lSK4evBdQ-l9lz1DWEQM6uo2a2IFjfhS1ZXa_LExQ_obbwJMN1uNQbZ_D0e6TzjAIJlQeUvzm3htxlWg7QBuispWzYTi3ilOaCl2lwuV
+.. plantuml:: plantuml/credential-presentation-remote-high-level-flow.puml
+    :width: 99%
+    :alt: The figure illustrates the High Level Remote Protocol Flow.
+    :caption: `High Level Remote Protocol Flow. <https://www.plantuml.com/plantuml/svg/TL9TQ-em6BxFhtZmvXmBvvJpVV1YECHjmi2kKxmPIDU-sCoOP4bgSRz-YLNNAhjids_U3AtBZAis0dTyLUAUjYIGqaOvGcAKKxaIk16gPjhpUCvr9XrwYqm8SfX8BvSvzP1Pd55I4ZikLqZypzsUO3HZHkFR5Ue1Vdn755rNhbI6lsMEA-bZNokoBehmjOPfFfQLuNsuqgZArpDKS4EvWp9uI96hWc3pJE99EkLPX3Xkgdsnw9gFPQ4LbowE6Qj31wC7-1bA768nJoVj2hVZMOX9fe-pFaxkQUATsugsxsdShqjVgvMqr6mx8jFd5p-cprXzqFqEkiK4evBojVNa3-XFWEQM34R1I3gFjfRy3N3eUZQx6xpLIwVM92y7DQnF5eM0V_j9IRlQQUx_W7NktSbLEbJ9XDYXFfwmEImRaYpyuti7>`_
 
-    High Level Remote Protocol Flow
+
+.. .. figure:: ../../images/High-Level-Flow-Presentation.svg
+..     :figwidth: 100%
+..     :align: center
+..     :target: https://www.plantuml.com/plantuml/svg/TL9TJy8m57tlhpZXHLcYYz-61uCXnF34d11UJCZS6bQPRMtlRF3NspB0JUBJidlEFH-v7LhA3DKV5TF-AtAXCqdeBRAgueI9zB3CUG-PXUjIKbvjX5mXySFDbc0qOqRZx05kW8jpHD5ZJQKouZiZeIHI_bbpIr64KmVJ_2nh8_gWqgXwLVfX8GpF2ShWEKMk2WwRPnAlafHdSSHn4-t4eYi-beLMGb8SC-P21gC7k0mXThQOfvDsXAVnBDWaqvTP7mVrDF7AxOssxg7SrR6krKfQtdJR8zEtTr-cpvZRxLs7lSK4evBdQ-l9lz1DWEQM6uo2a2IFjfhS1ZXa_LExQ_obbwJMN1uNQbZ_D0e6TzjAIJlQeUvzm3htxlWg7QBuispWzYTi3ilOaCl2lwuV
+
+..     High Level Remote Protocol Flow
 
 
 A High-Level description of the remote flow, from the User's perspective, is given below and shown in :ref:`fig_High-Level-Flow-Presentation`:
@@ -42,12 +48,18 @@ A High-Level description of the remote flow, from the User's perspective, is giv
 
 Below is a sequence diagram that details the interactions between all the involved parties.
 
-.. figure:: ../../images/cross_same_device_auth_seq_diagram.svg
-    :figwidth: 100%
-    :align: center
-    :target: https://www.plantuml.com/plantuml/svg/fLPDRnit4BtpLmpKGst0TfCU3RY8uxgsaxHMBIK-r8L0SKSIwnMv9OTIr2B_lJEWbgPa1mXGtPRalFVuE1zw4qa7IijMwKJUfUKKWrBgt90FCFWOCGn0HqXAJVtdlF1zX9znPGt60NptmSuNzBPDg3h6iSPssX4CxdNR8i6DOtXdK31WlNiaCTIndgEZpA0LkWQOPKjrX-t6kZaCEMZpTQQTOm_kuFOyqG8kMil0Xu8Cgxq8baGf0hDrtcxP8nPs_cb3TgK98Qa4np-njbEunocCCCYzmUcLdMkotbL7jMgm3jGIkS9JkCE_4qQ2OV24Xh3XbUXJCAZKsHalOsIjMk1WkD0HuUoiu8hw5VPG5m5bJKCaBNkQxNXmKvzOEtbuiXICzu_sXT2GnKnIi12oZEgKF5Z76ciasdJCmUWDacoPu6Fa3t42V82ebvW_Cr2sQq7B5Zf6WBMb1Vn-T-4REGwBW3DMvqXRP-T02uGKMf1J3yx8iz74DaUrqADytIFuergSB94MllcpSbsyKblZqocC5duj-3svg145J68UPIDhcIOYxsgOf9_iNoir3pvrx9-FVUA3T-r6hOLdpJn6E-O08P4iKf8qUUk3Dxe5AHhGYHaTMPFpfaHVoYCA4uKKARibseeLIkcMmCxW-UN1IkPkWuQtex42_gtxn-I4Mza6OLkC7ACRJHh82qEDLuf10A3sKxvBUbHY5mMMq3WhrpIwqrFRMh8O5ROHlq7qrULOdiHvWYxNWIetg4f7wAATEsnwGF3JloGRPy4lltgR_1eYFtlz8iH-0Zr_cPqM0x_sDchNGESvcIp64lG9WvrjG9WqfO3WPvNwSg7RJ5sYT6kRgZpvvAVXGJpC1zAJ4JCVf7Z4gBqkbO4kl9lPiCHcjnaLGoL9G3ga3_QVt7BkC7Q220yklycgcv1_H5VAhgiwr2IcwTB6A3bSs_PoZcGxh9wskDldI0XAK6L0bLZdH1Zp-HCMbp-h0tr-1nPk8qYFxzt-1NbPIoJlQTUKg6ecIOpaNS0LYsbEAZMPIbfc8oMhMxY9CM60iTJe5h98VdS_Xb7_tXKAopCOOwxc0gLKO5O4lyB0ntYktLnTZw_kBYz_Koz7d2euXei5SjEwzct3OUzn0s-jQoGfHGh7-PdSVUXZP01nE4NP1IadWUlIb3CL7ZaoZmlhPBs-8tdM8zcRNswO7-b42VtbPmhQPFSR6qth8pQWYOAT9i8eCi28HYbwDhhKf6K2oFKI4FHAsrRIuKHgKvn0LLdsiUkJ83VD_Z87UPn1adri3bNVbKSoV79JpidBRCneIFf0LVdNu_7mXzSdh-77Lw_WzZq_uR-3-kX09XPriSmY2Dkoc1YP7L-sbQXPOym2TvYgsI4NUtbeX6ToVQ9lL5pNytglPUM95za_UCS6Zqom7UNNEDsRExcafTGFXA3lD_dAsUH3LR0ZgfW59Vs_FVoYH7O5dOtQ-QEKmVe1rPK_JEMVocxBATA6pq_k3VHTnzumTLgs_m40
+.. plantuml:: plantuml/credential-presentation-remote-flow.puml
+    :width: 99%
+    :alt: The figure illustrates the Remote Protocol Flow.
+    :caption: `Remote Protocol Flow. <https://www.plantuml.com/plantuml/svg/fLPDRnit4BtpLmpKGsqWSPCU3RX8ehgsaxHMBIK-r8L1SKSIwnMv9OUhg4N-UuVaYgRy0GGeeClkSjvxy-Q3UkD9EWhhLiX0reJr79qGugqYws3qoQCRWVGGX9ZRB_d5znv-nbuhz2FuxgDUhkXT6r1qZAELxgGX65tBjaM22yFmHc72sEmV2GprKYxHK6QG0aq3p39GNM6xrMO94mxQFi-qT-p675o-3RI2SQiP-30XzmyYM1853ypMMJsmUxnd5q8gqhqavBG3lFo9jHt3DSvXYYxc3KRsUYb9MrCTbQB1Eb36o1wFuGh_3kW99iuIAiA6ttWRd48XJaxuDNhMck1Wif8UuUIau4RrFUwWnWxZEmcUqZV9TjoOkGsidIpSMmhAsZlzHAZBOcw3q-2oZFeK5wnZZJKIRJlcOFG6ANvIpdhF3ya9wy3BDUR739JjMj6wXOuHOAEv7hzVZMsJZgySBbWT9woDNWAj489hqwaRerBPRdNpeXRw8gVx0lweNjwkaLQs-RDsdRqIW_7X6AOhkqducJohOGLCekxYXwnb7eYisIkUlBT_8yJIsT2nVzRl6X-iQRTY4taspAEaOGvWajH58ZPD_lJHAjb271gGWHaDQPNxfaIVnY969dB1KtOhQYjM225R0hs0nyc3Zfqx14qkfpC10B3P5PCRhjUS-32C72CRIHB8HeOQhmn30gZzZC-bFIgngm9Bg8oEQIhPoRbkDMdq0bkFto3wx7GMIs8iGPVdG5GPbD69T5ul3JOxGB3pls8tBfnTFvjDhaQFGpcUXdZKG8ygixTYuDUTZT8qq5bk9iwt17r6fnVRn2GfE0IxgDINX2upTOcIhMwgyUIJdoS7_Z0V2FT6B6B_MfECsjzI6MXipKAxDJRxowWO6fi4ueQqJl-JEf6XVHSHuSRaclJTBTaxDCFOFREAwbR8MMivRt5_dIMS4bJbMVNFMoBq-VmHQyYFzO6XZHthqnxYAj-P-WlownJ9txWSLLIvUZWcjPV3diKqHvMQWMhi6CQGbYrSU1_GmIoEuW1P9B-_di5qLzOAXUKfz3uFRO4ImZ4hWktHyJ6-lYxEpcTdLwUdlucd8uu5l8Jn2datdTkM4uCFk8LtsZJSUqaAnt7Y_9jOxnaWEXny_0e28C5rOSuD2NSScMy5RUBxEaUoqEScJPMRv28TYKX_-eMSLDdzHdlLMeyDI2Advu7G9nagQUJPPgFBw6acW3mM3a7sKhUn7OxY22OdH6NPfwuqGTgDksGEygq58Nrl3iLk-Kxb6eVTctkKsPXHfN6l1lnyDflyyFheDVpuwXLSVk0I_ZkgZuxYnKITBrSEkA7xRrMy8huE0oTPeyy2w_3wje-9FNqtk4ToRQ1lL5oFxMP_CmqNcsV_u3qRF5LETvIhSVpWUicJ6oVw81AKZPTIpYOVtYVZKVWiACZ_xU5NKSjcw6nK_Nze0DlTGrtvNrJ-aEold29jylZa_htzmB4tJ1tMxNy0>`_
 
-    Remote Protocol Flow
+
+.. .. figure:: ../../images/cross_same_device_auth_seq_diagram.svg
+..     :figwidth: 100%
+..     :align: center
+..     :target: https://www.plantuml.com/plantuml/svg/fLPDRnit4BtpLmpKGst0TfCU3RY8uxgsaxHMBIK-r8L0SKSIwnMv9OTIr2B_lJEWbgPa1mXGtPRalFVuE1zw4qa7IijMwKJUfUKKWrBgt90FCFWOCGn0HqXAJVtdlF1zX9znPGt60NptmSuNzBPDg3h6iSPssX4CxdNR8i6DOtXdK31WlNiaCTIndgEZpA0LkWQOPKjrX-t6kZaCEMZpTQQTOm_kuFOyqG8kMil0Xu8Cgxq8baGf0hDrtcxP8nPs_cb3TgK98Qa4np-njbEunocCCCYzmUcLdMkotbL7jMgm3jGIkS9JkCE_4qQ2OV24Xh3XbUXJCAZKsHalOsIjMk1WkD0HuUoiu8hw5VPG5m5bJKCaBNkQxNXmKvzOEtbuiXICzu_sXT2GnKnIi12oZEgKF5Z76ciasdJCmUWDacoPu6Fa3t42V82ebvW_Cr2sQq7B5Zf6WBMb1Vn-T-4REGwBW3DMvqXRP-T02uGKMf1J3yx8iz74DaUrqADytIFuergSB94MllcpSbsyKblZqocC5duj-3svg145J68UPIDhcIOYxsgOf9_iNoir3pvrx9-FVUA3T-r6hOLdpJn6E-O08P4iKf8qUUk3Dxe5AHhGYHaTMPFpfaHVoYCA4uKKARibseeLIkcMmCxW-UN1IkPkWuQtex42_gtxn-I4Mza6OLkC7ACRJHh82qEDLuf10A3sKxvBUbHY5mMMq3WhrpIwqrFRMh8O5ROHlq7qrULOdiHvWYxNWIetg4f7wAATEsnwGF3JloGRPy4lltgR_1eYFtlz8iH-0Zr_cPqM0x_sDchNGESvcIp64lG9WvrjG9WqfO3WPvNwSg7RJ5sYT6kRgZpvvAVXGJpC1zAJ4JCVf7Z4gBqkbO4kl9lPiCHcjnaLGoL9G3ga3_QVt7BkC7Q220yklycgcv1_H5VAhgiwr2IcwTB6A3bSs_PoZcGxh9wskDldI0XAK6L0bLZdH1Zp-HCMbp-h0tr-1nPk8qYFxzt-1NbPIoJlQTUKg6ecIOpaNS0LYsbEAZMPIbfc8oMhMxY9CM60iTJe5h98VdS_Xb7_tXKAopCOOwxc0gLKO5O4lyB0ntYktLnTZw_kBYz_Koz7d2euXei5SjEwzct3OUzn0s-jQoGfHGh7-PdSVUXZP01nE4NP1IadWUlIb3CL7ZaoZmlhPBs-8tdM8zcRNswO7-b42VtbPmhQPFSR6qth8pQWYOAT9i8eCi28HYbwDhhKf6K2oFKI4FHAsrRIuKHgKvn0LLdsiUkJ83VD_Z87UPn1adri3bNVbKSoV79JpidBRCneIFf0LVdNu_7mXzSdh-77Lw_WzZq_uR-3-kX09XPriSmY2Dkoc1YP7L-sbQXPOym2TvYgsI4NUtbeX6ToVQ9lL5pNytglPUM95za_UCS6Zqom7UNNEDsRExcafTGFXA3lD_dAsUH3LR0ZgfW59Vs_FVoYH7O5dOtQ-QEKmVe1rPK_JEMVocxBATA6pq_k3VHTnzumTLgs_m40
+
+..     Remote Protocol Flow
 
 
 The details of each step shown in the previous picture are described below.
@@ -62,9 +74,17 @@ The details of each step shown in the previous picture are described below.
 
   Below is represented a non-normative example of a QR Code issued by the Relying Party.
 
-.. figure:: ../../images/verifier_qr_code.svg
-  :figwidth: 50%
-  :align: center
+.. only:: format_html
+
+  .. figure:: ./images/svg/verifier_qr_code.svg
+    :figwidth: 50%
+    :align: center
+
+.. only:: format_latex
+
+  .. figure:: ./images/pdf/verifier_qr_code.pdf
+    :width: 50%
+    :align: center
 
 
   Below is represented a non-normative example of the QR Code raw payload:
@@ -422,12 +442,9 @@ The JWT payload parameters are described herein:
   For security reasons and to prevent endpoint mix-up attacks, the value contained in the ``response_uri`` parameter MUST be one of those attested by a trusted third party, such as those provided in the ``openid_credential_verifier`` metadata within the ``response_uris`` parameter, obtained from the Trust Chain about the Relying Party.
 
 .. note::
-  The following parameters, even if defined in [OID4VP], are not mentioned in the previous non-normative example, since their usage is conditional and may change in future release of this documentation.
+  The following parameter, even if defined in [OID4VP], is not mentioned in the previous non-normative example, since its usage is conditional.
 
-  - ``presentation_definition``: JSON object according to `Presentation Exchange <https://identity.foundation/presentation-exchange/spec/v2.0.0/>`_. This parameter MUST not be present when ``presentation_definition_uri`` or ``scope`` are present.
-  - ``presentation_definition_uri``: Not supported. String containing an HTTPS URL pointing to a resource where a Presentation Definition JSON object can be retrieved. This parameter MUST be present when ``presentation_definition`` parameter or a ``scope`` value representing a Presentation Definition is not present.
   - ``client_metadata``: A JSON object containing the Relying Party metadata values. If the ``client_metadata`` parameter is present, the Wallet Instance MUST ignore it and consider the client metadata obtained through the OpenID Federation Trust Chain.
-
 
 Request URI Endpoint Errors
 ----------------------------
@@ -497,9 +514,7 @@ Where the following parameters are used:
       - The requested Digital Credential (one or more, in format of SD-JWT VC)
       - The Wallet Attestation (in SD-JWT VC format)
 
-      When `presentation_definition` is used, the ``vp_token`` value is a JSON Array containing the Verifiable Presentation(s) and the `presentation_submission` parameter MUST be also present within the response.
-
-      When the DCQL query language is used, the ``vp_token`` format is a JSON Object which keys corresponds to the requested credential ids in the ``dcql_query`` used in the request, and the values to each presented Digital Credential.
+      The ``vp_token`` format is a JSON Object which keys corresponds to the requested credential ids in the ``dcql_query`` used in the request, and the values to each presented Digital Credential.
 
   * - **state**
     - Unique identifier provided by the Relying Party within the Authorization Request.
