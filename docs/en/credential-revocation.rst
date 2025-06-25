@@ -245,7 +245,7 @@ Authentic Sources MUST use this notification service in the following cases:
   - The validity status of the Attributes is updated (revocation or suspension).
 
 
-In the following diagram is figure out the High-Level status update process for the Authentic Sources.
+The following diagram illustrates the high-level status update process for Authentic Sources.
 
 .. only:: format_html
 
