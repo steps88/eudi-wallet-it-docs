@@ -244,7 +244,7 @@ Le Fonti Autentiche DEVONO utilizzare questo servizio di notifica nei seguenti c
   - Il valore di uno o più Attributi contenuti nel database della Fonte Autentica è cambiato.
   - Lo stato di validità degli Attributi è aggiornato (revoca o sospensione).
 
-Nel seguente diagramma è illustrato il processo di Alto Livello relativo all'aggiornamento dello stato da parte delle Fonti Autentiche
+Nel seguente diagramma è illustrato il processo di Alto Livello relativo all'aggiornamento dello stato da parte delle Fonti Autentiche.
 
 .. only:: format_html
 
