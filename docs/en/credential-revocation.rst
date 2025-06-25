@@ -261,11 +261,11 @@ The following diagram illustrates the high-level status update process for Authe
     :alt: Status update process process Authentic Sources
     :width: 100%
 
-The process starts with data or data validity changes that occur in the Authentic Source database. The changes can be also caused by third entities different from the Authentic Source, for example in case of illegal activities by the Law Enforcing Bodies.
+The process starts with data or data validity changes that occur in the Authentic Source data. The changes can also be caused by third-party entities different from the Authentic Source, for example in case of illegal activities as notified by Law Enforcement Bodies.
 
-Once the data or validity data changes the Authentic Source MUST notify the Credential Issuer to whom it provided such data using the e-Service PDND ":ref:`credential-issuer-endpoint:Notify Update Credential`".
+Once the data changes, the Authentic Source MUST notify the Credential Issuers, to whom it provided such data, using the e-Service PDND ":ref:`credential-issuer-endpoint:Notify Update Credential`".
 
-The Credential Issuer, once it received the notification, MUST provide for the update of the Credential Status according to the mode defined for the validity mechanism used and MAY send a notification to the User using a registered out-of-band communication channel.
+The Credential Issuer, once it receives the notification, MUST provide for the update of the Credential Status according to the mode defined for the validity mechanism used and MAY send a notification to the User using a registered out-of-band communication channel.
 
 The Wallet instance, following periodic checks of the validity status of the stored Digital Credentials, receives the updated status and consequently MUST inform the User of the change of the Credential Status.
 
