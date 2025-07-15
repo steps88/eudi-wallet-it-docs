@@ -259,7 +259,18 @@ Each element of the ``credentials`` array contains at least the following inform
   * - **issuers**
     - REQUIRED. Array of relevant information about authorized Credential Issuers, including administrative and technical data such as Organization name, a reference to the API specification document and supported issuance mechanisms (for example the deferred flow support).
   * - **authentic_sources**
-    - REQUIRED. Array of relevant information about authorized Authentic Sources, including administrative and technical data related the provisioning of data to the Credential Issuers.
+    - REQUIRED. Array of relevant information about authorized Authentic Sources, including administrative and technical data related the provisioning of data to the Credential Issuers. The array MUST include at least the following information:
+
+      * **id**: Unique identifier of the Authentic Source.
+      * **organization_name**: human-readable name of the Authentic Source organization.
+      * **organization_code**: Unique code of the Authentic Source organization.
+      * **organization_country**: Country of the Authentic Source organization, represented as a two-letter ISO 3166-1 alpha-2 code.
+      * **contacts**: Array of contact information for the Authentic Source, including relevant email addresses of the Authentic Source organization.
+      * **homepage_uri**: [OPTIONAL] URI of the Authentic Source organization homepage.
+      * **logo_uri**: [OPTIONAL] URI of the Authentic Source organization logo.
+      * **source_type**: Type of Authentic Source, such as ``public`` or ``private``.
+      * **service_documentation**: [OPTIONAL] URI pointing to the Authentic Source service documentation.
+      * **user_information**: URI pointing to a web page containing human-readable information about the Digital Credential, whose data is provided by the Authentic Source. This web page MUST display any relevant information to the user before the issuance flow. This information MUST be communicated to the Issuer during the onboarding of the Authentic Source, the Issuer will then publish such information in the web page. For example, if the Authentic Source's database only contains the data required for the Digital Credential attributes registered *after* a specific date, this information MUST be provided on the web page.
   * - **formats**
     - REQUIRED. Array of supported technical formats of Digital Credentials, including:
 

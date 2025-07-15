@@ -259,7 +259,18 @@ Ogni elemento dell'array ``credentials`` contiene almeno le seguenti informazion
   * - **issuers**
     - OBBLIGATORIO. Array di informazioni rilevanti sui Fornitori di Attestato Elettronico autorizzati, inclusi dati amministrativi e tecnici come il nome dell'Organizzazione, un riferimento al documento di specifiche API e meccanismi di emissione supportati (ad esempio il supporto al *deferred flow*).
   * - **authentic_sources**
-    - OBBLIGATORIO. Array di informazioni rilevanti sulle Fonti Autentiche autorizzate, inclusi dati amministrativi e tecnici relativi alla fornitura di dati ai Fornitori di Attestato Elettronico.
+    - OBBLIGATORIO. Array di informazioni rilevanti sulle Fonti Autentiche autorizzate, inclusi dati amministrativi e tecnici relativi alla fornitura di dati agli Emittenti di Credenziali. L'array DEVE includere almeno le seguenti informazioni:
+
+      * **id**: Identificatore univoco della Fonte Autentica.
+      * **organization_name**: Nome leggibile dall'utente dell'organizzazione della Fonte Autentica.
+      * **organization_code**: Codice univoco dell'organizzazione della Fonte Autentica.
+      * **organization_country**: Paese dell'organizzazione della Fonte Autentica, rappresentato come un codice ISO 3166-1 alpha-2 di due lettere.
+      * **contacts**: Array di informazioni di contatto per la Fonte Autentica, inclusi gli indirizzi email rilevanti dell'organizzazione della Fonte Autentica.
+      * **homepage_uri**: [OPZIONALE] URI della homepage dell'organizzazione della Fonte Autentica.
+      * **logo_uri**: [OPZIONALE] URI del logo dell'organizzazione della Fonte Autentica.
+      * **source_type**: Tipo di Fonte Autentica, come ``public`` o ``private``.
+      * **service_documentation**: [OPZIONALE] URI che punta alla documentazione del servizio della Fonte Autentica.
+      * **user_information**: URI che punta a una pagina web contenente informazioni leggibili dall'utente sull'Atetstato Elettronico, i cui dati sono forniti dalla Fonte Autentica. Questa pagina web DEVE mostrare qualsiasi informazione rilevante all'utente prima del flusso di emissione. Queste informazioni DEVONO essere comunicate all'Issuer durante l'onboarding della Fonte Autentica, il quale provvede a pubblicarle nella pagina web. Ad esempio, se il database della Fonte Autentica contiene i dati richiesti per l'Attestato Elettronico solo per gli attributi registrati *dopo* una data specifica, questa informazione DEVE essere fornita sulla pagina web.
   * - **formats**
     - OBBLIGATORIO. Array dei formati tecnici supportati per le Credenziali Digitali, che include:
 

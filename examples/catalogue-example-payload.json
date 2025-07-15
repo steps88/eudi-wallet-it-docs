@@ -111,7 +111,8 @@
                   "deferred_flow": true,
                   "max_response_time_minutes": 60,
                   "notification_methods": ["push"]
-               }
+               },
+               "user_information": "https://issuer.example.org/.well-known/user_information"
             }
          ],
          "formats": [
