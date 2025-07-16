@@ -259,13 +259,13 @@ Ogni elemento dell'array ``credentials`` contiene almeno le seguenti informazion
   * - **issuers**
     - OBBLIGATORIO. Array di informazioni rilevanti sui Fornitori di Attestato Elettronico autorizzati, inclusi dati amministrativi e tecnici come il nome dell'Organizzazione, un riferimento al documento di specifiche API e meccanismi di emissione supportati (ad esempio il supporto al *deferred flow*).
   * - **authentic_sources**
-    - OBBLIGATORIO. Array di informazioni rilevanti sulle Fonti Autentiche autorizzate, inclusi dati amministrativi e tecnici relativi alla fornitura di dati agli Emittenti di Credenziali. L'array DEVE includere almeno le seguenti informazioni:
+    - OBBLIGATORIO. Array di informazioni rilevanti sulle Fonti Autentiche autorizzate, inclusi dati amministrativi e tecnici relativi alla fornitura di dati agli Emittenti di Credenziali. A meno di indicazioni contrarie, l'array DEVE includere almeno le seguenti informazioni:
 
       * **id**: Identificatore univoco della Fonte Autentica.
       * **organization_name**: Nome leggibile dall'utente dell'organizzazione della Fonte Autentica.
-      * **organization_code**: Codice univoco dell'organizzazione della Fonte Autentica.
+      * **organization_code**: Codice amministrativo dell'organizzazione della Fonte Autentica. 
       * **organization_country**: Paese dell'organizzazione della Fonte Autentica, rappresentato come un codice ISO 3166-1 alpha-2 di due lettere.
-      * **contacts**: Array di informazioni di contatto per la Fonte Autentica, inclusi gli indirizzi email rilevanti dell'organizzazione della Fonte Autentica.
+      * **contacts**: JSON Array di contatti della Fonte Autentica, possono essere inclusi nomi, indirizzi email, numeri di telefono, etc.
       * **homepage_uri**: [OPZIONALE] URI della homepage dell'organizzazione della Fonte Autentica.
       * **logo_uri**: [OPZIONALE] URI del logo dell'organizzazione della Fonte Autentica.
       * **source_type**: Tipo di Fonte Autentica, come ``public`` o ``private``.

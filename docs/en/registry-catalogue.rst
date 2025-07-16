@@ -259,13 +259,13 @@ Each element of the ``credentials`` array contains at least the following inform
   * - **issuers**
     - REQUIRED. Array of relevant information about authorized Credential Issuers, including administrative and technical data such as Organization name, a reference to the API specification document and supported issuance mechanisms (for example the deferred flow support).
   * - **authentic_sources**
-    - REQUIRED. Array of relevant information about authorized Authentic Sources, including administrative and technical data related the provisioning of data to the Credential Issuers. The array MUST include at least the following information:
+    - REQUIRED. Array of relevant information about authorized Authentic Sources, including administrative and technical data related the provisioning of data to the Credential Issuers. The array MUST include at least the following information, unless otherwise specified:
 
       * **id**: Unique identifier of the Authentic Source.
       * **organization_name**: human-readable name of the Authentic Source organization.
-      * **organization_code**: Unique code of the Authentic Source organization.
+      * **organization_code**: Administrative code of the Authentic Source organization.
       * **organization_country**: Country of the Authentic Source organization, represented as a two-letter ISO 3166-1 alpha-2 code.
-      * **contacts**: Array of contact information for the Authentic Source, including relevant email addresses of the Authentic Source organization.
+      * **contacts**:[OPTIONAL] JSON array with one or more strings representing contact persons at the Entity. These MAY contain names, e-mail addresses, descriptions, phone numbers, etc.
       * **homepage_uri**: [OPTIONAL] URI of the Authentic Source organization homepage.
       * **logo_uri**: [OPTIONAL] URI of the Authentic Source organization logo.
       * **source_type**: Type of Authentic Source, such as ``public`` or ``private``.
