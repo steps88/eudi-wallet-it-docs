@@ -271,6 +271,12 @@ Each element of the ``credentials`` array contains at least the following inform
       * **logo_uri**: [OPTIONAL] URI of the Authentic Source organization logo.
       * **source_type**: Type of Authentic Source, such as ``public`` or ``private``.
       * **service_documentation**: [OPTIONAL] URI pointing to the Authentic Source service documentation.
+      * **data_provision**: [OPTIONAL] JSON Object containing information about the data provision methods supported by the Authentic Source, including:
+
+        * **immediate_flow**: REQUIRED. Boolean indicating if the Authentic Source supports immediate data provision.
+        * **deferred_flow**: REQUIRED. Boolean indicating if the Authentic Source supports deferred data provision.
+        * **max_response_time_minutes**: CONDITIONAL. Maximum time in minutes for the Authentic Source to respond to a deferred data provision request. REQUIRED if ``deferred_flow`` is set to ``true``.
+        * **notification_methods**: CONDITIONAL. Array of notification methods supported by the Authentic Source for deferred data provision, such as ``push``, ``poll``.
       * **user_information**: [OPTIONAL] A string containing human-readable information about the Digital Credential relevant to the User. This string MUST be provided by the Authentic Source to the Trust Anchor during onboarding and MUST be formatted using Markdown. The Markdown formatting can be plain text or a combination of text and links. For example, if the Authentic Source's database only contains the data required for Digital Credential attributes registered *after* a specific date, this information MUST be conveyed to the Trust Anchor in this Markdown string.
   * - **formats**
     - REQUIRED. Array of supported technical formats of Digital Credentials, including:
