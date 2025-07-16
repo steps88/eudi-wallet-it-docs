@@ -97,6 +97,8 @@ Authentication Button
 """""""""""""""""""""
 
 The Authentication Button “Login with IT-Wallet" is a type of Engagement Button.
+
+The Authentication Button labeled "Login with IT-Wallet" serves as an Engagement Button, providing Users with a standardized way to authenticate using their digital Wallet.
 Relying Parties MUST make the Authentication Button available within the Discovery Page of their Technical Solutions to allow the User to get authenticated into their services through the Wallet Instance.
 
 The Authentication Button has the following requirements:
