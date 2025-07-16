@@ -276,12 +276,12 @@ Ogni elemento dell'array ``credentials`` contiene almeno le seguenti informazion
 
         * **format**: Tipo di formato (ad esempio, ``dc+sd-jwt``, ``mso_mdoc``)
         * **configuration_id**: Identificativo di configurazione del formato dell'Attestato Elettronico. Questo è formato concatenando il valore di ``credential_type`` al ``format`` (ad esempio, ``dc_sd_jwt_mDL`` o ``mso_mdoc_mDL``), ed è usato per fare riferimento in modo univoco alla configurazione per questo formato di Attestato Elettronico.
-        * **vct**: CONDIZIONALE. È OBBLIGATORIO solo se il ``format`` è ``dc+sd-jwt``. DEVE essere impostato come una stringa URI nel formato ``https://{dominio Trust Anchor}/{version}/{credential_type}`` (ad esempio, ``https://trust-registry.eid-wallet.example.it/v1.0/mDL``).
+        * **vct**: CONDIZIONALE. È OBBLIGATORIO solo se il ``format`` è ``dc+sd-jwt``. DEVE essere impostato come una stringa URI nel formato ``https://{dominio Trust Anchor}/{version}/{credential_type}`` (ad esempio, ``https://trust-registry.it-wallet.example.it/v1/mDL``).
         * **docType**: CONDIZIONALE. È OBBLIGATORIO solo se il ``format`` è ``mso_mdoc``. Se l'Attestato Elettronico è:
 
           * definita da uno standard ISO, DEVE essere una stringa nel formato ``iso.org.{iso-number}.{part}.{version}.{credential_type}`` (ad esempio, ``iso.org.18013.5.1.mDL``).
-          * definita a livello europeo, DEVE essere una stringa nel formato ``eu.europa.ec.{credential_type}.{version}`` (ad esempio, ``eu.europa.ec.personidentificationdata.1.0``).
-          * definita da uno standard nazionale, DEVE essere una stringa nel formato ``{dominio inverso Trust Anchor}.{credential_type}.{version}`` (ad esempio, ``it.eid-wallet.trust-registry.personidentificationdata.1.0``).
+          * definita a livello europeo, DEVE essere una stringa nel formato ``eu.europa.ec.{credential_type}.{version}`` (ad esempio, ``eu.europa.ec.personidentificationdata.1``).
+          * definita da uno standard nazionale, DEVE essere una stringa nel formato ``{dominio inverso Trust Anchor}.{credential_type}.{version}`` (ad esempio, ``it.wallet.trust-registry.personidentificationdata.1``).
         * **schema_uri**: URI che punta al documento di specifica del formato.
         * **schema_uri#integrity**: Digest crittografico del documento di specifica del formato per la verifica dell'integrità. DEVE essere una stringa nel formato ``{metodo_digest}={valore_digest}``, dove ``{metodo_digest}`` è l'algoritmo di digest utilizzato (ad esempio, ``sha-256``) e ``{valore_digest}`` è il valore di digest codificato in base64url.
   * - **display_properties**
@@ -292,7 +292,12 @@ Ogni elemento dell'array ``credentials`` contiene almeno le seguenti informazion
       * **text_color**: Colore del testo in formato esadecimale.
       * **logo_uri**: URI al logo dell'Attestato Elettronico.
   * - **claims**
-    - OBBLIGATORIO. Array di claims contenuti nell'Attestato Elettronico.
+    - OBBLIGATORIO. Array di attributi contenuti nell'Attestato Elettronico. DEVE includere almeno le seguenti claims:
+
+      * **name**: Il nome della claim nell'Attestato Elettronico.
+      * **taxonomy_ref**: Stringa contenente il percorso al tipo di claim come definito in :ref:`it-wallet-dc-domains`.
+      * **namespaces**: CONDIZIONALE. Namespace a cui appartiene la claim.
+      * **display_name_l10n_id**: OPZIONALE. Nome della claim leggibile dall'uomo con un suffisso ``_l10n_id`` per la gestione della localizzazione del contenuto.
 
 
 L'Oggetto ``wallet_attestations`` contiene almeno le seguenti informazioni:
@@ -319,15 +324,15 @@ L'Oggetto ``wallet_attestations`` contiene almeno le seguenti informazioni:
 
        * **format**: Tipo di formato (ad esempio, ``dc+sd-jwt``, ``mso_mdoc`` o ``oauth-client-attestation+jwt``)
        * **configuration_id**: Identificatore di configurazione dell'Attestazione del Wallet. Questo è formato concatenando la stringa ``wa`` al ``format`` (ad esempio, ``dc_sd_jwt_wa``, ``mso_mdoc_wa``, o ``jwt_wa``), ed è utilizzato per fare riferimento in modo univoco alla configurazione del formato dell'Attestazione del Wallet.
-       * **vct**: CONDIZIONALE. È presente solo se il ``format`` è ``dc+sd-jwt``. DEVE essere impostato come una stringa URI nel formato ``https://{dominio Trust Anchor}/{version}/{credential_type}`` (ad esempio, ``https://trust-registry.eid-wallet.example.it/v1.0/WalletAttestation``).
-       * **docType**: CONDIZIONALE. È presente solo se il ``format`` è ``mso_mdoc``. È una stringa nel formato ``{dominio inverso Trust Anchor}.{credential_type}.{version}`` (ad esempio, ``it.eid-wallet.trust-registry.WalletAttestation.1.0``).
+       * **vct**: CONDIZIONALE. È presente solo se il ``format`` è ``dc+sd-jwt``. DEVE essere impostato come una stringa URI nel formato ``https://{dominio Trust Anchor}/{version}/{credential_type}`` (ad esempio, ``https://trust-registry.it-wallet.example.it/v1/WalletAttestation``).
+       * **docType**: CONDIZIONALE. È presente solo se il ``format`` è ``mso_mdoc``. È una stringa nel formato ``{dominio inverso Trust Anchor}.{credential_type}.{version}`` (ad esempio, ``it.wallet.trust-registry.WalletAttestation.1``).
        * **schema_uri**: URI che punta al documento di specifica del formato.
        * **schema_uri#integrity**: Digest crittografico del documento di specifica del formato per la verifica dell'integrità. DEVE essere una stringa nel formato ``{metodo_digest}={valore_digest}``, dove ``{metodo_digest}`` è l'algoritmo di digest utilizzato (ad esempio, ``sha-256``) e ``{valore_digest}`` è il valore di digest codificato in base64url.
    * - **claims**
      - OBBLIGATORIO. Array di claim contenuti nell'Attestato Elettronico. DEVE includere almeno i seguenti claim:
 
        * **Name**: Il nome del claim (ad esempio, ``sub``, ``aal``, ``wallet_link``, ``wallet_name``).
-       * **Namespaces**: CONDIZIONALE. Array di namespace a cui appartiene il claim. DEVE essere impostato su ``{dominio inverso Trust Anchor}.{credential_type}.{version}`` (ad esempio, ``it.eid-wallet.trust-registry.WalletAttestation.1.0``).
+       * **Namespaces**: CONDIZIONALE. Array di namespace a cui appartiene il claim. DEVE essere impostato su ``{dominio inverso Trust Anchor}.{credential_type}.{version}`` (ad esempio, ``it.wallet.trust-registry.WalletAttestation.1``).
 
 L'esempio corrispondente del Catalogo degli Attestati Elettronici decodificato in JSON sia per l'header che per il payload è il seguente:
 
@@ -360,7 +365,7 @@ L'esempio corrispondente del Catalogo degli Attestati Elettronici decodificato i
 
   I bundle di localizzazione DEVONO essere disponibili all'URI specificato nel claim **localization_info.bundles_base_uri** del Catalogo degli Attestati Elettronici. Ogni *bundle locale* DEVE essere accessibile seguendo il pattern di denominazione **{locale_code}.json**, dove **{locale_code}** è sostituito con il codice di localizzazione corrispondente dall'array **available_locales**.
 
-  Un esempio non normativo dell'URI di localizzazione italiana per il bundle mDL è **https://trust-registry.eid-wallet.example.it/.well-known/l10n/mdl/it.json**.
+  Un esempio non normativo dell'URI di localizzazione italiana per il bundle mDL è **https://trust-registry.it-wallet.example.it/.well-known/l10n/mdl/it.json**.
 
   Le Entità DOVREBBERO verificare l'integrità dei bundle di localizzazione scaricati utilizzando il metodo di digest e i valori specificati nel claim **localization_info.integrity**. Questo garantisce che i dati di localizzazione non siano stati manomessi durante la trasmissione.
 
@@ -388,7 +393,7 @@ La Richiesta del Catalogo degli Attestati Elettronici DEVE essere una GET HTTP u
 .. code-block:: http
 
     GET /.well-known/credential-catalogue HTTP/1.1
-    Host: www.trust-registry.eid-wallet.example.it
+    Host: www.trust-registry.it-wallet.example.it
     Content-Type: application/jose
 
 .. note::

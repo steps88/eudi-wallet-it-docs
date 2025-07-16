@@ -95,6 +95,7 @@ Digital Credentials Categories
 
 Digital Credentials recognized within the IT-Wallet ecosystem are hierarchically classified and standardized according to the following main domains and categories. Additional categories MAY be added as the IT-Wallet ecosystem grows.
 
+.. _it-wallet-dc-domains:
 .. list-table:: Digital Credential Domains and Categories
    :class: longtable
    :header-rows: 1
@@ -292,7 +293,12 @@ Each element of the ``credentials`` array contains at least the following inform
       * **text_color**: Text color in hexadecimal format.
       * **logo_uri**: URI to the Digital Credential logo.
   * - **claims**
-    - REQUIRED. Array of claims contained in the Digital Credential.
+    - REQUIRED. Array of claims contained in the Digital Credential. It MUST include at least the following claims:
+
+      * **name**: The name of the claim in the Digital Credential.
+      * **taxonomy_ref**: String containing the path to the claim type as defined in :ref:`it-wallet-dc-domains`. 
+      * **namespaces**: CONDITIONAL. Namespace to which the claim belongs.
+      * **display_name_l10n_id**: OPTIONAL. Human-readable name of the claim with a suffix ``_l10n_id`` for content localisation management.
 
 
 The ``wallet_attestations`` Object contains at least the following information:
@@ -324,10 +330,10 @@ The ``wallet_attestations`` Object contains at least the following information:
       * **schema_uri**: URI pointing to the format specification document.
       * **schema_uri#integrity**: Cryptographic digest of the format specification document for integrity verification. It MUST be a string of the form ``{digest_method}={digest_value}``, where ``{digest_method}`` is the digest algorithm used (e.g., ``sha-256``) and ``{digest_value}`` is the base64url-encoded digest value.
   * - **claims**
-    - REQUIRED. Array of claims contained in the Digital Credential. It MUST include at least the following claims:
+    - REQUIRED. Array of claims contained in the Wallet Attestation. It MUST include at least the following claims:
 
-      * **Name**: The name of the claim (e.g., ``sub``, ``aal``, ``wallet_link``, ``wallet_name``).
-      * **Namespaces**: CONDITIONAL. Array of namespaces to which the claim belongs. It MUST be set to ``{Trust Anchor reverse domain}.{credential_type}.{version}`` (e.g., ``it.eid-wallet.trust-registry.WalletAttestation.1.0``).
+      * **name**: The name of the claim (e.g., ``sub``, ``aal``, ``wallet_link``, ``wallet_name``).
+      * **namespaces**: CONDITIONAL. Array of namespaces to which the claim belongs. It MUST be set to ``{Trust Anchor reverse domain}.{credential_type}.{version}`` (e.g., ``it.eid-wallet.trust-registry.WalletAttestation.1.0``).
 
 The corresponding example of Digital Credentials Catalogue as decoded in JSON for both header and payload is the following:
 
