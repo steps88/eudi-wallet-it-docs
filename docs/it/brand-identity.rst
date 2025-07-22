@@ -97,6 +97,8 @@ Pulsante di Autenticazione
 """"""""""""""""""""""""""
 
 Il Pulsante di Autenticazione "Entra con IT-Wallet" è un esempio di Pulsante di Ingaggio. 
+Il Pulsante di Autenticazione "Entra con IT-Wallet" funge da Pulsante di Ingaggio, fornendo agli utenti un modo standardizzato per Autenticarsi utilizzando il proprio portafoglio digitale.
+
 I Verificatori di Attestati Elettronici DEVONO rendere disponibile il Pulsante di Autenticazione all'interno della Discovery Page delle proprie Soluzioni Tecniche per permettere all'Utente di Autenticarsi ai propri servizi tramite un'Istanza del Wallet. 
 
 Il Pulsante di Autenticazione è caratterizzato dai seguenti requisiti: 
