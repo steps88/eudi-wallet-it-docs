@@ -74,15 +74,21 @@ Ad attivazione conclusa, l'Utente PUÒ ottenere uno o più Attestati Elettronici
 
 A seconda delle specifiche esigenze dell'Utente, della tipologia di Attestato Elettronico di Attributi e delle disponibilità offerte dal Fornitore di Wallet, dal Fornitore di Attestati Elettronici di Attributi e dalla Fonte Autentica, l'ottenimento degli Attestati Elettronici di Attributi può avvenire attraverso due modalità: 
 
-- **dal Catalogo dell'Istanza del Wallet**: l'Utente esplora l'elenco degli Attestati Elettronici di Attributi messi a disposizione dalla Soluzione Wallet, seleziona quello di suo interesse e avvia la procedura di richiesta che si conclude con l'ottenimento dell'Attestato Elettronico di Attributi nell'Istanza del Wallet (vedi :ref:`registry-catalogue:Catalogo degli Attestati Elettronici`); 
+- **dal Catalogo dell'Istanza del Wallet**: l'Utente esplora l'elenco degli Attestati Elettronici di Attributi messi a disposizione dalla Soluzione Wallet, seleziona quello di suo interesse e avvia la procedura di richiesta che si conclude con l'ottenimento dell'Attestato Elettronico di Attributi nell'Istanza del Wallet); 
 
-- **da un Touchpoint della Fonte Autentica** (o del Fornitore di Attestati Elettronici di Attributi qualora coincida con la Fonte Autentica): l'Utente interagisce col servizio digitale della Fonte Autentica che gli permette di ottenere nella sua Istanza del Wallet uno specifico Attestato Elettronico di Attributi tramite un Pulsante di Ingaggio (vedi :ref:`registry-catalogue:Catalogo degli Attestati Elettronici`).
+- **da un Touchpoint della Fonte Autentica** (o del Fornitore di Attestati Elettronici di Attributi qualora coincida con la Fonte Autentica): l'Utente interagisce col servizio digitale della Fonte Autentica che gli permette di ottenere nella sua Istanza del Wallet uno specifico Attestato Elettronico di Attributi tramite un Pulsante di Ingaggio.
 
-Nonostante le modalità di avvio della richiesta siano diverse, i flussi di ottenimento condividono una struttura e un processo simili. Di seguito, sono illustrati i requisiti dell'Esperienza Utente del flusso di ottenimento di un Attestato Elettronico di Attributi dal Catalogo che il Fornitore di Wallet DEVE garantire attraverso la propria Soluzione Wallet: 
+Nonostante le modalità di avvio della richiesta siano diverse, i flussi di ottenimento condividono una struttura e un processo simili. 
+
+Ottenimento dal Catalogo dell'Istanza del Wallet 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Di seguito, sono illustrati i requisiti dell'Esperienza Utente del flusso di ottenimento di un Attestato Elettronico di Attributi dal Catalogo che il Fornitore di Wallet DEVE garantire attraverso la propria Soluzione Wallet: 
 
 - l'Utente accede alla propria Istanza del Wallet utilizzando la modalità di sblocco precedentemente impostata; 
 - l'Utente seleziona l'Attestato Elettronico di Attributi che intende aggiungere alla sua Istanza del Wallet scegliendo tra quelli disponibili nel Catalogo; 
 - l'Utente prende visione dei dati del PID, qualora richiesti dalla Fonte Autentica per l'ottenimento dell'Attestato Elettronico di Attributi, il nome del relativo Fornitore di Attestati Elettronici di Attributi e di eventuali informative. L'Utente dà il proprio consenso per poter proseguire presentando i dati del PID o altri Attributi al Fornitore di Attestati Elettronici di Attributi oppure annulla l'operazione; 
+- l’Utente visualizza eventuali informazioni aggiuntive sui requisiti e/o limitazioni relative all’ottenimento dell’Attestato Elettronico di Attributi, provenienti dalla Fonte Autentica;  
 - l'Utente visualizza l'anteprima dell'Attestato Elettronico di Attributi. L'Utente conferma i dati mostrati in anteprima per procedere all'ottenimento oppure annulla l'operazione; 
 - l'Utente autorizza l'operazione utilizzando la modalità di sblocco precedentemente impostata; 
 - l'Utente visualizza l'esito positivo dell'ottenimento avvenuto; 
@@ -100,7 +106,29 @@ In caso di dati errati all'interno di un Attestato Elettronico di Attributi già
 
 In caso di errori nell'utilizzo della Istanza del Wallet, il Fornitore di Wallet DEVE garantire all'Utente la visualizzazione di messaggi coerenti che lo informino e guidino alla loro risoluzione. Per approfondimenti si rimanda alla sezione :ref:`functionalities:Gestione degli errori`. 
 
-Qualora una Fonte Autentica (o un Fornitore di Attestati Elettronici di Attributi qualora coincida con la Fonte Autentica) intendesse implementare un Pulsante di Ingaggio per permettere l'avvio del processo di ottenimento da un proprio Touchpoint, questo DEVE garantire il rispetto dei requisiti relativi all'aspetto grafico e alle modalità di implementazione del Pulsante di Ingaggio, descritti nella sezione :ref:`brand-identity:Brand Identity del Sistema IT-Wallet`. 
+Ottenimento dal Touchpoint della Fonte Autentica
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Di seguito sono illustrati i requisiti dell'Esperienza Utente del flusso di ottenimento di un Attestato Elettronico di Attributi dal Touchpoint della Fonte Autentica che questa DEVE garantire attraverso il proprio Touchpoint:  
+
+- L’Utente interagisce con il Pulsante di Ingaggio chiaramente esposto nell’interfaccia del Touchpoint; 
+- L’Utente seleziona la Soluzione Wallet con la quale procedere, attraverso un’interfaccia che DOVREBBE seguire le indicazioni e le funzionalità previste per la Selection Page descritta nella sezione :ref:functionalities:Autenticazione; 
+- (*solo cross-device*) L’Utente scansiona un QR code che invoca l’apertura dell’Istanza del Wallet prescelta, attraverso un’interfaccia che DOVREBBE seguire le indicazioni e le funzionalità previste per la QR code page descritta nella sezione :ref:functionalities:Autenticazione; 
+- (*solo cross-device*) L’Utente visualizza un messaggio di invito a continuare sulla propria Istanza del Wallet, attraverso un’interfaccia che DOVREBBE seguire le indicazioni e le funzionalità previste per la waiting page descritta nella sezione :ref:functionalities:Autenticazione; 
+- l'Utente accede alla propria Istanza del Wallet utilizzando la modalità di sblocco precedentemente impostata; 
+- l'Utente prende visione dei dati del PID, qualora richiesti dalla Fonte Autentica per l'ottenimento dell'Attestato Elettronico di Attributi, il nome del relativo Fornitore di Attestati Elettronici di Attributi e di eventuali informative. L'Utente dà il proprio consenso per poter proseguire presentando i dati del PID o altri Attributi al Fornitore di Attestati Elettronici di Attributi oppure annulla l'operazione;  
+
+- L’Utente visualizza eventuali informazioni aggiuntive sui requisiti e/o limitazioni relative all’ottenimento dell’Attestato Elettronico di Attributi, provenienti dalla Fonte Autentica;  
+
+- l'Utente visualizza l'anteprima dell'Attestato Elettronico di Attributi. L'Utente conferma i dati mostrati in anteprima per procedere all'ottenimento oppure annulla l'operazione;  
+
+- l'Utente autorizza l'operazione utilizzando la modalità di sblocco precedentemente impostata;  
+
+- l'Utente visualizza l'esito positivo dell'ottenimento avvenuto;  
+
+- l'Utente visualizza i dettagli dell'Attestato Elettronico di Attributi ottenuto ovvero: i dati in esso contenuti, il nome del Fornitore di Attestati Elettronici di Attributi che ha emesso l'Attestato Elettronico di Attributi e il nome della Fonte Autentica. 
+
+In caso di errori nell'ottenimento dell'Attestato Elettronico di Attributi, la Fonte Autentica DEVE garantire all'Utente la visualizzazione di messaggi coerenti che lo informino e guidino alla loro risoluzione. Per approfondimenti si rimanda alla sezione :ref:functionalities:Gestione degli errori. 
+
 
 Focus sugli Attestati Elettronici di Attributi
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -216,7 +244,7 @@ I Verificatori di Attestati Elettronici DOVREBBERO utilizzare le Risorse Ufficia
 I Verificatori di Attestati Elettronici, in ogni caso, DEVONO abilitare il processo di Autenticazione rendendo disponibili le seguenti pagine: 
 
 - **Discovery Page**: ha l'obiettivo di mostrare all'Utente tutti i metodi di Autenticazione disponibili; 
-- **selection page**: ha lo scopo di mostrare all’Utente tutte le Soluzioni Wallet presenti nel Registro e permettere di scegliere con quale continuare il processo di Autenticazione; 
+- **Selection Page**: ha lo scopo di mostrare all’Utente tutte le Soluzioni Wallet presenti nel Registro e permettere di scegliere con quale continuare il processo di Autenticazione; 
 - **QR code page** (*solo per modalità cross-device*): ha lo scopo di invitare l'Utente a inquadrare il codice QR; 
 - **waiting page** (*solo per modalità cross-device*): ha lo scopo di invitare l'Utente a continuare il processo di Autenticazione sulla propria Istanza del Wallet; 
 - **thank you page**: ha lo scopo di comunicare all'Utente l'avvenuta Autenticazione; 
@@ -262,27 +290,27 @@ Nel caso l'Utente stia navigando la pagina del Verificatore di Attestati Elettro
 
 Nel caso in cui invece l'Utente stia navigando la pagina del Verificatore di Attestati Elettronici dallo stesso Touchpoint su cui ha attivato l'Istanza del Wallet (modalità same-device) tale pagina DEVE condurre l'Utente all'apertura della propria Istanza del Wallet. 
 
-**Selection page** 
+**Selection Page** 
 
-La selection page è la pagina su cui atterra l'Utente dopo che ha scelto di Autenticarsi tramite il Sistema IT-Wallet, e ha lo scopo di presentare all'Utente le Soluzioni Wallet disponibili per effettuare l’Autenticazione.  
+La Selection Page è la pagina su cui atterra l'Utente dopo che ha scelto di Autenticarsi tramite il Sistema IT-Wallet, e ha lo scopo di presentare all'Utente le Soluzioni Wallet disponibili per effettuare l’Autenticazione.  
 
-Il Verificatore di Attestati Elettronici DOVREBBE implementare la selection page resa disponibile nelle Risorse Ufficiali.
+Il Verificatore di Attestati Elettronici DOVREBBE implementare la Selection Page resa disponibile nelle Risorse Ufficiali.
 
 .. only:: format_html 
 
   .. figure:: ./images/svg/selection-page.svg
-    :alt: Selection page
+    :alt: Selection Page
     :width: 100%
 
-     Selection page 
+     Selection Page 
 
 .. only:: format_latex  
 
   .. figure:: ./images/svg/selection-page.pdf
-    :alt: Selection page
+    :alt: Selection Page
     :width: 100%
 
-     Selection page 
+     Selection Page 
 
 In ogni caso, il Verificatore di Attestati Elettronici che implementa la pagina: 
 
