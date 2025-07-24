@@ -149,9 +149,9 @@ The Electronic Attestation of Attributes Provider:
 Presentation of Electronic Attestations
 ---------------------------------------
 
-The presentation process allows the User to access a service or demonstrate ownership of certain data or their eligibility to perform a specific action. The presentation of Electronic Attestations and their subsequent verification involves interaction between two parties: the User and the Relying Party. This can take place in two main ways, depending on the circumstances and context of the interaction:
+The presentation process allows the User to access a service or demonstrate ownership of certain data or their eligibility to perform a specific action. The presentation of Electronic Attestations and their subsequent verification involves interaction between the Wallet Instance, managed by the User, and a Relying Party Instance. Depending on the circumstances and context of the interaction, the following scenarios can be outlined: 
 
-- **Proximity Presentation**: the User presents the PID and/or EAA data through the Wallet Instance, directly to a Verifier or to a Relying Party's device designated for in-person verification.
+- **Proximity Presentation**: the User presents the PID and/or EAA data through the Wallet Instance, directly to a Verifier or to a device designated for in-person verification.
 
 - **Remote Presentation**: the User presents the PID and/or EAA data through the Wallet Instance, to a Relying Party configured for online verification, for instance, to Authenticate and access the services offered.
 
@@ -160,9 +160,9 @@ Proximity Presentation
 
 Proximity presentation allows the User to present the PID and/or EAA data via their Wallet Instance, using one of two methods:
 
-- **Supervised mode**: the User presents the PID and/or EAA data through the Wallet Instance to a Verifier equipped with a dedicated verification app or system (e.g., law enforcement officer, pharmacist).
+- **Supervised mode**: the User presents the PID and/or EAA data through the Wallet Instance to a Verifier (e.g., law enforcement officer, desk operator) equipped with a dedicated verification system (:ref:relying-party-instance:Mobile Relying Party Instance). 
 
-- **Unsupervised mode**: the User presents the PID and/or EAA data through the Wallet Instance to a designated device (e.g., turnstile, ATM).
+- **Unsupervised mode**: the User presents the PID and/or EAA data through the Wallet Instance to a designated device (e.g., turnstile, totem) provided with a dedicated verification system (Embedded Relying Party Instance).
 
 Below are the User Experience requirements related to both methods that the Wallet Provider MUST guarantee via their Wallet Solution.
 
@@ -195,8 +195,8 @@ Remote presentation allows the User to present the PID and/or EAA data by intera
 
 This presentation can occur in two different modes, depending on the type of device used to access the service:
 
-- **Same-device mode**: when the User accesses an online digital service using the same device on which the Wallet Instance is installed;
-- **Cross-device mode**: when the User accesses a digital service using a different device from the one where the Wallet Instance is installed.
+- **Same-device mode**: when the User accesses an online digital service integrated with a special verification system (:ref:relying-party-instance:Web Relying Party Instance) using the same device on which the Wallet Instance is installed;
+- **Cross-device mode**: when the User accesses a digital service integrated with a special verification system (:ref:relying-party-instance:Web Relying Party Instance) using a different device from the one where the Wallet Instance is installed.
 
 Below are the User Experience requirements related to both methods that the Wallet Provider MUST guarantee via their Wallet Solution.
 
