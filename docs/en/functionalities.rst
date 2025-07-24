@@ -74,15 +74,21 @@ Once activation is complete, the User MAY obtain one or more Electronic Attestat
 
 Depending on the User's specific needs, the type of Electronic Attestation of Attributes, and the offerings available from the Wallet Provider, the Electronic Attestation of Attributes Provider, and the Authentic Source, the request of Electronic Attestations of Attributes can occur in two ways:
 
-- **from the Wallet Instance Catalog**: the User explores the list of Electronic Attestations of Attributes provided by the Wallet Solution, selects the one of interest, and initiates the request process, concluding with the issuance of the Electronic Attestation of Attributes in the Wallet Instance (see :ref:`registry-catalogue:Digital Credentials Catalogue`); .
+- **from the Wallet Instance Catalog**: the User explores the list of Electronic Attestations of Attributes provided by the Wallet Solution, selects the one of interest, and initiates the request process, concluding with the issuance of the Electronic Attestation of Attributes in the Wallet Instance;
 
-- **from a Touchpoint of the Authentic Source** (or the Electronic Attestation of Attributes Provider if it coincides with the Authentic Source): the User interacts with the digital service of the Authentic Source, allowing them to get a specific Electronic Attestation of Attributes in their Wallet Instance via an Engagement Button (see :ref:`registry-catalogue:Digital Credentials Catalogue`).
+- **from a Touchpoint of the Authentic Source** (or the Electronic Attestation of Attributes Provider if it coincides with the Authentic Source): the User interacts with the digital service of the Authentic Source, allowing them to get a specific Electronic Attestation of Attributes in their Wallet Instance via an Engagement Button.
 
-Although the methods for initiating the request are different, the issuance flows share a similar structure and process. Below are illustrated the User Experience requirements for the issuance of an Electronic Attribute Attestation from the Catalog that the Wallet Solution Provider MUST guarantee through their own Wallet Solution:
+Although the methods for initiating the request are different, the issuance flows share a similar structure and process. 
+
+Issuance from the Wallet Instance Catalog
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Below are illustrated the User Experience requirements for the issuance of an Electronic Attribute Attestation from the Catalog that the Wallet Solution Provider MUST guarantee through their own Wallet Solution:
 
 - The User accesses their Wallet Instance using the unlock method previously set;
 - The User selects the Electronic Attestation of Attributes they wish to request from the available options in the Catalog;
 - The User views the PID data, if required by the Authentic Source for the request of the Electronic Attestation of Attributes, the name of the related Electronic Attestation of Attributes Provider, and any related information policy. The User gives their consent to proceed, presenting their PID data to the Electronic Attestation of Attributes Provider, or cancels the operation;
+- The User views any additional information on requirements and/or limitations related to obtaining the Electronic Attestation of Attributes from the Authentic Source;
 - The User views a preview of the Electronic Attestation of Attributes. The User confirms the data shown in the preview to proceed with the request or cancels the operation;
 - The User authorizes the operation using the unlock method previously set;
 - The User views the positive outcome of the request;
@@ -100,7 +106,24 @@ If the User encounters incorrect data in an already obtained or in-progress Elec
 
 In case of errors using the Wallet Instance, the Wallet Provider MUST guarantee that the User receives consistent messages that inform them and guide them toward resolving the issue. For further details, please refer to the :ref:`functionalities:Error Management` section.
 
-If an Authentic Source (or an Electronic Attestation of Attributes Provider, should it coincide with the Authentic Source) intends to implement an Engagement Button to initiate the request process from their Touchpoint, they MUST ensure compliance with the graphical appearance and implementation requirements for the Engagement Button, as outlined in the :ref:`brand-identity:Brand Identity` section.
+Issuance from a Touchpoint of the Authentic Source 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Below are illustrated the User Experience requirements for the issuance of an Electronic Attribute Attestation from the Catalog that the Wallet Solution Provider MUST guarantee through their own Wallet Solution: 
+
+- The User interacts with the Engagement Button clearly displayed in the Touchpoint interface; 
+- The User selects the Wallet Solution with which to proceed, through an interface that SHOULD follow the directions and functionalities described for the *Selection Page* in the :ref:functionalities:Authentication section; 
+- (*cross-device only*) the User scan a QR code that invokes the opening of their chosen Wallet Instance, through an interface that SHOULD follow the directions and functionalities described for the *QR code page* in the :ref:functionalities:Authentication section; 
+- (*cross-device only*) the User displays a message inviting them to continue on their chosen Wallet Instance, through an interface that SHOULD follow the directions and functionalities described for the *waiting page* in the :ref:functionalities:Authentication section; 
+- The User accesses their Wallet Instance using the unlock method previously set; 
+- The User views the PID data, if required by the Authentic Source for the request of the Electronic Attestation of Attributes, the name of the related Electronic Attestation of Attributes Provider, and any related information policy. The User gives their consent to proceed, presenting their PID data to the Electronic Attestation of Attributes Provider, or cancels the operation; 
+- The User views any additional information on requirements and/or limitations related to obtaining the Electronic Attestation of Attributes from the Authentic Source; 
+- The User views a preview of the Electronic Attestation of Attributes. The User confirms the data shown in the preview to proceed with the request or cancels the operation; 
+- The User authorizes the operation using the unlock method previously set; 
+- The User views the positive outcome of the request; 
+- The User views the details of the requested Electronic Attestation of Attributes, including: the data contained in it, the name of the Electronic Attestation of Attributes Provider who issued the Attestation, and the name of the Authentic Source. 
+
+In case of errors during the issuance of the Electronic Attestation of Attributes, the Authentic Source MUST guarantee that the User receives consistent messages that inform them and guide them toward resolving the issue. For further details, please refer to the :ref:functionalities:Error Management section. 
+
 
 Focus on Electronic Attestations of Attributes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -216,7 +239,7 @@ Relying Parties SHOULD use the Official Resources for design (see IT-Wallet Auth
 Relying Parties MUST implement and provide the following pages as part of the Authentication process:
 
 - **Discovery Page**: lists all the available Authentication methods;
-- **selection page**: shows the User all the Wallet Solutions available in the Register and let them choose which one to continue the Authentication process with; 
+- **Selection Page**: shows the User all the Wallet Solutions available in the Register and let them choose which one to continue the Authentication process with; 
 - **QR Code page** (*cross-device only*): prompts the User to scan a QR code;
 - **waiting page** (*cross-device only*): instructs the User to continue the Authentication process on their Wallet Instance;
 - **thank you page**: confirms the successful Authentication;
@@ -261,27 +284,27 @@ If the User accesses the Discovery Page from a different Touchpoint than the one
 
 If the User accesses the Discovery Page from the same Touchpoint where the Wallet Instance is activated (same-device), the selection MUST trigger the opening of the User's Wallet Instance.
 
-**Selection page**
+**Selection Page**
 
-The selection page is the page on which the User lands after they have chosen to Authenticate via the IT-Wallet System, and is intended to present the User with the Wallet Solutions available to perform Authentication. 
+The Selection Page is the page on which the User lands after they have chosen to Authenticate via the IT-Wallet System, and is intended to present the User with the Wallet Solutions available to perform Authentication. 
 
-The Relying Party SHOULD implement the selection page made available in Official Resources. 
+The Relying Party SHOULD implement the Selection Page made available in Official Resources. 
 
 .. only:: format_html 
 
   .. figure:: ./images/svg/selection-page.svg
-    :alt: Selection page
+    :alt: Selection Page
     :width: 100%
 
-     Selection page 
+     Selection Page 
 
 .. only:: format_latex  
 
   .. figure:: ./images/svg/selection-page.pdf
-    :alt: Selection page
+    :alt: Selection Page
     :width: 100%
 
-     Selection page 
+     Selection Page 
 
 In any case, the Relying Party implementing the page: 
 
