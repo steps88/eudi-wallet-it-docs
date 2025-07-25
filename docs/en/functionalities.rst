@@ -1,8 +1,16 @@
 .. include:: ../common/common_definitions.rst
 
+User Experience Design
+======================
 
-Functionalities
-===============
+.. toctree::
+  :caption: Index of User Experience Design
+  :maxdepth: 3 
+
+.. include:: design.rst 
+
+Functionalities overview
+------------------------
 
 The IT-Wallet System provides Users with a simpler, faster, and more secure way to access services. This service is delivered through the use of a Wallet Solution, whose User Experience is structured into three main phases: pre-use, use, and post-use.
 
