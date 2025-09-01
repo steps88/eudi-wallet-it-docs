@@ -76,6 +76,11 @@
                 "ES384",
                 "ES512"
             ],
+            "dpop_signing_alg_values_supported": [
+                "ES256",
+                "ES384",
+                "ES512"
+            ],
             "jwks": {
                 "keys": [
                     {
