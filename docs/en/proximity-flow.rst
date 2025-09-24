@@ -33,75 +33,64 @@ Relying Party and Wallet Instances registered in the IT-Wallet ecosystem MUST su
 - *Wallet Instance validation* through the Wallet Attestation.
 
 The following table shows the supported Device Engagement technologies, specifying which are mandatory.
+
 .. list-table::
    :class: longtable
    :widths: 20 15 15 25 25
    :header-rows: 2
 
-   * - **Transmission Technologies**
-     - **Wallet Instance**
-     - **RP Instance**
-     - **Wallet Instance**
-     - **RP Instance**
-
+   * - **Transmission technology**
+     - **ISO 18013-5**
+     - **ISO 18013-5**
+     - **IT Wallet**
+     - **IT Wallet**
    * -
-     - **`ISO18013-5`_**
-     - **`ISO18013-5`_**
-     - **IT Wallet**
-     - **IT Wallet**
-
+     - **Wallet Instance**
+     - **RP Instance**
+     - **Wallet Instance**
+     - **RP Instance**
    * - **QR code**
-     - Ca
+     - C\ :sup:`a`
      - M
      - MUST
      - C – MUST if the device is equipped with a camera or QR code reader and BLE.
-
    * - **NFC**
-     - Ca
+     - C\ :sup:`a`
      - M
      - RECOMMENDED
      - C – MUST if the device is equipped with an NFC reader.
 
-   * - **Key**
-     - C – Conditional
-     - M – Mandatory
-     - a – Support for at least one of these methods is mandatory
+Key: C = Conditional | M = Mandatory | :sup:`a`\ Support for at least one of these methods is mandatory
 
 The following table shows the supported Device Retrieval technologies, specifying which are mandatory.
+
 .. list-table::
-   :class: longtable
-   :widths: 20 15 15 25 25
    :header-rows: 2
+   :widths: 20 15 15 25 25
+   :class: longtable
 
-   * - **Transmission Technologies**
+   * - **Transmission technology**
+     - **ISO 18013-5**
+     - **ISO 18013-5**
+     - **IT Wallet**
+     - **IT Wallet**
+   * - 
      - **Wallet Instance**
      - **RP Instance**
      - **Wallet Instance**
      - **RP Instance**
-
-   * -
-     - **`ISO18013-5`_**
-     - **`ISO18013-5`_**
-     - **IT Wallet**
-     - **IT Wallet**
-
    * - **BLE**
-     - Ca
+     - C\ :sup:`a`
      - M
      - MUST
      - C – MUST if the device is equipped with a camera or QR code reader and BLE.
-
    * - **NFC**
-     - Ca
+     - C\ :sup:`a`
      - M
      - RECOMMENDED
      - C – MUST if the device is equipped with an NFC reader.
-
-   * - **Key**
-     - C – Conditional
-     - M – Mandatory
-     - a – Support for at least one of these methods is mandatory
-
+ 
+Key: C = Conditional | M = Mandatory | :sup:`a`\ Support for at least one of these methods is mandatory
 
 .. note::
    From the second edition, version 3, `ISO18013-5`_ does not define or support Server Retrieval as a transport option. Only proximity retrieval methods (NFC, BLE, and optionally Wi-Fi Aware) are specified. Therefore, Server Retrieval is not considered in this flow.
