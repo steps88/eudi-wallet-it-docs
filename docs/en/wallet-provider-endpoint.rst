@@ -460,7 +460,7 @@ Below is a non-normative example of the mdoc Wallet Attestation in CBOR diagnost
 .. note:: 
   Regardless of the fact that ``sub``, ``aal``, ``wallet_link`` and ``wallet_name`` are disclosable in the domestic namespace, these values MUST NOT be shown to the User, as they are not a User attribute.
 
-e-Service PDND Wallet Provider Catalogue
+e-Service PDND Wallet Provider Catalog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 User's death leads to the revocation of the Wallet Instances of the User and the deletion of the User account at the Wallet Provider. For this reason, the Wallet Provider provides the following e-service through PDND.

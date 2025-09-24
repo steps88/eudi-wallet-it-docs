@@ -96,13 +96,13 @@ Depending on the User's specific needs, the type of Electronic Attestation of At
 
 Although the methods for initiating the request are different, the issuance flows share a similar structure and process. 
 
-Issuance from the Wallet Instance Catalogue
+Issuance from the Wallet Instance Catalog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Below are illustrated the User Experience requirements for the issuance of an Electronic Attribute Attestation from the Catalogue that the Wallet Solution Provider MUST guarantee through their own Wallet Solution:
+Below are illustrated the User Experience requirements for the issuance of an Electronic Attribute Attestation from the Catalog that the Wallet Solution Provider MUST guarantee through their own Wallet Solution:
 
 - The User accesses their Wallet Instance using the unlock method previously set;
-- The User selects the Electronic Attestation of Attributes they wish to request from the available options in the Catalogue;
+- The User selects the Electronic Attestation of Attributes they wish to request from the available options in the Catalog;
 - The User selects from which Electronic Attestation Provider they want to obtain the Electronic Attribute Attestation, if there is more than one; 
 - The User views any additional information on requirements and/or limitations related to obtaining the Electronic Attestation of Attributes from the Authentic Source; 
 - The User views the PID data, if required by the Authentic Source for the request of the Electronic Attestation of Attributes, the name of the related Electronic Attestation of Attributes Provider, and any related information policy. The User gives their consent to proceed, presenting their PID data to the Electronic Attestation of Attributes Provider, or cancels the operation;
@@ -144,7 +144,7 @@ In case of errors using the Wallet Instance, the Wallet Provider MUST guarantee 
 
 Issuance from a Touchpoint of the Authentic Source 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Below are illustrated the User Experience requirements for the issuance of an Electronic Attribute Attestation from the Catalogue that the Wallet Solution Provider MUST guarantee through their own Wallet Solution: 
+Below are illustrated the User Experience requirements for the issuance of an Electronic Attribute Attestation from the Catalog that the Wallet Solution Provider MUST guarantee through their own Wallet Solution: 
 
 - The User interacts with the Engagement Button clearly displayed in the Touchpoint interface; 
 - The User selects the Wallet Solution with which to proceed, through an interface that SHOULD follow the directions and functionalities described for the *Selection Page* in the :ref:`functionalities:Authentication section`; 

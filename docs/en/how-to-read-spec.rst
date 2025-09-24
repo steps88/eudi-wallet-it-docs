@@ -27,7 +27,7 @@ The specification is organized into the following major sections:
   Comprehensive implementation requirements for each ecosystem participant: Wallet Solutions, Credential Issuers, Relying Parties, and Authentic Sources, including their components, interaction patterns, and configuration requirements.
 
 **Section** :ref:`digital-credential-management:Digital Credential Management`: 
-  Covers Digital Credential data models and formats, lifecycle management, validity verification, and the Credentials catalogue structure.
+  Covers Digital Credential data models and formats, lifecycle management, validity verification, and the Credentials Catalog structure.
 
 **Section** :ref:`digital-credential-flows:Digital Credential Flows`:
   Detailed implementation guidance for Digital Credential issuance and presentation workflows, including both remote and proximity interaction flows.
@@ -106,7 +106,7 @@ If the reader wants to operate an **Authentic Source**, the focus should be on s
 
 * **Section** :ref:`functionalities:User Experience Design`: High-level functional requirements supporting the User Experience across all stages of interaction between the User and the service. 
 * **Section** :ref:`authentic-sources:Authentic Sources`: Requirements and integration patterns with Credential Issuers.
-* **Section** :ref:`authentic-source-endpoint:Authentic Source Endpoints`: API specifications and catalogue integration.
+* **Section** :ref:`authentic-source-endpoint:Authentic Source Endpoints`: API specifications and catalog integration.
 * **Section** :ref:`algorithms:Cryptographic Algorithms`: Data integrity, authentication, and security requirements.
 * **Section** :ref:`e-service-pdnd:e-Service PDND`: PDND integration and interoperability requirements.
 

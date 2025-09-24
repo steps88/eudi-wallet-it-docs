@@ -679,7 +679,7 @@ The following **elementIdentifiers** MUST be included in a Digital Credential en
      -
 
 .. note::
-  Digital Credential User-specific attributes are defined in the Catalogue of Digital Credentials.
+  Digital Credential User-specific attributes are defined in the Catalog of Digital Credentials.
   User-specific attributes for mdoc Digital Credentials such as those used in mDL or PID are also included by referencing the appropriate `elementIdentifiers` defined in ISO/IEC 18013-5 or the `EIDAS-ARF`_ specification.
 
 .. note:: 

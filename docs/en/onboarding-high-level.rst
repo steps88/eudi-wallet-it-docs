@@ -166,7 +166,7 @@ The IT-Wallet Registry system coordinates all registrations through five main co
 
 The following journey maps illustrate two distinct credential scenarios:
 
-    - **Public Catalog Scenario**: Mobile Driving License (mDL) provided for a public discovery via Credential Catalogue.
+    - **Public Catalog Scenario**: Mobile Driving License (mDL) provided for a public discovery via Credential Catalog.
     - **Private Credential Scenario**: Corporate Employee Badge from Company (Privite AS, and therefore provided for discovery via Credential Offer only).
 
 Authentic Source Operator Journey
@@ -201,7 +201,7 @@ Critical phases include administrative verification by the Supervisory Body (whi
 
 .. warning::
 
-    **Important dependency**: Declared claims in AS Registry remain unavailable to end users until a Credential Issuer completes registration, integration approval, and technical implementation. Catalogue publication depends on supervisory body policies for public discovery eligibility.
+    **Important dependency**: Declared claims in AS Registry remain unavailable to end users until a Credential Issuer completes registration, integration approval, and technical implementation. Catalog publication depends on supervisory body policies for public discovery eligibility.
 
 Credential Issuer Operator Journey  
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -220,8 +220,8 @@ Credential Issuer operators start by discovering available Authentic Source enti
     - **AS Discovery**: Identifies the Authentic Source providing mDL attributes in AS Registry with required driving license claims.
     - **Integration Request**: Automatic approval due to regulatory mandate. 
     - **Technical Setup**: PDND e-service integration following government standards
-    - **Catalog Publication**: mDL automatically published in the Credential Catalogue.
-    - **User Access**: Citizens discover mDL through public catalogue in Wallet.
+    - **Catalog Publication**: mDL automatically published in the Credential Catalog.
+    - **User Access**: Citizens discover mDL through public catalog in Wallet.
 
 **Example - CI for Employee Badge (Private Scenario)**:
 

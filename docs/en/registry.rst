@@ -68,7 +68,7 @@ JWT payload structure (when decoded):
       "endpoints": {
         "claims_registry": "https://trust-anchor.eid-wallet.example.it/api/v1/claims",
         "authentic_sources": "https://trust-anchor.eid-wallet.example.it/api/v1/authentic-sources",
-        "credential_catalogue": "https://trust-anchor.eid-wallet.example.it/api/v1/credential-catalogue",
+        "credential_catalog": "https://trust-anchor.eid-wallet.example.it/api/v1/credential-catalog",
         "taxonomy": "https://trust-anchor.eid-wallet.example.it/api/v1/taxonomy",
         "federation_list": "https://trust-anchor.eid-wallet.example.it/list",
         "federation_fetch": "https://trust-anchor.eid-wallet.example.it/fetch",
@@ -119,7 +119,7 @@ Each claim MUST specify domains and categories to enable both **Credential-Speci
 This approach allows:
 
   - **Policy-based authorization** for credential-agnostic requests using domain/category mappings.
-  - **Implicit credential categorization** for private credentials not published in public catalogue.
+  - **Implicit credential categorization** for private credentials not published in public.
   - **Flexible RP registration** supporting both government compliance needs and business operational requirements.
 
 
@@ -406,7 +406,7 @@ Digital Credentials Catalog
 
 The Digital Credentials Catalog is the registry of all available Digital Credentials recognized within the IT-Wallet ecosystem. It is published by the Trust Anchor and publicly available by all Entities through a specialized Federation endpoint. It acts as a single reference point for all actors involved in the process of issuing, verifying and using Digital Credentials.
 
-The Digital Credential Catalogue aims to:
+The Digital Credential Catalog aims to:
 
   1. Facilitate Digital Credential discovery for Users.
   2. Standardize the technical and functional description of Digital Credentials.
@@ -416,33 +416,33 @@ The Digital Credential Catalogue aims to:
   6. Provide transparency on the ecosystem of available Digital Credentials.
 
 
-The main Entities involved in the Digital Credential Catalogue are:
+The main Entities involved in the Digital Credential Catalog are:
 
-  - **Trust Anchor**: It manages and maintains the Digital Credential Catalogue, guaranteeing its authenticity and integrity.
-  - **Supervisory Body**: It interacts with the Trust Anchor and the Digital Credential Catalogue to monitor the registration phase ensuring security and privacy according to national/European regulations, keeping all the information reliable and updated.
-  - **Digital Credential Issuers**: The entities authorized to issue Digital Credentials, registering them in the Catalogue.
-  - **Relying Parties**: They use the Digital Credential Catalogue to gather all the information needed about the Digital Credentials they intend to request during the presentation phase.
-  - **Wallet Providers**: They access the Digital Credential Catalogue to identify the available Digital Credentials and to retrieve all necessary information for integrating them into their Wallet Solutions.
+  - **Trust Anchor**: It manages and maintains the Digital Credential Catalog, guaranteeing its authenticity and integrity.
+  - **Supervisory Body**: It interacts with the Trust Anchor and the Digital Credential Catalog to monitor the registration phase ensuring security and privacy according to national/European regulations, keeping all the information reliable and updated.
+  - **Digital Credential Issuers**: The entities authorized to issue Digital Credentials, registering them in the Catalog.
+  - **Relying Parties**: They use the Digital Credential Catalog to gather all the information needed about the Digital Credentials they intend to request during the presentation phase.
+  - **Wallet Providers**: They access the Digital Credential Catalog to identify the available Digital Credentials and to retrieve all necessary information for integrating them into their Wallet Solutions.
   - **Users**: The Users who indirectly use the Digital Credentials Catalog through their Wallet Instances to discover and request Digital Credentials.
-  - **Authentic Sources**: The Entities that hold the original data that is attested in the Digital Credentials. They provide support to Issuers in registering the Digital Credentials in the Catalogue.
+  - **Authentic Sources**: The Entities that hold the original data that is attested in the Digital Credentials. They provide support to Issuers in registering the Digital Credentials in the Catalog.
 
 
-.. _fig_catalogue.svg:
-.. plantuml:: plantuml/credential-catalogue-entities.puml
+.. _fig_catalog.svg:
+.. plantuml:: plantuml/credential-catalog-entities.puml
     :width: 99%
     :alt: The figure illustrates the Digital Credential Entities.
-    :caption: `Entity-Relationship diagram of Digital Credential Catalogue. <https://www.plantuml.com/plantuml/svg/ZLJ1Rkis4BpxAxP6WQP00X-QtjeWgPEsFXGmuXGz6ZIvbeb8fCfTEbM__YrDELAUb6ST34khuSnmESjxOXKuLYKysiAoAc4PqA1ZcnwL57mH4Pwam1Pfzfrrkem6uPVbxM9vkrtwglPEy7UpsG_mY7lh43RhvzNBqwO7vbWh4tvQQ5zLtjsDVDbxnpVg3SbNUFFpGcDWkxTQCKv06p6wKpG5MdhzEW4M2GDDyUcBAJ1XEsAO07p5PgAx2J1hjbe5Cm69_-c3SWLkLSbJ-etqohwUW7nJPOaNAHVM4LkER5CuPhFtL5tfSmIlOJvCA7KHdGlW6GjB79hql1H4471eQ-3t85v07PKjrQv46A6JXTzJ7IpZh_DpfkO_Yg4r1lBkAlLTkF-MlvE6PVi_EeAtWmTZINivP53EYEg_4OalQIG-uU-soo4IFpXzy4dd9Rr1VarwwVUNSgf0EgbKoZgM7m4Vy9i3t1ULY8dcfY76wefYBT6qv4FpcpUD26ow2gJIITGxopxGkPig7HJK1qK8w2W6wmeWrFB0pScQQ1sLRlgwlP7kz2rHn42Zfmkh_34vU8WiJP1k6y3sBf9DAuP4SF4isq7eP0EMZNXUgv2OKdHo0ThAF9_ogQ_l4GJsK2Wf1R1kxqELsw1sFZBeSUN-O7NoUIhMmH-joRl_vrI1jjJkMMia6dgmZh48Yh4lcgeUCl471xdKQIlfP5gZDpu64KX2vnAqjQJ-foyD-22DTTBOD0sWc54uZ6XTx7Wtq6c0fBqVijrjg8lqTPVd7A6uAoqTiflVHQMD7JfJUm4Ahz0E4_nnXbQEPQ5c6LBBX_4rVJkVXZtuT1gPe8jjVs6-VZ2CzGQiQvSE-tyc6pSxo6fVyezFuZXc8TCDizVnTP7pO4_BzatlmjG3hdmV3XZJw12qaLuvOkKqGfq11dPDNhvzR0dw3bREs82Qo-RzHgN-bKfVsRYNECIg_080>`_
+    :caption: `Entity-Relationship diagram of Digital Credential Catalog. <https://www.plantuml.com/plantuml/svg/ZLJ1Rkis4BpxAxP6WQP00X-QtjeWgPEsFXGmuXGz6ZIvbeb8fCfTEbM__YrDELAUb6ST34khuSnmESjxOXKuLYKysiAoAc4PqA1ZcnwL57mH4Pwam1Pfzfrrkem6uPVbxM9vkrtwglPEy7UpsG_mY7lh43RhvzNBqwO7vbWh4tvQQ5zLtjsDVDbxnpVg3SbNUFFpGcDWkxTQCKv06p6wKpG5MdhzEW4M2GDDyUcBAJ1XEsAO07p5PgAx2J1hjbe5Cm69_-c3SWLkLSbJ-etqohwUW7nJPOaNAHVM4LkER5CuPhFtL5tfSmIlOJvCA7KHdGlW6GjB79hql1H4471eQ-3t85v07PKjrQv46A6JXTzJ7IpZh_DpfkO_Yg4r1lBkAlLTkF-MlvE6PVi_EeAtWmTZINivP53EYEg_4OalQIG-uU-soo4IFpXzy4dd9Rr1VarwwVUNSgf0EgbKoZgM7m4Vy9i3t1ULY8dcfY76wefYBT6qv4FpcpUD26ow2gJIITGxopxGkPig7HJK1qK8w2W6wmeWrFB0pScQQ1sLRlgwlP7kz2rHn42Zfmkh_34vU8WiJP1k6y3sBf9DAuP4SF4isq7eP0EMZNXUgv2OKdHo0ThAF9_ogQ_l4GJsK2Wf1R1kxqELsw1sFZBeSUN-O7NoUIhMmH-joRl_vrI1jjJkMMia6dgmZh48Yh4lcgeUCl471xdKQIlfP5gZDpu64KX2vnAqjQJ-foyD-22DTTBOD0sWc54uZ6XTx7Wtq6c0fBqVijrjg8lqTPVd7A6uAoqTiflVHQMD7JfJUm4Ahz0E4_nnXbQEPQ5c6LBBX_4rVJkVXZtuT1gPe8jjVs6-VZ2CzGQiQvSE-tyc6pSxo6fVyezFuZXc8TCDizVnTP7pO4_BzatlmjG3hdmV3XZJw12qaLuvOkKqGfq11dPDNhvzR0dw3bREs82Qo-RzHgN-bKfVsRYNECIg_080>`_
 
 
-.. .. figure:: ../../images/catalogue.svg
+.. .. figure:: ../../images/catalog.svg
 ..     :figwidth: 100%
 ..     :align: center
 ..     :target: https://www.plantuml.com/plantuml/svg/ZLHDZnit3BtxLp16WMw1E3wqlHGeaDJR3mD9Qwopw751I_HOM8qq5JdhJdzzAMkyCnixs3aOy53aUq_aezwpO9AszhCtBXZVMeA3ICC_BPS9Z-yg9uTsrp8b4uDGa7Scril6OyWr2nRhtMwv-c6noQ7xJn-NDR9Gqj33AjPD3BccoVYpR-6MzYuGR3Ttwy-_RcTlRFbUh_xwy_xkumHYQHkqwVj1WDFJnLup5jma9yGz_t2R7dofvNKCHSh5uGa1ZyInfiMFIqD9tDuP59fMO55mXpmnsqVpE2qptvydQexLn4p5VA8qBVUHkkbAfsKw-s0msMd9zAyvOAZe0RrC70NneyHcMl8HlQSfm4iNM9oquiuUcisU_NrZKD37ggMtCBzrbTClM2MoUkRGCwpEvtDDkAFAiQGk_rzfHjBarCSWxa4b0JwXyxZp15VWjF2RulQVvsVZpRzJGHjA7CDD7eLYtpEb4uSJzny5XkCXWdLieauVC5Xb_QSbbjSuCfxY3zULrB9y2EOGCy_d_0NbC_FbtoSCM16VM6fqGVJ788ThzncwCoPLuoddjcEX-eRRHZthEARkbsWx9TWE4SYX4saCJcBYSpSn3mkQ0p811MwJ2nKm6VqZtKcQSZsXwSQyezKV-1rpIuclJXVMvJ0h-D2ADa6xRI4VYgDyQHJ80A_Eib-CWJQHxrJp1bD6ojOf0UWZypBbKr-VBGWIeK8D9N1X7rDTse2xs0gOwypZBHleot9iKdnojjp-xrC4-b1_PsE8-LA32q9LGg4nQOv6AC0l59JGm8tQoLnZjh5DIf29pY7eOvdzZ-WjnAID3UWXRmEW22c6LQvNEpuiTLuWRUyBRmyN6YpzTl1piL2xyuuFHSrlojBRZe9jeYOghi9UElZb3gs3QA4HXgEJm_MQiPolcZt5F8q2CDXsN5YU7qhNUWCkzAMN_J-3NHTxuTKnvUzVi-CL2GNkqdi3tc2v2EvKjkz63wQvm2hluGLYNXs6tjBhm8B143GbmSAkA-KFjpt0MC4wM9V8YE-UNrGUFwdyXOpt56nR-_y1
 
 
-The following table summarizes the main information that MUST be provided by the Digital Credential Catalogue:
+The following table summarizes the main information that MUST be provided by the Digital Credential Catalog:
 
-.. list-table:: Digital Credential Catalogue - Main information
+.. list-table:: Digital Credential Catalog - Main information
    :class: longtable
    :widths: 30 70
    :header-rows: 1
@@ -484,7 +484,7 @@ The following table summarizes the main information that MUST be provided by the
        - **Structured taxonomy references**: Classification systems and controlled vocabularies used.
 
 
-The Trust Anchor MUST publish and keep up to date all the information at the Digital Credential Catalogue `.well-known` endpoint ensuring data reliability, authenticity and integrity. In particular, the Digital Credential Catalogue, claims and taxonomy MUST be available through the ``.well-known/credential-catalogue`` endpoint.
+The Trust Anchor MUST publish and keep up to date all the information at the Digital Credential Catalog `.well-known` endpoint ensuring data reliability, authenticity and integrity. In particular, the Digital Credential Catalog, claims and taxonomy MUST be available through the ``.well-known/credential-catalog`` endpoint.
 
 Digital Credentials Categories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -544,7 +544,7 @@ Digital Credentials Catalog Structure
 
 Digital Credentials Catalog contents is secured in a JWS that contains the following JOSE header parameters:
 
-.. _table_catalogue_parameters:
+.. _table_catalog_parameters:
 .. list-table::
    :class: longtable
    :header-rows: 1
@@ -579,11 +579,11 @@ The JWS payload contains the following parameters:
    * - Field Name
      - Description
    * - **catalog_version**
-     - REQUIRED. Version of the Digital Credential Catalogue format.
+     - REQUIRED. Version of the Digital Credential Catalog format.
    * - **iss**
-     - REQUIRED. Issuer identifier of the Digital Credential Catalogue.
+     - REQUIRED. Issuer identifier of the Digital Credential Catalog.
    * - **last_modified**
-     - REQUIRED. Timestamp of the last modification to the Digital Credential Catalogue.
+     - REQUIRED. Timestamp of the last modification to the Digital Credential Catalog.
    * - **credentials**
      - REQUIRED. Array containing Digital Credential definitions.
    * - **wallet_attestation**
@@ -718,16 +718,16 @@ The ``wallet_attestation`` Object contains at least the following information:
 
 The corresponding example of Digital Credentials Catalog as decoded in JSON for both header and payload is the following:
 
-.. literalinclude:: ../../examples/catalogue-example-header.json
+.. literalinclude:: ../../examples/catalog-example-header.json
   :language: JSON
 
-.. literalinclude:: ../../examples/catalogue-example-payload.json
+.. literalinclude:: ../../examples/catalog-example-payload.json
   :language: JSON
 
 .. note::
   For a better and more efficient management of the localisation of the information contained in the Digital Credentials Catalog, an Entity consulting it SHOULD:
 
-    - Download the basic version of the Digital Credentials Catalog (compact, without localisations) using the ``.well-known/credential-catalogue`` endpoint.
+    - Download the basic version of the Digital Credentials Catalog (compact, without localisations) using the ``.well-known/credential-catalog`` endpoint.
     - Determine the User's preferred language.
     - Download only the necessary localisation bundles.
     - Dynamically merge localised content with the Digital Credentials Catalog structure.
@@ -800,7 +800,7 @@ The registry components are interconnected and work together to support the comp
 
 1. **Claims Registry** ↔ **Taxonomy**: Individual claims reference taxonomy domains and categories for semantic consistency.
 2. **AS Registry** ↔ **Taxonomy**: AS entities declare capabilities using taxonomy classifications for standardized categorization.
-3. **AS Registry** ↔ **Catalogue**: Credential types reference AS capabilities for data source validation.
-4. **Catalogue** ↔ **Taxonomy**: Credential entries specify domains, categories, and purposes from the taxonomy for discovery and authorization.
+3. **AS Registry** ↔ **Catalog**: Credential types reference AS capabilities for data source validation.
+4. **Catalog** ↔ **Taxonomy**: Credential entries specify domains, categories, and purposes from the taxonomy for discovery and authorization.
 5. **Federation Registry** ↔ **All Components**: Provides cryptographic trust validation for all registry operations and entity authentication.
 

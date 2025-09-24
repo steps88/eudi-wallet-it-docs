@@ -329,7 +329,7 @@ Below is the description of acronyms and definitions which are useful for furthe
       Data object issued by a Wallet Provider describing the components of the Wallet Unit.
       Aligned with ARF 1.10.
 
-    **Digital Credential Catalogue**
+    **Digital Credential Catalog**
       Electronic catalog containing information about the formats and schemes of Digital Credentials, the data contained and the Authentic Sources. The Catalog contains additional information that allows for the establishment of the authenticity and reliability of the information contained therein.
       Not present in ARF 1.10; specific to IT-Wallet.
 
