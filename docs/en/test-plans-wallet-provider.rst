@@ -1,5 +1,7 @@
 .. include:: ../common/common_definitions.rst
 
+.. _wallet-provider-test-matrix:
+
 Wallet Provider Test Matrix
 ---------------------------
 
@@ -16,6 +18,8 @@ The test plan is based on the requirements extracted from the following Sections
 
 .. note::
    The test cases in this list vary in scope. Some are intentionally written at a high level to confirm the success of complete user flows and the conformance of core architectural and interoperability principles, while others are atomic, targeting single, detailed requirements and verifying specific functional behavior.
+
+.. _wallet-provider-backend-testcases:
 
 Test Cases for Wallet Provider Backend
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -126,7 +130,7 @@ This section lists the test cases from Sections:
    * - WP_010
      - Trust, Interoperability
      - Wallet Instance revocation mechanism
-     - When Wallet Provider triggers the revocation for a specific Wallet Instance, that instance is terminated and can no longer perform any functions.
+     - When Wallet Provider triggers the revocation for a specific Wallet Instance at any time, that instance is terminated and can no longer perform any functions.
    * - WP_011
      - Trust, Security
      - Wallet Instance integrity verification
@@ -136,6 +140,7 @@ This section lists the test cases from Sections:
      - Backend component architecture
      - The Wallet Provider Backend supports all the components (Frontend, API Interface, Wallet Instance Lifecycle Management, and Trust & Security) as shown in :ref:`Figure of Wallet Solution High Level Architecture <fig_wallet-solution-high-level-architecture>`.
 
+.. _wallet-instance-testcases:
 
 Test Cases for Wallet Instance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -183,15 +188,15 @@ This section lists the test cases from Sections:
      - Lifecycle, Trust, Security
      - Periodic trust reestablishment
      - Wallet Instance periodically and successfully obtains a fresh Wallet Attestation from its Wallet Provider.
-   * - WP_018a
-     - Trust, Security
-     - No attestation for unverified Wallet Instances
-     - Wallet Provider rejects an attestation request from a Wallet Instance that fails authenticity, integrity, or genuineness checks.
    * - WP_019
      - Trust, Security
      - Wallet Attestation content
      - The Wallet Attestation contains all required claims and data points that attest to the device's integrity and security status.
    * - WP_019a
+     - Trust, Security
+     - No attestation for unverified Wallet Instances
+     - Wallet Provider rejects an attestation request from a Wallet Instance that fails authenticity, integrity, or genuineness checks.
+   * - WP_019b
      - Trust, Security
      - Attestation-ephemeral key binding
      - The Wallet Attestation contains a cryptographic binding to Wallet Instance’s ephemeral public key that is successfully verified.
@@ -230,12 +235,16 @@ This section lists the test cases from Sections:
    * - WP_028
      - Wallet Attestation Issuance, Lifecycle, Security
      - Time-limited Wallet Attestation
-     - Wallet Provider issues a Wallet Attestation with an expiration time of no more than 24 hours from issuance.
+     - Wallet Provider issues a Wallet Attestation with a short validity period and a defined expiration time when no revocation check methods are supported.
    * - WP_029
+     - Wallet Attestation Issuance, Data Model and Lifecycle, Interoperability
+     - HTTP 200 / JSON response envelope
+     - Upon successful validation of the Wallet Attestation Issuance Request, the Wallet Provider returns 200 OK with Content-Type: application/json, containing the Wallet Attestation as its structure defined in `Wallet Attestation JWT <wallet-provider-endpoint.html#wallet-attestation-jwt>`_.
+   * - WP_029a
      - Wallet Attestation Issuance, Data Model and Lifecycle, Security
      - Multi-format Wallet Attestation
-     - Wallet Provider provides the Wallet Attestation in at least three formats (JWT, SD-JWT, and mdoc), each signed by the Wallet Provider.
-   * - WP_029a
+     - Wallet Provider provides the Wallet Attestation in at least three formats (JWT, SD-JWT, and mdoc), each signed by the Wallet Provider, and confirming the structures defined in `Wallet Attestation JWT <wallet-provider-endpoint.html#wallet-attestation-jwt>`_, `Wallet Attestation SD-JWT <wallet-provider-endpoint.html#wallet-attestation-sd-jwt>`_, and `Wallet Attestation mdoc <wallet-provider-endpoint.html#wallet-attestation-mdoc>`_.
+   * - WP_029b
      - Wallet Attestation Issuance, Data Model and Lifecycle, Security
      - No PII in Wallet Attestation
      - The Wallet Attestation payload contains no personally identifiable information (PII) about the User.
@@ -250,7 +259,7 @@ This section lists the test cases from Sections:
    * - WP_032
      - Wallet Revocation, Lifecycle, Security
      - User-initiated revocation
-     - The User successfully initiates a revocation through Wallet Instance function.
+     - The User successfully initiates a revocation either through the Wallet Instance built-in revocation function or via an external user agent.
    * - WP_032a
      - Wallet Revocation, Lifecycle, Interoperability
      - User login to portal with 2FA
@@ -319,6 +328,8 @@ This section lists the test cases from Sections:
      - Wallet Revocation, Lifecycle, Interoperability
      - Forbidden revocation request (403)
      - When a User attempts to revoke a Wallet Instance they do not have permission for, Wallet Provider returns a response with the HTTP status code (``403 Forbidden``) and with the error code ``invalid_request``.
+
+
 
 Test Cases for Issuance Phase 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -587,7 +598,6 @@ This section lists the test cases from Sections:
      - No consent on new Digital Credential store without ``user_attribute`` update
      - If the Digital Credential update only concerns credential metadata changes (``update``), Wallet Instance automatically stores the new refreshed Digital Credential without requesting additional consent from the User.
 
-
 Test Cases for Presentation Phase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 This section lists the test cases from Section :ref:`credential-presentation:Digital Credential Presentation`,  
@@ -852,7 +862,6 @@ covering both the **Remote Flow** and the **Proximity Flow** presentation phases
      - Close BLE channel
      - When a session is terminated, Wallet Instance disconnects BLE; no open channels remain.
 
-
 Test Cases for User Attribute Deletion on Relying Party Side
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -903,7 +912,6 @@ This section lists the test cases from Sections:
      - Attribute Deletion, Lifecycle, UX
      - User notification on erasure
      - Wallet Instance displays a clear notification to the User indicating the success or failure of the Erasure Request.
-
 
 Test Cases for Digital Credential’s Backup and Restore
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1008,6 +1016,7 @@ This section lists the test cases from Section :ref:`backup-restore:Backup and R
      - Credential re-issuance request
      - For each Credential, Wallet Instance successfully initiates a re-issuance request for the Credential using a new holder key binding.
 
+.. _wallet-instance-optional-testcases:
 
 Optional Test Cases for Wallet Instance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1124,39 +1133,43 @@ These test cases are optional and have been designed for the IT Wallet implement
    * - WP_142
      - Wallet Attestation Issuance, Lifecycle, Security
      - Submitting Wallet Attestation Request JWT to Wallet Provider
-     - The Wallet Attestation submits the signed request JWT as an ``assertion`` parameter to the Wallet Provider’s Attestation Issuance Endpoint.
+     - The Wallet Instance submits the signed request JWT as an ``assertion`` parameter to the Wallet Provider’s Attestation Issuance Endpoint.
    * - WP_143
-     - Wallet Attestation Issuance, Lifecycle, Security
-     - HTTP header validation for Wallet Attestation Request
-     - Wallet Provider successfully validates the Wallet Attestation Request JWT header to contain valid ``alg``, ``kid``, and ``typ`` parameters.
-   * - WP_144
      - Wallet Attestation Issuance, Lifecycle, Security
      - Attestation Request JWT verification
      - Wallet Provider successfully performs a comprehensive validation of the Wallet Attestation Request JWT, including its signature, claims, and cryptographic proofs.
-   * - WP_144a
+   * - WP_143a
+     - Wallet Attestation Issuance, Lifecycle, Security
+     - HTTP header validation for Wallet Attestation Request
+     - Wallet Provider successfully validates the Wallet Attestation Request JWT header to contain valid ``alg``, ``kid``, and ``typ`` parameters.
+   * - WP_143b
      - Wallet Attestation Issuance, Lifecycle, Security
      - JWT signature verification in Wallet Attestation Request
      - Wallet Provider successfully verifies the signature of the Wallet Attestation Request JWT using the public key in the provided JWK.
-   * - WP_144b
+   * - WP_143c
      - Wallet Attestation Issuance, Lifecycle, Security
      - Nonce uniqueness verification for Wallet Attestation
      - Wallet Provider rejects the Wallet Attestation Request JWT if the nonce was not generated by itself or has been previously used.
-   * - WP_144c
+   * - WP_143d
      - Wallet Attestation Issuance, Lifecycle, Security
      - Registered Wallet Instance verification
      - Wallet Provider confirms that the Wallet Attestation Request originates from a valid and currently registered Wallet Instance; if not rejects the request.
-   * - WP_144d
+   * - WP_143e
      - Wallet Attestation Issuance, Lifecycle, Interoperability
      - Hardware signature validation
      - Wallet Provider successfully reconstructs the client_data, and validates the ``hardware_signature`` using Wallet Instance's registered Hardware public key.
-   * - WP_144e
+   * - WP_143f
      - Wallet Attestation Issuance, Lifecycle, Security
      - Integrity Assertion validation per guidelines
      - Wallet Provider successfully validates the ``integrity_assertion`` according to the device manufacturer’s guidelines.
-   * - WP_144f
+   * - WP_143g
      - Wallet Attestation Issuance, Lifecycle, Security
      - ``iss`` parameter verification
      - Wallet Provider verifies that the ``iss`` parameter in the Wallet Attestation Request JWT matches its own URL identifier.
+   * - WP_144
+     - Wallet Attestation Issuance, Lifecycle, Security
+     - Attestation Issuance
+     - After successful validation of the Wallet Attestation Request, Wallet Provider issues a Wallet Attestation with an expiration time not exceeding 24 hours from issuance.
    * - WP_145
      - Wallet Revocation, Lifecycle, Interoperability
      - Wallet Instance status retrieval
