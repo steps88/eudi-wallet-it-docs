@@ -345,7 +345,7 @@ Definitions (Acronyms and Commands)
      - `SW1/SW2` (Status Words) — Two-byte status code at the end of every response.  Common values: `90 00 = success`, `61 XX = more data`, `6A 82 = file/application not found`.
 
 
-**Step 1**: The Relying Party Instance (PCD) sends a SELECT `APDU` command with the Application Identifier (`AID: A0 00 00 02 48 04 00`) to open the Wallet Instance.
+**Step 1**: The Relying Party Instance (PCD) sends a SELECT `APDU` command with the Application Identifier (`AID: A0 00 00 02 48 04 00`) to engage the Wallet Instance.
 
 
 **Step 2**: The Wallet Instance (PICC) responds with File Control Information (FCI) and status words (SW1/SW2), either confirming success (`90 00`) or indicating that more data (`61 XX`).
