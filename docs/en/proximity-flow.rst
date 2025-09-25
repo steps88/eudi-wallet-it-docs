@@ -153,7 +153,7 @@ Below is a non-normative example using the diagnostic notation of a CBOR-encoded
 
 .. admonition:: Box C
 
-   After receiving User approval, the Wallet Instance MUST retrieve the requested mdoc Digital Credentials. It then MUST prepare a ``SessionData`` message containing these Digital Credentials, and it MUST sign the required authentication data (as part of the mdoc authentication process, as specified in [`ISO18013-5`_ #12.4]). It MUST encrypt it using the established session keys before transmitting it to the Relying Party Instance over the secure BLE channel. The signing ensures device binding and data integrity. The mdoc response MUST be encoded in CBOR, with its structure outlined in [`ISO18013-5`_ #10.3].
+   After receiving User approval, the Wallet Instance MUST retrieve the requested mdoc Digital Credentials. It then MUST prepare a ``SessionData`` message containing these Digital Credentials, and it MUST sign the required authentication data (as part of the mdoc authentication process, as specified in [`ISO18013-5`_ #12.4]). It MUST encrypt it using the established session keys before transmitting it to the Relying Party Instance over the secure channel. The signing ensures device binding and data integrity. The mdoc response MUST be encoded in CBOR, with its structure outlined in [`ISO18013-5`_ #10.3].
    Refer to:
 
    - Sec 8.2.2.4 for ``SessionData`` over BLE, and
