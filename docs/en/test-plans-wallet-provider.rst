@@ -330,6 +330,7 @@ This section lists the test cases from Sections:
      - When a User attempts to revoke a Wallet Instance they do not have permission for, Wallet Provider returns a response with the HTTP status code (``403 Forbidden``) and with the error code ``invalid_request``.
 
 
+.. _wallet-credential-issuance-testcases:
 
 Test Cases for Issuance Phase 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -486,69 +487,69 @@ This section lists the test cases from Sections:
      - Batch Issuance: PoP of batch Credential keys
      - In case of Batch Issuance, Wallet Instance generates N key proofs using the provided ``c_nonce``, one for each Digital Credential in the batch, where N equals the ``batch_size`` value.
    * - WP_059
-     - Issuance, Security
-     - Handle deferred issuance
-     - Wallet Instance evaluates the Credential Response; if it contains both ``transaction_id`` and ``lead_time``, Wallet Instance recognizes the flow as deferred issuance.
-   * - WP_060
-     - Issuance, Interoperability
-     - Deferred issuance request after lead_time
-     - Wallet Instance submits a Deferred Credential Request only after the required ``lead_time`` has passed.
-   * - WP_060a
-     - Issuance, Interoperability
-     - Deferred issuance request with transaction_id
-     - Wallet Instance sends a Deferred Credential Request as an HTTP POST with ``Content-Type: application/json``, and the request body contains the required ``transaction_id``.
-   * - WP_060b
-     - Issuance, Interoperability
-     - Deferred request with still-valid Access Token
-     - Wallet Instance includes the existing Access Token in the deferred request if the ``lead_time`` parameter value is less than the expiration time set for the Access Token.
-   * - WP_060c
-     - Issuance, Interoperability
-     - Fresh DPoP-bound Access Token via the Refresh
-     - When the existing Access Token would expire before the deferred request can be made, Wallet Instance obtains a new DPoP-bound Access Token via the Refresh Token flow; if the refresh fails, it initiates a new Credential Issuance flow.
-   * - WP_061
-     - Issuance, Interoperability
-     - New Credential Issuance flow
-     - When Wallet Instance fails to refresh an expiring Access Token, it initiates an entirely new Credential Issuance flow.
-   * - WP_062
      - Issuance, Interoperability
      - Validate Credential Response for required parameters
      - Wallet Instance inspects the Credential Response payload, verifying all mandatory PID/(Q)EAA parameters are present and valid as defined in :ref:`Table of Credential Response <table_credential_response_claim>`; if any parameter is missing or invalid, it rejects the response with an error.
-   * - WP_063
+   * - WP_060
      - Issuance, Interoperability
      - Verify Digital Credential type/schema
      - Wallet Instance retrieves the issued Digital Credential from the response’s ``credential`` claim, verifies that its type matches the requested type, and validates the schema against :ref:`credential-data-model:Digital Credential Data Model`; if either check fails, it rejects the Digital Credential.
-   * - WP_064
+   * - WP_061
      - Issuance, Security
      - Validate Credential Issuer Trust Chain
      - Wallet Instance verifies the Digital Credential’s Trust Chain from its header to confirm that the Credential Issuer is trusted.
-   * - WP_065
+   * - WP_062
      - Issuance, Interoperability
      - Format-specific Digital Credential verification
      - Wallet Instance verifies whether a Digital Credential is in SD-JWT VC or mdoc-CBOR format, and then runs the appropriate verification. If it fails, it rejects the Credential.
-   * - WP_065a
+   * - WP_062a
      - Issuance, Security, Interoperability
      - Verify SD-JWT Credential integrity
      - Wallet Instance obtains the ``alg`` and ``kid`` values from the SD-JWT header, retrieves the corresponding public key, and verifies the signature; if invalid, the SD-JWT Credential is rejected.
-   * - WP_065b
+   * - WP_062b
      - Issuance, Security, Interoperability
      - Verify mdoc-CBOR Credential integrity
      - Wallet Instance extracts the signature algorithm from the protected header of the mdoc-CBOR ``COSE_Sign1``, retrieves the Credential Issuer’s public key from the ``kid`` or ``x5chain`` in the unprotected header, and verifies the COSE signature over the MSO; if invalid, the Credential is rejected.
-   * - WP_066
+   * - WP_063
      - Issuance, Privacy
      - User consent for credential storage
      - Wallet Instance prompts the User for consent and stores the Digital Credential only after explicit approval.
-   * - WP_067
+   * - WP_064
      - Issuance, Interoperability
      - Notification Handling
-     - Immediately after securely storing the Digital Credential, Wallet Instance sends an HTTP POST request to the Notification Endpoint with ``Content-Type: application/json``.
-   * - WP_067a
+     - Wallet Instance sends an HTTP POST request to the Notification Endpoint with ``Content-Type: application/json``.
+   * - WP_064a
      - Issuance, Interoperability
      - Notification Parameters
      - The Notification Request payload contains the ``notification_id`` from the Credential Response and an ``event`` value of either ``credential_accepted``, ``credential_deleted``, or ``credential_failure``; it may also include a valid ASCII ``event_description``.
-   * - WP_067b
+   * - WP_064b
      - Issuance, Privacy
      - Protect User privacy in notification content
      - The ``event_description`` contains only generic, user-neutral text and does not disclose User behavior or device status.
+   * - WP_065
+     - Issuance, Security
+     - Handle deferred issuance
+     - Wallet Instance evaluates the Credential Response; if it contains both ``transaction_id`` and ``lead_time``, Wallet Instance recognizes the flow as deferred issuance.
+   * - WP_066
+     - Issuance, Interoperability
+     - Deferred issuance request after lead_time
+     - Wallet Instance submits a Deferred Credential Request only after the required ``lead_time`` has passed.
+   * - WP_066a
+     - Issuance, Interoperability
+     - Deferred issuance request with transaction_id
+     - Wallet Instance sends a Deferred Credential Request as an HTTP POST with ``Content-Type: application/json``, and the request body contains the required ``transaction_id``.
+   * - WP_066b
+     - Issuance, Interoperability
+     - Deferred request with still-valid Access Token
+     - Wallet Instance includes the existing Access Token in the deferred request if the ``lead_time`` parameter value is less than the expiration time set for the Access Token.
+   * - WP_066c
+     - Issuance, Interoperability
+     - Fresh DPoP-bound Access Token via the Refresh
+     - When the existing Access Token would expire before the deferred request can be made, Wallet Instance obtains a new DPoP-bound Access Token via the Refresh Token flow.
+   * - WP_067
+     - Issuance, Interoperability
+     - New Credential Issuance flow
+     - When Wallet Instance fails to refresh an expiring Access Token, it initiates an entirely new Credential Issuance flow.
    * - WP_068
      - Issuance, Interoperability
      - Refresh Token Request
@@ -580,7 +581,7 @@ This section lists the test cases from Sections:
    * - WP_071b
      - Issuance, Security
      - Restart issuance on full expiry
-     - Wallet Instance initiates a new Credential Issuance flow, including re-authenticating the User, when it verifies both the Access Token and Refresh Token have expired.
+     - Wallet Instance re-authenticates the User when initiating  a new Credential Issuance flow. 
    * - WP_072
      - Issuance, Security
      - Retrieve refreshed Credential
@@ -589,7 +590,11 @@ This section lists the test cases from Sections:
      - Issuance, Security and Privacy
      - Delete old Digital Credentials
      - After storing a new Digital Credential, Wallet Instance deletes the previous version so that only the latest Digital Credential remains stored.
-   * - WP_074
+   * - WP_073a
+     - Issuance, Security and Privacy
+     - Delete old batch Credentials
+     - When the Wallet Instance receives and stores a new batch of the same Credential with the same claims, it deletes the previous Credentials.
+   * - WP_074 
      - Issuance, UX
      - Consent on new Digital Credential store with ``user_attribute`` update
      - If the Digital Credential update involves changes to the User's attribute values (``attribute_update``), Wallet Instance prompts the User for consent before storing the new refreshed Digital Credential.
@@ -597,6 +602,8 @@ This section lists the test cases from Sections:
      - Issuance, UX
      - No consent on new Digital Credential store without ``user_attribute`` update
      - If the Digital Credential update only concerns credential metadata changes (``update``), Wallet Instance automatically stores the new refreshed Digital Credential without requesting additional consent from the User.
+
+.. _wallet-credential-presentation-testcases:
 
 Test Cases for Presentation Phase
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -862,6 +869,8 @@ covering both the **Remote Flow** and the **Proximity Flow** presentation phases
      - Close BLE channel
      - When a session is terminated, Wallet Instance disconnects BLE; no open channels remain.
 
+.. _user-attribute-deletion-testcases:
+
 Test Cases for User Attribute Deletion on Relying Party Side
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -912,6 +921,8 @@ This section lists the test cases from Sections:
      - Attribute Deletion, Lifecycle, UX
      - User notification on erasure
      - Wallet Instance displays a clear notification to the User indicating the success or failure of the Erasure Request.
+
+.. _credential-backup-testcases:
 
 Test Cases for Digital Credential’s Backup and Restore
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
