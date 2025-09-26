@@ -7,17 +7,16 @@ participant "Federation Authority" as ta
 == Step 1: Onboarding Request Submission ==
 
 fe -> ta: Submit onboarding request\n(Entity ID, Public Key JWK, CSR)
-note right of ta: Federation Authority registers\nFederation Entity Identifier\nin lowercase format
 
 == Step 2: Federation Authority Validation and Certificate Issuance ==
 
 ta -> ta: Verify registration information
 ta -> ta: Validate Entity Configuration at\n/.well-known/openid-federation endpoint
-ta -> ta: Check metadata and certificates
+ta -> ta: Apply metadata policies with cascading effect
 ta -> ta: Issue X.509 certificate for\nFederation Entity Public Key
 
 alt Validation successful
-    ta -> fe: Certificate chain response\n(Entity certificate + TA self-signed certificate)
+    ta -> fe: Certificate chain response\n(Entity certificate + authority certificates)
 else Validation failed
     ta -> fe: Rejection with identified issues
 end
@@ -31,12 +30,17 @@ fe -> ta: Resolve request\n(/resolve?sub=entity_id&trust_anchor=ta_id)
 == Step 4: Resolve Response and Onboarding Completion ==
 
 ta -> ta: Reconstruct valid trust chain
-ta -> ta: Generate signed JWT with\ntrust chain and validated metadata
+ta -> ta: Generate Federation Trust Mark for entity
+ta -> ta: Include Trust Mark in Subordinate Statement
+ta -> ta: Generate signed JWT with trust chain,\nvalidated metadata and applying metadata policies
 
 alt Resolve successful (200 OK)
     ta -> fe: Resolve response with JWT\n(trust chain + validated metadata)
-    fe -> fe: Validate JWT and extract\ntrust chain and metadata
-    note right of fe: Entity onboarding completed\nReady for credential operations
+    fe -> ta: Fetch Subordinate Statement\n(/fetch?sub=entity_id)
+    ta -> fe: Subordinate Statement with Trust Mark
+    fe -> fe: Extract Trust Mark from Subordinate Statement
+    fe -> fe: Integrate Trust Mark in Entity Configuration\n(trust_marks claim)
+    fe -> fe: Publish final Entity Configuration at\n/.well-known/openid-federation
 else Resolve failed (400/404)
     ta -> fe: Error response with issues to resolve
 end

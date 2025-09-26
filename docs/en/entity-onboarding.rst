@@ -294,7 +294,7 @@ The federation onboarding follows a structured 4-step procedure that enables sec
 .. plantuml:: plantuml/federation-onboarding-process.puml
     :width: 99%
     :alt: Federation entity onboarding process showing the 4-step procedure
-    :caption: `Federation Entity Onboarding Process. <https://www.plantuml.com/plantuml/svg/ZLJ1Jcit4DtVhnYzHKNqNbvI6XQDb1QKqWfOW0A5BY8XnvwRkFYER-qnWRylruxbImZIszhZSywSEUDJpy9nQ0pyYGgTO6q9pearly8rhQnmIjCQRfoLw7qb0biApGfTLRN2iPQw5SJmvSFhBo0yrFXfrLdWZNMva4LLpMPmozZ2pzC-ymB_2-WPRiEgqTvtJsUpggeHXhy1YscwOB3bYKjFbdIqQ-JYZszm4rP6IxZ2LxXykFe6yzl5e2BB24wlDmosZcY758B3jVQCpY_feqiN2ebrhT4jIHCOkqKdXKUehMi4bxwEFq6_5qQhT2X8mHnT1oS58rnu7mH9Z2spo2tVezDrbhN3qvJujALIcR4nYvrRglKwk1qTBsdqVOl639_8RcbaMoIjXdMHYQHQgubxcFCDoYTea8KIBA9cMJJxKXdb8_pp_MJyQwyaEdF8oJAYgXA6-yRu8BlyrS5K0029eiRfExVaHcW2XxwrvB6Clq_z5UxEmAEfXrwl2Tz97rHeFFPfQw4DgZtA1VwBCbvlDMz0v_ahq5s_la9IPUg_J0zx_tVRpIMwjq1lpJFcgETy9xfSU0XakgGXd2a58eVfSQE9FKWZT9ClNqvaEaXwvRvZXIjDm6yWH4u5v_CVo4Xl5tCdPGD7BXtzxiDgXh67Hwr-OXSyFmgIRx9dBDwE1iMoIG5Qf64cdtg_mjmshS6EVMyr5YWjUNP1CZntWuH8jUkqrFs5rCb7sCNWyk4kshEaNdraZIZHZHpvbCuiiKGJZex7OxY-6km59bVcP4QYZl7DdpxRrmDS2QjCA2zqzppAmnTsGlA-xe8G0Tv_T3NcKFQ_JPayHRMa1GhrsgqfI8SntyA0RNS3zsbFSbjfIU1eCXwF9kF9VlVdpbctrtjQ560BktYadJb5Kg4n_mC0>`_
+    :caption: `Federation Entity Onboarding Process. <https://www.plantuml.com/plantuml/svg/federation-onboarding-process>`_
 
 
 
@@ -453,17 +453,21 @@ After receiving the certificate chain from the Federation Authority, the entity 
 Following the resolve request, the **Trust Anchor** performs:
 
   - **Trust Chain Reconstruction**: Reconstruction of a valid trust chain for the entity (including Intermediate statements if applicable) as defined in :ref:`trust:The Infrastructure of Trust`
-  - **Federation Trust Mark Coordination**: Ensures the entity has received appropriate Federation Trust Marks from its immediate Federation Authority (Trust Anchor or Intermediate)
+  - **Federation Trust Mark Generation**: Generation of an IT-Wallet Federation Trust Mark as a signed JWT attestation of the entity's federation membership and compliance with IT-Wallet technical requirements
+  - **Trust Mark Integration in Subordinate Statement**: The generated Trust Mark is included in the entity's Subordinate Statement as defined in :ref:`trust:Subordinate Statements`
+  - **Metadata Policy Application**: Application of cascading metadata policies during trust chain construction, ensuring Trust Anchor policies take precedence over Intermediate policies
   - Generation of a signed JSON Web Token (JWT) using algorithms specified in :ref:`algorithms:Cryptographic Algorithms` containing the reconstructed trust chain and validated entity metadata
   - Transmission of an HTTP response containing the created JWT (Resolve Response)
 
-If the response status code is 200 OK, the **entity onboarding is successfully completed**. The entity MUST:
+If the response status code is 200 OK, the Federation Entity MUST complete the onboarding process by:
 
-  - Validate the JWT contained in the Resolve Response
-  - Extract the trust chain and validated metadata from the JWT payload
-  - **Trust Mark Integration**: Include the issued Federation Trust Mark in its Entity Configuration ``trust_marks`` claim for ongoing federation compliance attestation
+  - **Validate Resolve Response**: Validate the JWT contained in the Resolve Response and extract the trust chain and validated metadata from the JWT payload
+  - **Fetch Subordinate Statement**: Retrieve its own Subordinate Statement from the immediate Federation Authority using the ``/fetch`` endpoint as defined in :ref:`trust:Federation API endpoints`
+  - **Extract Trust Mark**: Extract the Federation Trust Mark from the Subordinate Statement ``trust_marks`` claim
+  - **Trust Mark Integration**: Include the extracted Trust Mark in its Entity Configuration using the ``trust_marks`` claim as specified in :ref:`trust:Entity Configuration Leaves and Intermediates`
+  - **Final Entity Configuration Update**: Publish the updated Entity Configuration with the integrated Trust Mark at the ``/.well-known/openid-federation`` endpoint
 
-The entity is now operational within the IT-Wallet federation and ready for credential lifecycle activities.
+Upon successful completion of Step 4, the **entity onboarding is successfully completed**. The entity is now operational within the IT-Wallet federation and ready for credential lifecycle activities.
 
 .. note::
    If the ``/resolve`` endpoint responds with status code 400 or 404, the entity must resolve the issues described in the response message before calling the resolve endpoint again. For other status codes, contact the Trust Anchor support.
