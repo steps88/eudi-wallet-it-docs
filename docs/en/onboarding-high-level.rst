@@ -6,7 +6,7 @@ Onboarding System
 
 The IT-Wallet ecosystem operates as a federated trust infrastructure where participating entities must establish cryptographic trust relationships and maintain compliance with common security standards.
 
-The onboarding system MUST enable secure digital credential operations. At the same time, it MUST accommodate the diverse operational requirements that different participants require.
+The onboarding system MUST enable secure Digital Credential operations. At the same time, it MUST accommodate the diverse operational requirements that different participants require.
 
 Administrative processes for organizational entities are common to all participants and independent of their technical functions within the ecosystem. However, technical registration processes MUST account for distinct operational roles.
 
@@ -24,7 +24,7 @@ The onboarding framework MUST provide specialized onboarding processes that matc
     :alt: IT-Wallet onboarding system overview showing dual-path registration processes and trust infrastructure
     :caption: `IT-Wallet Onboarding System Overview. <https://www.plantuml.com/plantuml/svg/trust-infrastructure-overview>`_
 
-All Primary Actors MUST undergo administrative registration for legal and regulatory compliance, followed by specialized technical registration processes that MUST reflect their operational roles in the digital credential ecosystem.
+All Primary Actors MUST undergo administrative registration for legal and regulatory compliance, followed by specialized technical registration processes that MUST reflect their operational roles in the Digital Credential ecosystem.
 
     1. **Administrative Registration**: All entities (Authentic Sources, Relying Parties, Wallet Providers, Credential Issuers) MUST complete initial administrative registration that validates their legal standing, regulatory compliance, and organizational eligibility to participate in the IT-Wallet ecosystem.
 
@@ -51,7 +51,7 @@ All Primary Actors MUST undergo administrative registration for legal and regula
 Authentic Source Registration Process
 ---------------------------------------
 
-Authentic Source registration allows data providers to establish their authoritative role in the digital credential ecosystem through the registration of their data capabilities and standardized access mechanisms based on the Claims Registry and Taxonomy classifications.
+Authentic Source registration allows data providers to establish their authoritative role in the Digital Credential ecosystem through the registration of their data capabilities and standardized access mechanisms based on the Claims Registry and Taxonomy classifications.
 
 Authentic Source entities MUST undergo registration procedures that validate their data authority, declare their available claims from the standardized Claims Registry, and establish technical integration mechanisms. Authentic Source entities specify intended use cases that determine catalog eligibility per Supervisory Body policies. Public Authentic Sources MUST leverage PDND integration to provide government data through standardized national infrastructure, while Private Authentic Sources MAY establish custom service interfaces that accommodate specific organizational or regulatory requirements. Both pathways MUST assure data quality standards and establish audit trails for all data provisioning activities.
 
@@ -70,7 +70,7 @@ Operational entities MUST complete onboarding that includes administrative eligi
 
 Successfully onboarded entities are included in the Federation Registry, which maintains the authoritative list of trusted federation participants. This registry enables operational trust validation during credential lifecycle activities.
 
-Relying Parties MUST verify digital credentials with cryptographic assurance, Wallet Providers MUST provide trusted digital wallet services to citizens, and Credential Issuers MUST issue digital credentials using authoritative data sources. All operations MUST occur within established trust relationships that assure security and auditability.
+Relying Parties MUST verify Digital Credentials with cryptographic assurance, Wallet Providers MUST provide trusted digital wallet services to citizens, and Credential Issuers MUST issue Digital Credentials using authoritative data sources. All operations MUST occur within established trust relationships that assure security and auditability.
 
 Entity Lifecycle Management
 ---------------------------
@@ -254,7 +254,7 @@ Wallet Provider Operator Journey
 
 ..     Wallet Provider certification and security validation process
 
-Wallet Provider operators follow an independent onboarding path that focuses on application certification and security validation. The process highlights the development and certification of wallet applications that can securely store and manage digital credentials for citizens.
+Wallet Provider operators follow an independent onboarding path that focuses on application certification and security validation. The process highlights the development and certification of wallet applications that can securely store and manage Digital Credentials for citizens.
 
 A key technical requirement involves implementing wallet integrity and authenticity check mechanisms. These checks enable the wallet to obtain a Wallet Attestation, which serves as proof of the wallet's security and compliance status during credential operations.
 
@@ -320,7 +320,7 @@ Credential discovery happens through two main pathways:
     - **Credential Catalog browsing**: Users can explore available Credential types through a Credential Catalog.
     - **Credential Offers**: Direct Credential Offer from Authentic Sources or Credential Issuers for specific Credentials.
 
-The service access phase demonstrates the value of the complete ecosystem, where users can present their digital credentials to registered Relying Party services for authenticated access. This seamless integration depends on all relevant entities having completed their respective onboarding journeys.
+The service access phase demonstrates the value of the complete ecosystem, where users can present their Digital Credentials to registered Relying Party services for authenticated access. This seamless integration depends on all relevant entities having completed their respective onboarding journeys.
 
 
 
