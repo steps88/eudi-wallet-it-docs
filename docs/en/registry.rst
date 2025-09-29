@@ -17,7 +17,7 @@ The IT-Wallet registry system comprises five main components:
   2. **Authentic Source (AS) Registry**: Catalog of registered data providers with their declared capabilities and available claims.
   3. **Federation Registry**: Authoritative list of trusted entities participating in the federation with their technical configurations.
   4. **Digital Credentials Catalog**: Public discovery mechanism for available credential types with their metadata and issuance information.
-  5. **Taxonomy**: Hierarchical classification system organizing claims and credentials by domain, category, and purpose.
+  5. **Taxonomy**: Hierarchical classification system organizing credentials by domain and purpose.
 
 These registry components are interconnected and maintained by the Supervisory Body to ensure consistency, security, and regulatory compliance across the ecosystem.
 
@@ -90,7 +90,7 @@ The Supervisory Body MUST maintain the Claims Registry to ensure semantic consis
 
   - **Standardised Claims**: Semantic definitions for all credential attributes with data types and validation rules.
   - **Interoperability Mappings**: Alias definitions for claims that use different terminology across standards (e.g., ISO18013-5 ``place_of_birth`` mapped to canonical ``birth_place``).
-  - **Taxonomy References**: Claims reference applicable domains and categories from the separate Taxonomy component for classification.
+  - **Taxonomy References**: Claims reference applicable domains and purposes from the separate Taxonomy component for classification.
   - **Data Formats**: Standardised data types (string, date, numeric, boolean, email, url, image, array, object) with validation patterns.
 
 The Claims Registry MUST ensure:
@@ -101,7 +101,7 @@ The Claims Registry MUST ensure:
   - **Regulatory Alignment**: Coordinates with national and EU regulatory framework.
   - **Credential-Agnostic Scenarios**: Supports scenarios where **user convenience** and **business operational efficiency** are prioritized over **regulatory compliance** and **audit trails**.
 
-Each claim MUST specify domains and categories to enable both **Credential-Specific Scenarios** and **Credential-Agnostic Scenarios** according to Relying Party's requirements and presentation request patterns:
+Each claim MUST specify domains and purposes to enable both **Credential-Specific Scenarios** and **Credential-Agnostic Scenarios** according to Relying Party's requirements and presentation request patterns:
 
   1. **Credential-Specific Scenarios** (Primary for Government/Regulated Sectors): RPs request specific credential types for compliance and audit requirements, including for example:
 
@@ -118,7 +118,7 @@ Each claim MUST specify domains and categories to enable both **Credential-Speci
 
 This approach allows:
 
-  - **Policy-based authorization** for credential-agnostic requests using domain/category mappings.
+  - **Policy-based authorization** for credential-agnostic requests using domain/purpose mappings.
   - **Implicit credential categorization** for private credentials not published in public.
   - **Flexible RP registration** supporting both government compliance needs and business operational requirements.
 
@@ -137,13 +137,13 @@ The Claims Registry MUST support the complete ecosystem lifecycle:
 
   - **AS Registration**: Authentic Sources declare available claims from standardized registry during capability registration.
   - **CI Registration**: Credential Issuers select AS entities based on required claims and register credential types for catalog publication.
-  - **RP Registration**: Relying Parties specify authorization requirements using domains/categories or specific credential types.
+  - **RP Registration**: Relying Parties specify authorization requirements using domains/purposes for specific credential types and/or User's attributes.
 
 **During Operational Activities**:
 
   - **Credential Issuance**: Claims definitions ensure consistent data representation across different credential types.
   - **Presentation Requests**: RPs reference claims for schema validation and authorization verification in both credential-specific and credential-agnostic scenarios.
-  - **Policy Enforcement**: Authorization policies leverage claim domain/category classifications for access control.
+  - **Policy Enforcement**: Authorization policies leverage domain/purpose classifications for access control.
 
 
 Claims Registry Structure
@@ -303,12 +303,9 @@ The AS Registry MUST contain the following parameters for each registered Authen
    * - **data_capabilities**
      - JSON Objects Array
      - REQUIRED. Array containing data capability specifications.
-   * - **data_capabilities[].domain**
-     - string
-     - REQUIRED. Taxonomy domain (e.g., ``"AUTHORIZATION"``, ``"FINANCIAL"``).
-   * - **data_capabilities[].category**
-     - string
-     - REQUIRED. Taxonomy category (e.g., ``"DRIVING_LICENSE"``, ``"BANK_ACCOUNT"``).
+   * - **data_capabilities[].domains**
+     - String Array
+     - REQUIRED. Taxonomy domain (e.g., ``["AUTHORIZATION"]``, ``["FINANCIAL"]``).
    * - **data_capabilities[].intended_purposes**
      - String Array
      - REQUIRED. Business purposes served (e.g., ``["driving-authorization", "identity-verification"]``).
@@ -486,19 +483,19 @@ The following table summarizes the main information that MUST be provided by the
 
 The Trust Anchor MUST publish and keep up to date all the information at the Digital Credential Catalog `.well-known` endpoint ensuring data reliability, authenticity and integrity. In particular, the Digital Credential Catalog, claims and taxonomy MUST be available through the ``.well-known/credential-catalog`` endpoint.
 
-Digital Credentials Categories
+Digital Credentials Hierarchy
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Digital Credentials recognized within the IT-Wallet ecosystem are hierarchically classified and standardized according to the following main domains and categories. Additional categories MAY be added as the IT-Wallet ecosystem grows.
+Digital Credentials recognized within the IT-Wallet ecosystem are hierarchically classified and standardized according to the following main domains and purposes. Additional purposes MAY be added as the IT-Wallet ecosystem grows.
 
 .. _it-wallet-dc-domains:
-.. list-table:: Digital Credential Domains and Categories
+.. list-table:: Digital Credential Domains and Purposes
    :class: longtable
    :header-rows: 1
    :widths: 20 30 50
 
    * - **Domain**
-     - **Category**
+     - **Purpose**
      - **Description**
    * - *IDENTITY*
      - * PERSON_IDENTIFICATION
@@ -647,8 +644,6 @@ Each element of the ``credentials`` array contains at least the following inform
 
       * **id**: Unique identifier for the purpose (e.g., "driving-authorization", "person-identification").
       * **description**: Human-readable purpose description with a suffix ``_l10n_id`` for content localisation.
-      * **category**: Main category in the Credential taxonomy (e.g., ``AUTHORIZATION``, ``IDENTITY``).
-      * **subcategory**: Subcategory within the taxonomy (e.g., ``DRIVING_LICENSE``, ``PERSON_IDENTIFICATION``).
       * **claims_required**: Array of claim identifiers that are required when using the Credential for this purpose.
       * **claims_recommended**: Array of claim identifiers that are recommended but not mandatory for this purpose.
   * - **issuers**
@@ -679,7 +674,6 @@ Each element of the ``credentials`` array contains at least the following inform
     - REQUIRED. Array of claims contained in the Digital Credential. It MUST include at least the following claims:
 
       * **name**: The name of the claim in the Digital Credential.
-      * **taxonomy_ref**: String containing the path to the claim type as defined in the Taxonomy component (see :ref:`it-wallet-dc-domains`). 
       * **namespaces**: CONDITIONAL. Namespace to which the claim belongs.
       * **display_name_l10n_id**: OPTIONAL. Human-readable name of the claim with a suffix ``_l10n_id`` for content localisation management.
 
@@ -755,25 +749,24 @@ The corresponding example of Digital Credentials Catalog as decoded in JSON for 
 Taxonomy
 --------
 
-The **Taxonomy** provides the semantic foundation for Digital Credential interoperability by maintaining the authoritative vocabulary for organizing claims and credentials within the IT-Wallet ecosystem. The taxonomy is credential format neutral and has the aim of facilitating Digital Credentials integrations in the IT-Wallet Technical Solutions.
+The **Taxonomy** provides the semantic foundation for Digital Credential interoperability by maintaining the authoritative vocabulary for organizing credentials within the IT-Wallet ecosystem. The taxonomy is credential format neutral and has the aim of facilitating Digital Credentials integrations in the IT-Wallet Technical Solutions.
 
-The taxonomy provides, in a single resource, the hierarchical classification system organizing domains, categories, and purposes that can be applied to both individual claims and credential types, supporting authorization policy evaluation and ecosystem-wide standardization.
+The taxonomy provides, in a single resource, the hierarchical classification system organizing domains and purposes that can be applied to credential types, supporting authorization policy evaluation and ecosystem-wide standardization.
 
 **Taxonomy Objectives:**
 
-1. **Semantic Foundation**: Establish standardized vocabulary for domains, categories, and purposes across the ecosystem
+1. **Semantic Foundation**: Establish standardized vocabulary for domains and purposes across the ecosystem
 2. **Policy Framework**: Enable structured authorization decisions based on hierarchical classification
-3. **Interoperability**: Ensure consistent interpretation of credential and claim classifications
-4. **Extensibility**: Support evolution of the ecosystem with new domains and categories
+3. **Interoperability**: Ensure consistent interpretation of credential classifications
+4. **Extensibility**: Support evolution of the ecosystem with new domains and purposes
 5. **Cross-Border Compliance**: Align with EU regulatory requirements and international standards
 
 **Taxonomy Structure:**
 
-The taxonomy maintains a three-level hierarchical structure:
+The taxonomy maintains a two-level hierarchical structure:
 
 - **Domains**: Top-level classification representing broad functional areas (e.g., IDENTITY, AUTHORIZATION, FINANCIAL)
-- **Categories**: Specific credential/claim types within each domain (e.g., PERSON_IDENTIFICATION, DRIVING_LICENSE, BANK_ACCOUNT)
-- **Purposes**: Specific use cases and business contexts for which credentials/claims can be utilized
+- **Purposes**: Specific credential use cases within each domain (e.g., PERSON_IDENTIFICATION, DRIVING_LICENSE, BANK_ACCOUNT) for which credentials can be used
 
 **Localization Support:**
 
@@ -781,9 +774,9 @@ The taxonomy supports multilingual environments through the ``_l10n_id`` suffix 
 
 **Taxonomy Usage:**
 
-- **Claims Registry**: Individual claims reference taxonomy domains and categories for semantic consistency
+- **Claims Registry**: Individual claims catalog
 - **AS Registry**: Authentic Sources declare capabilities using taxonomy classifications
-- **Digital Credentials Catalog**: Credential types specify domains, categories, and supported purposes
+- **Digital Credentials Catalog**: Credential types specify domains and supported purposes
 - **Authorization Policies**: Policy evaluation leverages taxonomy structure for access control decisions
 
 The taxonomy is accessible through the dedicated taxonomy endpoint as defined in the registry discovery mechanism and is maintained by the Supervisory Body to ensure regulatory compliance and semantic consistency.
@@ -798,9 +791,8 @@ Registry Integration and Cross-References
 
 The registry components are interconnected and work together to support the complete credential ecosystem:
 
-1. **Claims Registry** ↔ **Taxonomy**: Individual claims reference taxonomy domains and categories for semantic consistency.
-2. **AS Registry** ↔ **Taxonomy**: AS entities declare capabilities using taxonomy classifications for standardized categorization.
-3. **AS Registry** ↔ **Catalog**: Credential types reference AS capabilities for data source validation.
-4. **Catalog** ↔ **Taxonomy**: Credential entries specify domains, categories, and purposes from the taxonomy for discovery and authorization.
-5. **Federation Registry** ↔ **All Components**: Provides cryptographic trust validation for all registry operations and entity authentication.
+1. **AS Registry** ↔ **Taxonomy**: AS entities declare capabilities using taxonomy classifications for standardized categorization.
+2. **AS Registry** ↔ **Catalog**: Credential types reference AS capabilities for data source validation.
+3. **Catalog** ↔ **Taxonomy**: Credential entries specify domains and purposes from the taxonomy for discovery and authorization.
+4. **Federation Registry** ↔ **All Components**: Provides cryptographic trust validation for all registry operations and entity authentication.
 

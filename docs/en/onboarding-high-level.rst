@@ -30,7 +30,7 @@ All Primary Actors MUST undergo administrative registration for legal and regula
 
     2. **Technical Registration**: Following administrative approval, entities complete technical registration through specialized pathways:
 
-        a. **Authentic Sources**: Declare their available claims from the Claims Registry using Taxonomy classifications (domains, categories) and specify intended use cases and purposes (public or private). 
+        a. **Authentic Sources**: Declare their available claims from the Claims Registry and specify intended domains, purposes and organization type (public or private). 
 
         b. **Credential Issuers**: Select Authentic Sources based on required claims, request integration approval (except for regulatory mandates), and register credential types with automatic catalog publication per Supervisory Body policy.
 
@@ -38,7 +38,7 @@ All Primary Actors MUST undergo administrative registration for legal and regula
 
     3. **IT-Wallet Registry Integration**:
 
-        a. **Claims Registry and Taxonomy Integration**: Claims Registry provides standardized data definitions for individual credential attributes, while Taxonomy defines hierarchical classification (domains, categories, purposes) that are then referenced in the Digital Credentials Catalog for specific credential implementations. All participants leverage these registries for capability declarations and issuance/verification requirements.
+        a. **Claims Registry and Taxonomy Integration**: Claims Registry provides standardized data definitions for individual credential attributes, while Taxonomy defines hierarchical classification (domains, purposes) that are then referenced in the Digital Credentials Catalog for specific credential implementations. All participants leverage these registries for capability declarations and issuance/verification requirements.
 
         b. **AS Registry Integration**: Authentic Sources registered with their declared claims and capability, enabling CI discovery and coordination.
 
@@ -53,7 +53,13 @@ Authentic Source Registration Process
 
 Authentic Source registration allows data providers to establish their authoritative role in the Digital Credential ecosystem through the registration of their data capabilities and standardized access mechanisms based on the Claims Registry and Taxonomy classifications.
 
-Authentic Source entities MUST undergo registration procedures that validate their data authority, declare their available claims from the standardized Claims Registry, and establish technical integration mechanisms. Authentic Source entities specify intended use cases that determine catalog eligibility per Supervisory Body policies. Public Authentic Sources MUST leverage PDND integration to provide government data through standardized national infrastructure, while Private Authentic Sources MAY establish custom service interfaces that accommodate specific organizational or regulatory requirements. Both pathways MUST assure data quality standards and establish audit trails for all data provisioning activities.
+Authentic Source entities MUST undergo registration procedures that validate their data authority, declare their available claims from the standardized Claims Registry, and establish technical integration mechanisms. Authentic Source entities specify intended use cases (formally purposes) that determine catalog eligibility per Supervisory Body policies. 
+
+Public Authentic Sources MUST leverage PDND integration to provide government data through standardized national infrastructure.
+
+Private Authentic Sources MAY establish custom service interfaces that accommodate specific organizational or regulatory requirements. 
+
+Both pathways MUST assure data quality standards and establish audit trails for all data provisioning activities.
 
 **AS-CI Coordination Process**: Following AS registration, Credential Issuers identify suitable AS entities through the AS Registry and request integration authorization during the administrative registration phase. For regulatory mandates, authorization MUST be automatic. Otherwise, Authentic Sources entities evaluate and authorize Credential Issuers requests based on business and technical criteria. Following administrative authorization, technical integration procedures establish the operational data access relationships before credential type catalog publication.
 
@@ -164,7 +170,7 @@ The IT-Wallet Registry system coordinates all registrations through five main co
     2. **AS Registry** for data sources and capabilities.
     3. **Federation Registry** for operational trust relationships.
     4. **Digital Credentials Catalog** (see :ref:`registry:Digital Credentials Catalog`) for credential type discovery.
-    5. **Taxonomy** for hierarchical classification organizing claims and credentials by domain, category, and purpose.
+    5. **Taxonomy** for hierarchical classification organizing credentials by domain and purpose.
 
 The following journey maps illustrate two distinct credential scenarios:
 
@@ -181,12 +187,12 @@ Authentic Source Operator Journey
 
 ..     Authentic Source registration process and Supervisory Body interactions
 
-From the Authentic Source operator perspective, the onboarding process begins with evaluating existing data capabilities against the standardized Claims Registry and Taxonomy classifications, determining which user attributes can be made available as a Digital Credential. The operator submits a registration request to the Supervisory Body, declaring specific claims from the Claims Registry with their corresponding Taxonomy domains, categories, and intended purposes.
+From the Authentic Source operator perspective, the onboarding process begins with evaluating existing data capabilities against the standardized Claims Registry and Taxonomy classifications, determining which user attributes can be made available as a Digital Credential. The operator submits a registration request to the Supervisory Body, declaring specific claims from the Claims Registry with the Taxonomy domains and intended purposes.
 
 **Example - Public Authentic Source (mDL Scenario)**:
 
     - **Claims Declaration**: Selects standardized claims (``given_name``, ``family_name``, ``driving_privileges``, etc. ) from Claims Registry.
-    - **Taxonomy Classification**: Domain ``AUTHORIZATION``, Category ``DRIVING_LICENSE``, Purpose ``driving-authorization``.
+    - **Taxonomy Classification**: Domain ``AUTHORIZATION``, Purpose ``DRIVING_LICENSE``.
     - **Use Case**: Public service - driving authorization verification (eligible for Credential Catalog).
     - **Integration**: PDND e-service integration following government standards (see :ref:`e-service-pdnd:e-Service PDND`).
     - **Catalog Outcome**: mDL becomes publicly discoverable after CI integration.
@@ -194,7 +200,7 @@ From the Authentic Source operator perspective, the onboarding process begins wi
 **Example - Corporate AS (Employee Badge Scenario)**:
 
     - **Claims Declaration**: Selects claims (``given_name``, ``family_name``, ``employee.job_title``, etc.) from Claims Registry.
-    - **Taxonomy Classification**: Domain ``MEMBERSHIP``, Category ``ASSOCIATION``, Purpose ``corporate-access``.
+    - **Taxonomy Classification**: Domain ``MEMBERSHIP``, Purpose ``ASSOCIATION``.
     - **Use Case**: Private corporate access control (non-eligible for Credential Catalog).
     - **Integration**: Custom API for Credential Issuer integration.
     - **Catalog Outcome**: Badge remains private, available only via Credential Offer.
@@ -278,7 +284,7 @@ Relying Party operators begin by identifying which EAA types are required for th
     - **Authorization Request**: Driving authorization verification for rental eligibility.
     - **Claims Requirements**: ``given_name``, ``family_name``, ``driving_privileges``, etc., from mDL.
     - **Use Case Justification**: Legal obligation to verify valid driving license before vehicle rental.
-    - **Authorization Scope**: Granted access to ``AUTHORIZATION`` domain, ``DRIVING_LICENSE`` category, ``driving-authorization`` purpose.
+    - **Authorization Scope**: Granted access to ``AUTHORIZATION`` domain, ``DRIVING_LICENSE`` purpose.
 
 **Example - Municipal Services (Public RP)**:
 
@@ -294,13 +300,13 @@ Relying Party operators begin by identifying which EAA types are required for th
     - **Authorization Request**: Employee verification for corporate facility access.
     - **Claims Requirements**: ``given_name``, ``family_name``, ``employee.job_title`` from Corporate Employee Badge.
     - **Use Case Justification**: Workplace security requiring employee identification and access control.
-    - **Authorization Scope**: Granted access to ``MEMBERSHIP`` domain, ``ASSOCIATION`` category, ``corporate-access`` purpose.
+    - **Authorization Scope**: Granted access to ``MEMBERSHIP`` domain, ``ASSOCIATION`` purpose.
     - **Credential Discovery**: Badge available only via private Credential Offer (non-eligible for Credential Catalog).
 
 
 Technical integration focuses on developing authentication flows that can verify Digital Credentials presented by Users. This includes implementing cryptographic verification mechanisms and establishing secure communication channels with the federation infrastructure.
 
-Service authorization by the Supervisory Body MUST involve policy-based evaluation that considers organizational type (private vs public administration), business sector classification, and legitimate service requirements. The authorization process grants specific operational scopes that define which credential domains, categories, and purposes the Relying Party can request. Following approval, the Relying Party is registered in the Federation Registry with clearly defined authorization boundaries for Digital Credentials and User's attributes acceptance.
+Service authorization by the Supervisory Body MUST involve policy-based evaluation that considers organizational type (private vs public administration), business sector classification, and legitimate service requirements. The authorization process grants specific operational scopes that define which credential domains and purposes the Relying Party can request. Following approval, the Relying Party is registered in the Federation Registry with clearly defined authorization boundaries for Digital Credentials and User's attributes acceptance.
 
 
 End User Experience Journey

@@ -72,7 +72,7 @@ The onboarding process follows a structured multi-phase approach:
   3. **IT-Wallet Registry Integration**:
 
     - **Claims Registry Integration**: Authentic Sources select standardized claim definitions from Claims Registry during capability declaration.
-    - **Taxonomy Integration**: All entities use Taxonomy hierarchical classification (domains, categories, purposes) for organizational structure.
+    - **Taxonomy Integration**: All entities use Taxonomy hierarchical classification (domains, purposes) for organizational structure to categorize Credentials.
     - **AS Registry Integration**: Authentic Sources registered with their declared claims and capabilities, enabling CI discovery and coordination.
     - **Federation Registry Integration**: Operational entities included for trust validation during credential operations.
     - **Catalog Integration**: Credential types published in :ref:`registry:Digital Credentials Catalog Structure` based on supervisory body policies for public discovery eligibility.
@@ -93,7 +93,6 @@ Authentic Sources MUST comply with the following technical requirements to ensur
   - **Claims Compliance**:
 
     - **Claims Registry Adoption**: The Entities MUST use standardized Claims Registry identifiers in data responses without custom claim mapping.
-    - **Taxonomy Classification**: The entities MUST classify their data authority within the appropriate domain, category, and purpose structure.
 
   - **API Integration Standards**:
 
@@ -131,10 +130,10 @@ During registration, Authentic Sources MUST provide the following information:
        - Administrative identifier codes such as IPA registration code (REQUIRED only for public Authentic Sources) and legal identifier (Fiscal Code/VAT Number).
        - Contact Information including technical and administrative contact email addresses, homepage URI, privacy policy URI, etc.
    * - **Data Capabilities Declaration**
-     - **REQUIRED**. Available claims with Domain and Category mapping:
+     - **REQUIRED**. Available claims with Domain and Purpose mapping:
 
        - Array of claim identifiers from Claims Registry that the Authentic Source provides (e.g., ``["given_name", "family_name", "driving_privileges"]``).
-       - Taxonomy classification for Authentic Source scope (e.g., ``AUTHORIZATION`` domain, ``DRIVING_LICENSE`` category and ``["driving-authorization", "identity-verification"]`` purposes).
+       - Taxonomy classification for Authentic Source scope (e.g., ``[AUTHORIZATION]`` domains and ``["DRIVING_LICENSE"]`` purposes).
       
    * - **API Implementation Details**
      - **REQUIRED**. Integration information details:
@@ -184,9 +183,8 @@ The Authentic Source registration follows a technical process as described below
      },
      "data_capabilities": [
        {
-         "domain": "AUTHORIZATION",
-         "category": "DRIVING_LICENSE",
-         "intended_purposes": ["driving-authorization", "identity-verification"],
+         "domains": ["IDENTITY", "AUTHORIZATION"],
+         "intended_purposes": ["DRIVING_LICENSE"],
          "available_claims": [
            "given_name", "family_name", "birth_date", "birth_place",
            "issue_date", "expiry_date", "document_number", "driving_privileges"
@@ -212,7 +210,7 @@ The Authentic Source registration follows a technical process as described below
 **Step 2 - Technical Validation**: Supervisory Body validates submitted registration focusing on:
 
   - **Claims Registry Compliance**: Validation of claims format, identifiers, and existence in Claims Registry.
-  - **Taxonomy Validation**: Verification that declared domains, categories, and purposes are valid taxonomy entries.
+  - **Taxonomy Validation**: Verification that declared domains, and purposes are valid taxonomy entries.
   - **API Integration Verification**:
 
     - **Public Entities**: PDND e-service specification compliance verification
@@ -565,7 +563,7 @@ The Trust Mark JWT (contained in the ``trust_mark`` claim above) includes the fo
      - **OPTIONAL**. URL with additional web information about the Trust Mark.
 
 
-The following non-normative examples illustrate different Trust Mark JWT content for federation membership and authorization policies:
+The following non-normative examples illustrate different Trust Mark JWT contents for federation membership and different authorization policies:
 
 .. code-block:: json
 
@@ -603,8 +601,30 @@ The following non-normative examples illustrate different Trust Mark JWT content
      "authorized_credential_types": ["mobile-driving-license"],
      "scope_restrictions": {
        "domains": ["AUTHORIZATION"],
-       "categories": ["DRIVING_LICENSE"],
-       "purposes": ["driving-authorization"]
+       "purposes": ["DRIVING_LICENSE"]
+     }
+   }
+
+.. code-block:: json
+
+   {
+     "iss": "https://trust-anchor.eid-wallet.example.it",
+     "sub": "https://private-badge.ci.example.com",
+     "id": "https://trust-anchor.eid-wallet.example.it/trust_marks/authorization_policy/credential-issuer",
+     "iat": 1718207217,
+     "exp": 1749743216,
+     "organization_type": "private",
+     "id_code": {
+       "vat_number": "IT98765432101",
+       "legal_identifier": "98765432101"
+     },
+     "organization_name": "Badge Services Ltd",
+     "email": "compliance@rprivate-badge.ci.example.com",
+     "authorized_claims": ["given_name", "family_name", "company_id"],
+     "authorized_credential_types": ["example-company-badge"],
+     "scope_restrictions": {
+       "domains": ["MEMBERSHIP"],
+       "purposes": ["ASSOCIATION"]
      }
    }
 

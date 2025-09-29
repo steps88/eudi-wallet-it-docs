@@ -9,8 +9,6 @@ The IT-Wallet ecosystem is built on a multi-layered architecture, where governan
 
 The following diagrams depict the IT-Wallet architecture overview.
 
-
-
 .. plantuml:: plantuml/architecture-overview-governance.puml
     :width: 99%
     :alt: The image illustrates the IT-Wallet architecture overvew - governance.

@@ -15,27 +15,16 @@
       "id": "IDENTITY",
       "name_l10n_id": "domain.identity.name",
       "description_l10n_id": "domain.identity.description",
-      "categories": [
+      "purposes": [
         {
           "id": "PERSON_IDENTIFICATION",
-          "name_l10n_id": "category.person_identification.name",
-          "description_l10n_id": "category.person_identification.description",
-          "purposes": [
-            "identity-verification",
-            "person-identification",
-            "age-verification",
-            "legal-verification"
-          ]
+          "name_l10n_id": "purpose.person_identification.name",
+          "description_l10n_id": "purpose.person_identification.description"
         },
         {
           "id": "ELECTRONIC_RESIDENCY",
-          "name_l10n_id": "category.electronic_residency.name",
-          "description_l10n_id": "category.electronic_residency.description",
-          "purposes": [
-            "residence-verification",
-            "address-confirmation",
-            "legal-domicile"
-          ]
+          "name_l10n_id": "purpose.electronic_residency.name",
+          "description_l10n_id": "purpose.electronic_residency.description"
         }
       ]
     },
@@ -43,47 +32,26 @@
       "id": "AUTHORIZATION",
       "name_l10n_id": "domain.authorization.name",
       "description_l10n_id": "domain.authorization.description",
-      "categories": [
+      "purposes": [
         {
           "id": "DRIVING_LICENSE",
-          "name_l10n_id": "category.driving_license.name",
-          "description_l10n_id": "category.driving_license.description",
-          "purposes": [
-            "driving-authorization",
-            "identity-verification",
-            "age-verification",
-            "law-enforcement"
-          ]
+          "name_l10n_id": "purpose.driving_license.name",
+          "description_l10n_id": "purpose.driving_license.description"
         },
         {
           "id": "PROFESSIONAL_LICENSE",
-          "name_l10n_id": "category.professional_license.name",
-          "description_l10n_id": "category.professional_license.description",
-          "purposes": [
-            "professional-qualification",
-            "service-authorization",
-            "regulatory-compliance"
-          ]
+          "name_l10n_id": "purpose.professional_license.name",
+          "description_l10n_id": "purpose.professional_license.description"
         },
         {
           "id": "TRAVEL_DOCUMENT",
-          "name_l10n_id": "category.travel_document.name",
-          "description_l10n_id": "category.travel_document.description",
-          "purposes": [
-            "travel-authorization",
-            "border-control",
-            "identity-verification"
-          ]
+          "name_l10n_id": "purpose.travel_document.name",
+          "description_l10n_id": "purpose.travel_document.description"
         },
         {
           "id": "ACCESS_PERMIT",
-          "name_l10n_id": "category.access_permit.name",
-          "description_l10n_id": "category.access_permit.description",
-          "purposes": [
-            "access-control",
-            "facility-authorization",
-            "security-clearance"
-          ]
+          "name_l10n_id": "purpose.access_permit.name",
+          "description_l10n_id": "purpose.access_permit.description"
         }
       ]
     },
@@ -91,36 +59,21 @@
       "id": "EDUCATION",
       "name_l10n_id": "domain.education.name",
       "description_l10n_id": "domain.education.description",
-      "categories": [
+      "purposes": [
         {
           "id": "ACADEMIC_DEGREE",
-          "name_l10n_id": "category.academic_degree.name",
-          "description_l10n_id": "category.academic_degree.description",
-          "purposes": [
-            "education-verification",
-            "qualification-proof",
-            "academic-recognition"
-          ]
+          "name_l10n_id": "purpose.academic_degree.name",
+          "description_l10n_id": "purpose.academic_degree.description"
         },
         {
           "id": "CERTIFICATE",
-          "name_l10n_id": "category.certificate.name",
-          "description_l10n_id": "category.certificate.description",
-          "purposes": [
-            "certification-proof",
-            "skill-verification",
-            "training-completion"
-          ]
+          "name_l10n_id": "purpose.certificate.name",
+          "description_l10n_id": "purpose.certificate.description"
         },
         {
           "id": "TRAINING_RECOGNITION",
-          "name_l10n_id": "category.training_recognition.name",
-          "description_l10n_id": "category.training_recognition.description",
-          "purposes": [
-            "professional-development",
-            "continuing-education",
-            "skill-validation"
-          ]
+          "name_l10n_id": "purpose.training_recognition.name",
+          "description_l10n_id": "purpose.training_recognition.description"
         }
       ]
     },
@@ -128,36 +81,21 @@
       "id": "HEALTH",
       "name_l10n_id": "domain.health.name",
       "description_l10n_id": "domain.health.description",
-      "categories": [
+      "purposes": [
         {
           "id": "INSURANCE_CARD",
-          "name_l10n_id": "category.insurance_card.name",
-          "description_l10n_id": "category.insurance_card.description",
-          "purposes": [
-            "healthcare-access",
-            "insurance-verification",
-            "medical-services"
-          ]
+          "name_l10n_id": "purpose.insurance_card.name",
+          "description_l10n_id": "purpose.insurance_card.description"
         },
         {
           "id": "DISABILITY_CARD",
-          "name_l10n_id": "category.disability_card.name",
-          "description_l10n_id": "category.disability_card.description",
-          "purposes": [
-            "accessibility-services",
-            "benefit-eligibility",
-            "accommodation-requests"
-          ]
+          "name_l10n_id": "purpose.disability_card.name",
+          "description_l10n_id": "purpose.disability_card.description"
         },
         {
           "id": "MEDICAL_PRESCRIPTION",
-          "name_l10n_id": "category.medical_prescription.name",
-          "description_l10n_id": "category.medical_prescription.description",
-          "purposes": [
-            "medication-authorization",
-            "treatment-verification",
-            "pharmacy-access"
-          ]
+          "name_l10n_id": "purpose.medical_prescription.name",
+          "description_l10n_id": "purpose.medical_prescription.description"
         }
       ]
     },
@@ -165,56 +103,31 @@
       "id": "FINANCIAL",
       "name_l10n_id": "domain.financial.name",
       "description_l10n_id": "domain.financial.description",
-      "categories": [
+      "purposes": [
         {
           "id": "INCOME_CERTIFICATE",
-          "name_l10n_id": "category.income_certificate.name",
-          "description_l10n_id": "category.income_certificate.description",
-          "purposes": [
-            "income-verification",
-            "credit-assessment",
-            "benefit-eligibility"
-          ]
+          "name_l10n_id": "purpose.income_certificate.name",
+          "description_l10n_id": "purpose.income_certificate.description"
         },
         {
           "id": "TAX_STATEMENT",
-          "name_l10n_id": "category.tax_statement.name",
-          "description_l10n_id": "category.tax_statement.description",
-          "purposes": [
-            "tax-compliance",
-            "financial-verification",
-            "income-proof"
-          ]
+          "name_l10n_id": "purpose.tax_statement.name",
+          "description_l10n_id": "purpose.tax_statement.description"
         },
         {
           "id": "FAMILY_ECONOMIC_STATUS",
-          "name_l10n_id": "category.family_economic_status.name",
-          "description_l10n_id": "category.family_economic_status.description",
-          "purposes": [
-            "social-benefits",
-            "family-support",
-            "economic-assessment"
-          ]
+          "name_l10n_id": "purpose.family_economic_status.name",
+          "description_l10n_id": "purpose.family_economic_status.description"
         },
         {
           "id": "BANK_ACCOUNT",
-          "name_l10n_id": "category.bank_account.name",
-          "description_l10n_id": "category.bank_account.description",
-          "purposes": [
-            "financial-verification",
-            "credit-assessment",
-            "account-validation"
-          ]
+          "name_l10n_id": "purpose.bank_account.name",
+          "description_l10n_id": "purpose.bank_account.description"
         },
         {
           "id": "PAYMENT_HISTORY",
-          "name_l10n_id": "category.payment_history.name",
-          "description_l10n_id": "category.payment_history.description",
-          "purposes": [
-            "credit-assessment",
-            "income-verification",
-            "financial-analysis"
-          ]
+          "name_l10n_id": "purpose.payment_history.name",
+          "description_l10n_id": "purpose.payment_history.description"
         }
       ]
     },
@@ -222,36 +135,21 @@
       "id": "MEMBERSHIP",
       "name_l10n_id": "domain.membership.name",
       "description_l10n_id": "domain.membership.description",
-      "categories": [
+      "purposes": [
         {
           "id": "ASSOCIATION",
-          "name_l10n_id": "category.association.name",
-          "description_l10n_id": "category.association.description",
-          "purposes": [
-            "membership-verification",
-            "association-benefits",
-            "community-access"
-          ]
+          "name_l10n_id": "purpose.association.name",
+          "description_l10n_id": "purpose.association.description"
         },
         {
           "id": "LOYALTY_PROGRAM",
-          "name_l10n_id": "category.loyalty_program.name",
-          "description_l10n_id": "category.loyalty_program.description",
-          "purposes": [
-            "reward-redemption",
-            "customer-benefits",
-            "program-participation"
-          ]
+          "name_l10n_id": "purpose.loyalty_program.name",
+          "description_l10n_id": "purpose.loyalty_program.description"
         },
         {
           "id": "CLUB_MEMBERSHIP",
-          "name_l10n_id": "category.club_membership.name",
-          "description_l10n_id": "category.club_membership.description",
-          "purposes": [
-            "club-access",
-            "member-services",
-            "privilege-verification"
-          ]
+          "name_l10n_id": "purpose.club_membership.name",
+          "description_l10n_id": "purpose.club_membership.description"
         }
       ]
     },
@@ -259,36 +157,21 @@
       "id": "ATTESTATION",
       "name_l10n_id": "domain.attestation.name",
       "description_l10n_id": "domain.attestation.description",
-      "categories": [
+      "purposes": [
         {
           "id": "PUBLIC_STATEMENT",
-          "name_l10n_id": "category.public_statement.name",
-          "description_l10n_id": "category.public_statement.description",
-          "purposes": [
-            "official-declaration",
-            "legal-attestation",
-            "public-record"
-          ]
+          "name_l10n_id": "purpose.public_statement.name",
+          "description_l10n_id": "purpose.public_statement.description"
         },
         {
           "id": "CIVIL_STATUS",
-          "name_l10n_id": "category.civil_status.name",
-          "description_l10n_id": "category.civil_status.description",
-          "purposes": [
-            "marital-verification",
-            "family-status",
-            "legal-relationships"
-          ]
+          "name_l10n_id": "purpose.civil_status.name",
+          "description_l10n_id": "purpose.civil_status.description"
         },
         {
           "id": "CERTIFICATION",
-          "name_l10n_id": "category.certification.name",
-          "description_l10n_id": "category.certification.description",
-          "purposes": [
-            "quality-assurance",
-            "compliance-verification",
-            "standard-confirmation"
-          ]
+          "name_l10n_id": "purpose.certification.name",
+          "description_l10n_id": "purpose.certification.description"
         }
       ]
     }

@@ -253,8 +253,6 @@ Ogni elemento dell'array ``credentials`` contiene almeno le seguenti informazion
 
       * **id**: Identificativo univoco per lo scopo (es., "driving-authorization", "person-identification").
       * **description**: Descrizione *human-readable* dello scopo con un suffisso ``_l10n_id`` per la localizzazione del contenuto.
-      * **category**: Categoria principale nella tassonomia dell'Attestato Elettronico (es., ``AUTHORIZATION``, ``IDENTITY``).
-      * **subcategory**: Sottocategoria all'interno della tassonomia (es., ``DRIVING_LICENSE``, ``PERSON_IDENTIFICATION``).
       * **claims_required**: Array di identificativi di claims che sono richiesti quando si utilizza l'Attestato Elettronico per questo scopo.
       * **claims_recommended**: Array di identificativi di claims che sono raccomandati ma non obbligatori per questo scopo.
   * - **issuers**
@@ -302,7 +300,6 @@ Ogni elemento dell'array ``credentials`` contiene almeno le seguenti informazion
     - OBBLIGATORIO. Array di attributi contenuti nell'Attestato Elettronico. DEVE includere almeno le seguenti claims:
 
       * **name**: Il nome della claim nell'Attestato Elettronico.
-      * **taxonomy_ref**: Stringa contenente il percorso al tipo di claim come definito in :ref:`it-wallet-dc-domains`.
       * **namespaces**: CONDIZIONALE. Namespace a cui appartiene la claim.
       * **display_name_l10n_id**: OPZIONALE. Nome della claim leggibile dall'uomo con un suffisso ``_l10n_id`` per la gestione della localizzazione del contenuto.
 
@@ -382,7 +379,7 @@ Il Catalogo degli Attestati Elettronici DEVE includere anche un URI di riferimen
 
 Un esempio non normativo della Tassonomia degli Attributi è fornito di seguito.
 
-.. literalinclude:: ../../examples/catalogue-claims-taxonomy.json
+.. literalinclude:: ../../examples/catalog-claims-taxonomy.json
   :language: JSON
 
 

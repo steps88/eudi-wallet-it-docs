@@ -16,9 +16,8 @@
     },
     "data_capabilities": [
       {
-        "domain": "AUTHORIZATION",
-        "category": "DRIVING_LICENSE",
-        "intended_purposes": ["driving-authorization", "identity-verification"],
+        "domains": ["IDENTITY", "AUTHORIZATION"],
+        "intended_purposes": ["DRIVING_LICENSE", "PERSON_IDENTIFICATION"],
         "available_claims": [
           "given_name", "family_name", "birth_date", "birth_place",
           "issue_date", "expiry_date", "document_number", "driving_privileges",
@@ -58,9 +57,8 @@
     },
     "data_capabilities": [
       {
-        "domain": "FINANCIAL",
-        "category": "BANK_ACCOUNT",
-        "intended_purposes": ["financial-verification", "credit-assessment"],
+        "domains": ["FINANCIAL"],
+        "intended_purposes": ["BANK_ACCOUNT", "INCOME_CERTIFICATE"],
         "available_claims": [
           "given_name", "family_name", "birth_date", "tax_code",
           "account_holder_name", "iban", "account_status", "account_opening_date",
@@ -76,9 +74,8 @@
         "update_frequency": "daily"
       },
       {
-        "domain": "FINANCIAL",
-        "category": "PAYMENT_HISTORY",
-        "intended_purposes": ["credit-assessment", "income-verification"],
+        "domains": ["FINANCIAL"],
+        "intended_purposes": ["PAYMENT_HISTORY"],
         "available_claims": [
           "given_name", "family_name", "tax_code",
           "transaction_history", "average_balance", "credit_score_indicator"
