@@ -3,16 +3,17 @@
 eID Substantial Authentication with MRTD Verification for PID Issuance
 =======================================================================
 
-This Section defines an eID Substantial Authentication with MRTD Verification protocol that integrates within the PID issuance flow as defined in the Section :ref:`credential-issuance-low-level:Credential Issuance Low-Level Flows` extends OAuth2 flows to include:
+This Section defines an eID Substantial Authentication with MRTD Verification protocol that integrates within the PID issuance flow as defined in the Section :ref:`credential-issuance-low-level:Credential Issuance Low-Level Flows` extending OAuth2 flows to include:
 
 	- Electronic identification with Level of Assurance "Substantial" (LoA3) as the primary authentication step.
-	- Electronic document verification as an additional authentication mechanism.
+	- Electronic document verification as an additional identity verification layer.
 	- Session correlation and security binding between authentication steps.
-	- Integration with credential issuance flows.
+	- Integration with Credential issuance flows.
 
-While CIE ID with LoA High authentication remains the primary method for Wallet activation and PID issuance, the eID Substantial Authentication with MRTD Verification mechanism defined in this Section provides an alternative approach to enhance service accessibility and usability, without compromising the overall security of the IT-Wallet ecosystem.
+While CIEid with LoA High authentication remains the primary method for Wallet activation and PID issuance, the eID Substantial Authentication with MRTD Verification mechanism defined in this Section provides an alternative approach to enhance service accessibility and usability, without compromising the overall security of the IT-Wallet ecosystem.
 
-This Section currently only supports the CIE for the MRTD verification protocol.
+.. note::
+  This Section currently only supports the CIE id card for the MRTD verification protocol, but the protocol described in this Section may be extended to support other MRTD Documents such as Electronic Passports.
 
 Design Principles
 -----------------
@@ -29,14 +30,14 @@ System Architecture
 
 The system architecture comprises the following main components:
 
-	- **Wallet Instance:** I handles the PID request according to IT-Wallet Specification, supporting additional cryptographic capabilities for MRTD/IAS Electronic Document reading according to ICAO 9303 and BSI-03110 specifications.
+	- **Wallet Instance:** It handles the PID request according to IT-Wallet Specification, supporting additional cryptographic capabilities for MRTD/IAS Electronic Document reading according to ICAO 9303 and BSI-03110 specifications.
 	- **eID Substantial Authentication with MRTD Verification System:** Orchestrates the authentication flow, integrating LoA3 Identity Providers, Electronic Document Verification Service, and performing all the identity correlation checks to guarantee that the User requesting a PID is the same authenticated User.
 
-		- **PID Authorization Server:** Handles the authorization flow for PID Issuance according to IT-Wallet Specification, coordinating the User authentication and the remote identity proofing.
+		- **PID Authorization Server:** Handles the authorization flow for PID Issuance, coordinating the User authentication and the remote identity proofing.
 		- **MRTD PoP Service:** Handles electronic document proof of possession with cryptographic document validation.
 
 	- **LoA3 Identity Provider:** Provides Electronic Identification Schemes with eIDAS LoA3 compliance (CIEid and SPID).
-	- **CIE National Registry:** Provide privacy-preserved evidence of the binding between NIS and User's Tax payer's identification number required for the MRTD PoP verification and, optionally, the MRZ data (document number, date of birth,expiry date, citizenship and gender) to improve the user experience. It also provides information related to the validity status of the document. It acts as the authoritative source for the CIE.
+	- **CIE National Registry:** Provides privacy-preserved evidence of the binding between NIS and User's Tax payer's identification number required for the MRTD verification and, optionally, the MRZ data (document number, date of birth,expiry date, citizenship and gender) to improve the user experience. It also provides information related to the validity status of the document. It acts as the authoritative source for the CIE.
 
 .. _fig_eID_MRTD_System_Architecture:
 .. plantuml:: plantuml/l2plus-system-architecture.puml
@@ -51,7 +52,7 @@ The protocol consists of the following sequential phases:
 
 1. **OAuth Authorization Request**: PAR and authorization request with eID Substantial Authentication with MRTD Verification requirements.
 2. **Primary Authentication**: LoA3 electronic identification (SPID/CIEid L2).
-3. **MRTD PoP Validation**: Electronic document reading and cryptographic verification (Proof of Possession, integrity, and authenticity checks).
+3. **MRTD Proof of Possession (PoP) Validation**: Electronic document reading and cryptographic verification (Proof of Possession, integrity, and authenticity checks).
 4. **OAuth Authorization Response**: Final authorization code issuance.
 
 .. _fig_eID_MRTD_High_Level_Flow:
@@ -140,10 +141,10 @@ The Authorization Server MUST provide a signed JWT containing the challenge requ
      - **Description**
    * - **alg**
      - string
-     - REQUIRED. Signature algorithm
+     - REQUIRED. Signature algorithm.
    * - **typ**
      - string
-     - REQUIRED. It MUST be "mrtd+ias+jwt"
+     - REQUIRED. It MUST be ``mrtd+ias+jwt``.
    * - **kid**
      - string
      - REQUIRED. Identifier of the PID Provider's key that MUST be used to verify the signature of this JWT.
@@ -158,43 +159,43 @@ The Authorization Server MUST provide a signed JWT containing the challenge requ
      - **Description**
    * - **iss**
      - string
-     - REQUIRED. PID Provider identifier
+     - REQUIRED. PID Provider identifier.
    * - **aud**
      - string
-     - REQUIRED. Wallet Instance identifier
+     - REQUIRED. Wallet Instance identifier.
    * - **iat**
      - integer
-     - REQUIRED. Issuance time (Unix timestamp)
+     - REQUIRED. Issuance time (Unix timestamp).
    * - **exp**
      - integer
-     - REQUIRED. Expiration time (Unix timestamp)
+     - REQUIRED. Expiration time (Unix timestamp).
    * - **status**
      - string
-     - REQUIRED. Challenge status. MUST be "require_interaction"
+     - REQUIRED. Challenge status. MUST be ``require_interaction``.
    * - **type**
      - string
-     - REQUIRED. Type of the required interaction. It MUST be set to "mrtd+ias"
+     - REQUIRED. Type of the required interaction. It MUST be set to ``mrtd+ias``.
    * - **auth_session**
      - string
-     - REQUIRED. Session identifier
+     - REQUIRED. Session identifier.
    * - **state**
      - string
-     - REQUIRED. MUST be the same value as in the initial Request Object
+     - REQUIRED. MUST be the same value as in the initial Request Object.
    * - **nonce**
      - string
      - REQUIRED. Nonce value for replay protection. It MUST be obtained by the MRTD PoP Service that MUST have direct control over this value.
    * - **htu**
      - string
-     - REQUIRED. HTTP URI of the MRTD PoP initialization endpoint
+     - REQUIRED. HTTP URI of the MRTD PoP initialization endpoint.
    * - **htm**
      - string
-     - REQUIRED. HTTP method for the MRTD PoP initialization request. MUST be "POST"
+     - REQUIRED. HTTP method for the MRTD PoP initialization request. MUST be ``POST``.
 
 The Wallet Instance MUST:
 
 	- Validate the JWT signature using the PID Provider's public key obtained through trust evaluation.
 	- Verify that the ``status`` field is set to "require_interaction".
-	- Verify the authentication type matches the expected value "mrtd+ias".
+	- Verify the authentication type matches the expected value ``mrtd+ias``.
 	- Extract HTTP target URI (``htu``) and method (``htm``) for the next step.
 	- Handle JWT validation and network errors, and provide user feedback with appropriate retry mechanisms.
 
@@ -213,10 +214,10 @@ The Wallet Instance MUST send an HTTP POST Request to the MRTD PoP Service initi
      - **Description**
    * - **auth_session**
      - string
-     - REQUIRED. Session identifier for session binding
+     - REQUIRED. Session identifier for session binding.
    * - **nonce**
      - string
-     - REQUIRED. Nonce value obtained from the MRTD Proof JWT
+     - REQUIRED. Nonce value obtained from the MRTD Proof JWT.
 
 Below a non-normative example of an MRTD PoP Request:
 
@@ -253,7 +254,7 @@ The MRTD PoP Service MAY request the MRZ information (document number, date of b
 MRTD PoP Response
 """""""""""""""""
 
-If the Request is successfully processed, the MRTD PoP Service MUST send a HTTP Response with code 202 Accepted and ``application/json`` as content type. The payload of the JSON response contains the parameters included in the following table:
+If the HTTP Request is successfully processed, the MRTD PoP Service MUST send a HTTP Response with code *202 Accepted* and ``application/json`` as content type. The payload of the JSON response contains the parameters included in the following table:
 
 .. _table_eID_MRTD_PoP_Response:
 .. list-table:: MRTD PoP Response Parameters
@@ -271,7 +272,7 @@ If the Request is successfully processed, the MRTD PoP Service MUST send a HTTP 
      - REQUIRED. Unique nonce value for the next step, preventing replay attacks.
    * - **mrz**
      - string
-     - OPTIONAL. Machine Readable Zone information including document number, date of birth, expiry date, citizenship and gender
+     - OPTIONAL. Machine Readable Zone information including document number, date of birth, expiry date, citizenship and gender.
 
 Below a non-normative example of an MRTD PoP Response:
 
@@ -289,7 +290,7 @@ Below a non-normative example of an MRTD PoP Response:
 **The MRTD PoP Service MUST:**
 
 	- Generate cryptographically secure challenge data for ``MRTD+IAS`` validation with sufficient entropy (to be used in Anti-Cloning Internal Authentication protocol by the Wallet Instance), storing it with an appropriate expiration time. Moreover, the MRTD PoP Service MUST ensure challenge uniqueness to prevent reuse attacks.
-	- Create a new unique nonce for the next step to prevent replay attacks.
+	- Create a new unique ``nonce`` for the next step to prevent replay attacks.
 	- Validate session continuity by ensuring the ``auth_session`` parameter corresponds to an active session.
 	- Return HTTP *202 Accepted* status to indicate asynchronous processing initiation.
 	- Include proper Content-Type header (``application/json; charset=utf-8``).
@@ -324,13 +325,13 @@ Upon all the evidence has been collected through NFC interaction with the Electr
      - **Description**
    * - **mrtd_validation_jwt**
      - string
-     - REQUIRED. JWT containing document evidence, cryptographic proofs, Data Groups, and validation results
+     - REQUIRED. JWT containing document evidence, cryptographic proofs, Data Groups (DGs), and validation results.
    * - **auth_session**
      - string
-     - REQUIRED. Session identifier for session binding
+     - REQUIRED. Session identifier for session binding.
    * - **nonce**
      - string
-     - REQUIRED. MUST match the value obtained from the MRTD PoP Response
+     - REQUIRED. MUST match the value obtained from the MRTD PoP Response.
 
 Validation JWT Structure
 """"""""""""""""""""""""
@@ -347,10 +348,10 @@ The Validation JWT (``mrtd_validation_jwt``) structure is given in the following
      - **Description**
    * - **alg**
      - string
-     - REQUIRED. Signature algorithm
+     - REQUIRED. Signature algorithm.
    * - **typ**
      - string
-     - REQUIRED. It MUST be "mrtd+ias+jwt"
+     - REQUIRED. It MUST be ``mrtd+ias+jwt``.
    * - **kid**
      - string
      - REQUIRED. Identifier of the Wallet Instance's key that MUST be used to verify the signature of this JWT.
@@ -365,25 +366,25 @@ The Validation JWT (``mrtd_validation_jwt``) structure is given in the following
      - **Description**
    * - **iss**
      - string
-     - REQUIRED. Wallet Instance identifier
+     - REQUIRED. Wallet Instance identifier.
    * - **aud**
      - string
-     - REQUIRED. PID Provider identifier
+     - REQUIRED. PID Provider identifier.
    * - **iat**
      - integer
-     - REQUIRED. Issuance time (Unix timestamp)
+     - REQUIRED. Issuance time (Unix timestamp).
    * - **exp**
      - integer
-     - REQUIRED. Expiration time (Unix timestamp)
+     - REQUIRED. Expiration time (Unix timestamp).
    * - **document_type**
      - string
-     - REQUIRED. Type of document validated. MUST be set to "cie".
+     - REQUIRED. Type of document validated. MUST be set to ``cie``.
    * - **mrtd**
      - JSON Object
-     - REQUIRED. MRTD validation data containing Data Groups and SOD
+     - REQUIRED. MRTD validation data containing Data Groups and SOD.
    * - **ias**
      - JSON Object
-     - REQUIRED. IAS validation data containing NIS, Anti-Cloning Public Key, and SOD
+     - REQUIRED. IAS validation data containing NIS, Anti-Cloning Public Key, and SOD.
 
 MRTD Object Structure
 """""""""""""""""""""
@@ -400,13 +401,13 @@ The ``mrtd`` object contains the following fields:
      - **Description**
    * - **dg1**
      - string
-     - REQUIRED. Base64-encoded Data Group 1 (MRZ information:document number, date of birth, expiry date, citizenship and gender)
+     - REQUIRED. Base64-encoded Data Group 1 (MRZ information:document number, date of birth, expiry date, citizenship and gender).
    * - **dg11**
      - string
-     - REQUIRED. Base64-encoded Data Group 11 (additional personal data)
+     - REQUIRED. Base64-encoded Data Group 11 (additional personal data).
    * - **sod_mrtd**
      - string
-     - REQUIRED. Base64-encoded Security Object of Document for MRTD
+     - REQUIRED. Base64-encoded Security Object of Document for MRTD.
 
 IAS Object Structure
 """"""""""""""""""""
@@ -423,16 +424,16 @@ The ``ias`` object contains the following fields:
      - **Description**
    * - **nis**
      - string
-     - REQUIRED. NIS (Numero Identificativo Servizi) value
+     - REQUIRED. NIS (Service Identification Number) value.
    * - **ias_pk**
      - string
-     - REQUIRED. Base64-encoded IAS public key in DER format
+     - REQUIRED. Base64-encoded IAS public key in DER format.
    * - **sod_ias**
      - string
-     - REQUIRED. Base64-encoded Security Object of Document for IAS
+     - REQUIRED. Base64-encoded Security Object of Document for IAS.
    * - **challenge_signed**
      - string
-     - REQUIRED. Base64-encoded signed challenge response
+     - REQUIRED. Base64-encoded signed challenge response.
 
 Below a non-normative example of an MRTD PoP Validation Request:
 
@@ -489,7 +490,7 @@ Upon successful completion of all checks by the MRTD PoP Service, it MUST send t
      - **Description**
    * - **verification_nonce**
      - string
-     - REQUIRED. Final confirmation nonce for browser-based callback
+     - REQUIRED. Final confirmation nonce for browser-based callback.
 
 Below a non-normative example of an MRTD PoP Validation Response:
 
@@ -521,11 +522,11 @@ Upon successful completion of all authentication steps and identity correlation,
 Error Management
 ----------------
 
-The error management MUST follow the same rules as defined in the IT-Wallet Specification, regarding the formats and the related standard references.
+The error management MUST follow the same rules as defined in the Section :ref:`credential-issuer-endpoint:Credential Issuance Endpoints`, regarding the formats and the related standard references.
 
 During the MRTD PoP Validation flow, when recoverable errors occur, the MRTD PoP Service MAY generate and return a fresh nonce to enable the User to retry attempts while maintaining session security and preventing replay attacks.
 
-In addition to the error codes already defined in the IT-Wallet Specification, at least the following error codes MUST be supported.
+In addition to the error codes already defined in the Section :ref:`credential-issuer-endpoint:Credential Issuance Endpoints`, at least the following error codes MUST be supported.
 
 MRTD PoP Response Errors
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -537,8 +538,8 @@ MRTD PoP Response Errors
 
    * - **Error Code**
      - **Description**
-   * - temporarily_unavailable
-     - Document validation service or CIE Registry service is temporarily unavailable
+   * - **temporarily_unavailable**
+     - Document validation service or CIE Registry service is temporarily unavailable.
 
 MRTD PoP Validation Response Errors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -550,22 +551,22 @@ MRTD PoP Validation Response Errors
 
    * - **Error Code**
      - **Description**
-   * - invalid_client
-     - Wallet Instance authentication failed
-   * - invalid_request
+   * - **invalid_client**
+     - Wallet Instance authentication failed.
+   * - **invalid_request**
      - HTTP Validation Request or Validation JWT is invalid or malformed (due to a malformed structure, missing data, signature failure, request timeout, etc.).
-   * - access_denied
-     - User authentication or document validation failed
+   * - **access_denied**
+     - User authentication or document validation failed.
 
 HTTP Status Code Mapping
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Error responses MUST use appropriate HTTP status codes:
 
-	- **400 Bad Request**: For ``invalid_request`` errors
-	- **401 Unauthorized**: For ``invalid_client`` errors
-	- **403 Forbidden**: For ``access_denied`` errors
-	- **503 Service Unavailable**: For ``temporarily_unavailable`` errors
+	- **400 Bad Request**: For ``invalid_request`` errors.
+	- **401 Unauthorized**: For ``invalid_client`` errors.
+	- **403 Forbidden**: For ``access_denied`` errors.
+	- **503 Service Unavailable**: For ``temporarily_unavailable`` errors.
 
 Security Considerations
 -----------------------
@@ -606,56 +607,56 @@ The following security controls MUST be implemented in the protocol:
    * - **#**
      - **Description**
      - **Phase**
-   * - SC1
+   * - **SC1**
      - The network communication channels are protected by using TLS v1.2+ with secure ciphers.
      - All
-   * - SC2
+   * - **SC2**
      - The Wallet Instance ensures the authenticity of the PID Provider and the eID Identity Provider by pinning the leaf certificate of each server.
      - All
-   * - SC3
+   * - **SC3**
      - The PID Authorization Server verifies that the eID Identity Provider used within the *eID LoA3* phase is accredited.
      - Phase 2
-   * - SC4
+   * - **SC4**
      - The PID Authorization Server verifies the authenticity and integrity of the data extracted from the *eID LoA3* assertion, by checking the digital signature.
      - Phase 2
-   * - SC5
+   * - **SC5**
      - The challenge value and all nonce values are generated with safeguards to prevent bruteforce or guessing attacks.
      - Phase 3
-   * - SC6
+   * - **SC6**
      - The PID Provider verifies all the nonce values to detect replay attacks.
      - Phase 3
-   * - SC7
-     - The Wallet Instance verifies that challenge_info is properly signed by the PID Authorization Server. Moreover, it checks that challenge_info contains: an iss value corresponding to the value of the PID Authorization Server; an aud value equal to the client_id of the Wallet Instance; and a state value equal to the one in the PAR request, to be sure that the response is bound to the initial request that is made by the Wallet Instance in Step 2. Therefore the information provided as part of challenge_info, in particular the htu that corresponds to the redirect url to follow for the *MRTD PoP*, is not tampered with.
+   * - **SC7**
+     - The Wallet Instance verifies that ``challenge_info`` is properly signed by the PID Authorization Server. Moreover, it checks that ``challenge_info`` contains: an ``iss`` value corresponding to the value of the PID Authorization Server; an aud value equal to the ``client_id`` of the Wallet Instance; and a ``state`` value equal to the one in the PAR request, to be sure that the response is bound to the initial request that is made by the Wallet Instance in Step 2. Therefore the information provided as part of ``challenge_info``, in particular the ``htu`` that corresponds to the redirect url to follow for the *MRTD PoP*, is not tampered with.
      - Phase 3
-   * - SC8
-     - The PID Provider checks that the auth_session is associated with the same Wallet Instance in all the requests within the *MRTD PoP* phase. Therefore the PID Provider can be sure that the Wallet Instance performing the *MRTD PoP* phase: is trusted; is always the same across the protocol; and has previously started the PID issuance (PAR request). This can be implemented by requesting the Wallet Instance to perform a proof of possession of its private key (e.g., within OAuth-Client-Attestation or by signing a nonce value).
+   * - **SC8**
+     - The PID Provider checks that the ``auth_session`` is associated with the same Wallet Instance in all the requests within the *MRTD PoP* phase. Therefore the PID Provider can be sure that the Wallet Instance performing the *MRTD PoP* phase: is trusted; is always the same across the protocol; and has previously started the PID issuance (PAR request). This can be implemented by requesting the Wallet Instance to perform a proof of possession of its private key (e.g., within OAuth-Client-Attestation or by signing a nonce value).
      - Phase 3
-   * - SC9
-     - The PID Provider checks that the auth_session is not expired (validity timeout typically of 5 minutes), i.e., that the operation has been concluded within a certain amount of time.
+   * - **SC9**
+     - The PID Provider checks that the ``auth_session`` is not expired (validity timeout typically of 5 minutes), i.e., that the operation has been concluded within a certain amount of time.
      - Phase 3
-   * - SC10
+   * - **SC10**
      - The integrity and confidentiality of the channel between the *physical CIE* and the *physical device_wallet* is secured with the PACE protocol (via the algorithm and key derivation functions supported by the card).
      - Phase 3
-   * - SC11
-     - The MRTD PoP Service verifies the authenticity and integrity of the mrtd_validation_jwt by checking that it is signed with the Wallet Instance private key associated with the auth_session.
+   * - **SC11**
+     - The MRTD PoP Service verifies the authenticity and integrity of the ``mrtd_validation_jwt`` by checking that it is signed with the Wallet Instance private key associated with the ``auth_session``.
      - Phase 3
-   * - SC12
-     - The MRTD PoP Service verifies that challenge_signed contained in mrtd_validation_jwt corresponds to the original challenge signed with the CIE AntiClone private key (SDO.Servizi_Int_Kpriv). This demonstrates the Wallet Instance and the CIE performed the Internal Authentication (in line with Sec. 5.2.3.5.1 in IAS ECC, but with randomness value RND.IFD provided by the MRTD PoP Service instead of generating it in the Wallet Instance).
+   * - **SC12**
+     - The MRTD PoP Service verifies that challenge_signed contained in ``mrtd_validation_jwt`` corresponds to the original challenge signed with the CIE AntiClone private key (``SDO.Servizi_Int_Kpriv``). This demonstrates the Wallet Instance and the CIE performed the Internal Authentication (in line with Sec. 5.2.3.5.1 in IAS ECC, but with randomness value ``RND.IFD`` provided by the MRTD PoP Service instead of generating it in the Wallet Instance).
      - Phase 3
-   * - SC13
+   * - **SC13**
      - The MRTD PoP Service verifies the authenticity of the data extracted from the CIE by checking the SOD elements (both IAS and MRTD) and the related signature certificate chains.
      - Phase 3
-   * - SC14
+   * - **SC14**
      - The MRTD PoP Service verifies the integrity of the data extracted from the CIE by checking the SOD elements (both IAS and MRTD) and the related hashes.
      - Phase 3
 
 Additional implementation requirements:
 
-	- **Rate limiting**: Protection against automated attacks and brute force attempts
-	- **Session timeout**: Automatic cleanup of incomplete authentication sessions
-	- **Audit logging**: Comprehensive logging of all authentication events with correlation identifiers
-	- **Error handling**: Secure error responses that do not leak sensitive information
-	- **Cryptographic material cleanup**: Secure deletion of temporary keys and challenges
+	- **Rate limiting**: Protection against automated attacks and brute force attempts.
+	- **Session timeout**: Automatic cleanup of incomplete authentication sessions.
+	- **Audit logging**: Comprehensive logging of all authentication events with correlation identifiers.
+	- **Error handling**: Secure error responses that do not leak sensitive information.
+	- **Cryptographic material cleanup**: Secure deletion of temporary keys and challenges.
 
 Implementation Considerations
 -----------------------------
