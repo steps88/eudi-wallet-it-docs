@@ -34,7 +34,7 @@ The high-level flow begins with the User who wants to obtain a PID and starts hi
 .. note::
     Regarding point 4, the primary authentication method is based on CieID LoA High (L3). For scenarios where CIE PIN is not immediately available, an alternative multi-step authentication mechanism is available combining eID Substantial Authentication with MRTD Verification.
 
-    This protocol ensures consistent security levels through multi-factor authentication while providing enhanced accessibility.
+    This protocol ensures standard security levels through multi-factor authentication while providing enhanced accessibility.
 
     For complete technical specifications, see :ref:`credential-issuance-l2plus:eID Substantial Authentication with MRTD Verification for PID Issuance`.
 
