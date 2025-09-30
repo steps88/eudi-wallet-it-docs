@@ -4,7 +4,7 @@
 Infrastruttura del Registro
 ============================
 
-L'ecosistema IT-Wallet opera attraverso un'infrastruttura di registro che fornisce definizioni standardizzate dei dati, registrazione delle entità e capacità di discover delle credenziali. Il sistema di registro è composto da più componenti interconnessi che supportano l'intero ciclo di vita delle operazioni delle credenziali digitali, dall'onboarding delle entità alla presentazione delle credenziali.
+L'ecosistema IT-Wallet opera attraverso un'infrastruttura di registro che fornisce definizioni standardizzate dei dati, registrazione delle entità e capacità di discovery delle credenziali. Il sistema di registro è composto da più componenti interconnessi che supportano l'intero ciclo di vita delle operazioni delle credenziali digitali, dall'onboarding delle entità alla presentazione delle credenziali.
 
 L'architettura del registro è necessaria a definire i requisiti di standardizzazione semantica, gestione del trust della federazione e discovery delle credenziali attraverso componenti di registro specializzati che garantiscono interoperabilità e conformità in tutto l'ecosistema.
 
@@ -111,7 +111,7 @@ Il Registro degli Attributi DEVE supportare l'intero ciclo di vita dell'ecosiste
 
 **Durante il Processo di Onboarding**:
 
-  - **Registrazione AS**: Le Fonti Autentiche dichiarano i proprio claim disponibili tra quelli presenti nel registro standardizzato durante la registrazione delle capacità.
+  - **Registrazione AS**: Le Fonti Autentiche dichiarano i proprio claim disponibili tra quelli presenti nel registro standardizzato durante la registrazione delle capacità di fornitura dati.
   - **Registrazione CI**: I Credential Issuer selezionano le entità AS basandosi sugli attributi richiesti e registrano i tipi di credenziali per la pubblicazione nel catalogo.
   - **Registrazione RP**: Le Relying Party specificano i requisiti di autorizzazione utilizzando domini/scopi per tipi di credenziali specifici e/o attributi dell'Utente.
 
@@ -138,7 +138,7 @@ Registro delle Fonti Autentiche
 L'Organismo di Supervisione DEVE mantenere il Registro delle Fonti Autentiche per abilitare l'accesso coordinato ai dati e il rilascio di credenziali in tutto l'ecosistema. Il Registro AS DEVE contenere almeno:
 
   - **Informazioni sull'Organizzazione**: Dettagli dell'entità legale, stato normativo e ruolo autorevole all'interno di domini specifici.
-  - **Capacità dei Dati**: Disponibilità dichiarata degli attributi che fanno riferimento alle definizioni standardizzate del Registro degli Attributi con le corrispondenti classificazioni della Tassonomia.
+  - **Capacità di Fornitura Dati**: Disponibilità dichiarata degli attributi che fanno riferimento alle definizioni standardizzate del Registro degli Attributi con le corrispondenti classificazioni della Tassonomia.
   - **Metodi di Integrazione**: Meccanismi di accesso tecnico (PDND per AS pubbliche, API personalizzate per AS private).
   - **Scopi Previsti**: Tipi di credenziali supportati e contesti aziendali per il coordinamento AS-CI.
   - **Garanzia della Qualità dei Dati**: Stato autoritativo, frequenza di aggiornamento e capacità di traccia di audit.
@@ -156,7 +156,7 @@ Utilizzo del Registro AS
 Il Registro AS supporta il coordinamento dell'ecosistema durante tutto il ciclo di vita operativo:
 
 **Durante il Processo di Onboarding**:
-  - **Auto-Dichiarazione AS**: Le Fonti Autentiche registrano le capacità prima che esista un qualsiasi tipo di credenziali nel catalogo.
+  - **Auto-Dichiarazione AS**: Le Fonti Autentiche registrano le specifiche prima che esista un qualsiasi tipo di credenziali nel catalogo.
   - **Discovery dei CI**: I Credential Issuer cercano entità AS basandosi sugli attributi richiesti e sui tipi di credenziali previsti.
   - **Coordinamento delle Approvazioni**: Le entità AS valutano e approvano le richieste di accesso CI per la fornitura di dati.
 
@@ -187,7 +187,7 @@ Questo approccio abilita sia la **trasparenza normativa** per l'amministrazione 
 Struttura del Registro AS
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Durante la registrazione, le Fonti Autentiche dichiarano le loro capacità prima che esista un qualsiasi tipo di credenziale nel catalogo. Questa dichiarazione stabilisce le fondamenta per la successiva registrazione CI e creazione di tipi di credenziali.
+Durante la registrazione, le Fonti Autentiche dichiarano le loro specifiche prima che esista un qualsiasi tipo di credenziale nel catalogo. Questa dichiarazione stabilisce le fondamenta per la successiva registrazione CI e creazione di tipi di credenziali.
 
 Schema dell'Identificatore Univoco AS
 """"""""""""""""""""""""""""""""""""""
@@ -287,7 +287,7 @@ Il Registro AS DEVE contenere i seguenti parametri per ogni Fonte Autentica regi
      - RICHIESTO. Scopi aziendali serviti (ad esempio, ``["driving-authorization", "identity-verification"]``).
    * - **data_capabilities[].available_claims**
      - String Array
-     - RICHIESTO. I claim disponibili da questa capacità dei dati.
+     - RICHIESTO. I claim disponibili da questa capacità di fornitura dati.
    * - **data_capabilities[].integration_method**
      - string
      - RICHIESTO. Framework di autorizzazione utilizzato per l'accesso ai dati. DEVE essere ``"pdnd"`` per AS Pubbliche. Le AS Private POSSONO utilizzare altri framework di autorizzazione come: ``"oauth2"``, ``"api_key"``, ``"mtls"``, ecc.
@@ -296,7 +296,7 @@ Il Registro AS DEVE contenere i seguenti parametri per ogni Fonte Autentica regi
      - RICHIESTO. Punto di accesso al servizio (endpoint PDND per AS Pubbliche, endpoint API per AS Private).
    * - **data_capabilities[].api_specification**
      - string
-     - RICHIESTO. URL al documento di specifica OpenAPI 3.0 per questa capacità dei dati.
+     - RICHIESTO. URL al documento di specifica OpenAPI 3.0 per questa capacità di fornitura dati.
    * - **data_capabilities[].data_provision**
      - JSON object
      - OPZIONALE. Capacità di fornitura dati e specifiche di tempistica.
@@ -772,7 +772,7 @@ La tassonomia supporta ambienti multilingue attraverso il pattern del suffisso `
 **Utilizzo della Tassonomia:**
 
 - **Registro degli Attributi**: Catalogo degli attributi individuali
-- **Registro AS**: Le Fonti Autentiche dichiarano capacità utilizzando classificazioni della tassonomia
+- **Registro AS**: Le Fonti Autentiche dichiarano capacità di fornitura dati utilizzando classificazioni della tassonomia
 - **Catalogo degli Attestati Elettronici**: I tipi di credenziali specificano domini e scopi supportati
 - **Policy di Autorizzazione**: La valutazione delle policy sfrutta la struttura della tassonomia per decisioni di controllo degli accessi
 
@@ -788,7 +788,7 @@ Integrazione del Registro e Riferimenti Incrociati
 
 I componenti del registro sono interconnessi e lavorano insieme per supportare l'ecosistema completo delle credenziali:
 
-1. **Registro AS** ↔ **Tassonomia**: Le entità AS dichiarano capacità utilizzando classificazioni della tassonomia per la categorizzazione standardizzata.
+1. **Registro AS** ↔ **Tassonomia**: Le entità AS dichiarano capacità di fornitura utilizzando classificazioni della tassonomia per la categorizzazione standardizzata.
 2. **Registro AS** ↔ **Catalogo**: I tipi di credenziali fanno riferimento alle capacità AS per la validazione della fonte dati.
 3. **Catalogo** ↔ **Tassonomia**: Le voci delle credenziali specificano domini e scopi dalla tassonomia per discovery e autorizzazione.
 4. **Registro della Federazione** ↔ **Tutti i Componenti**: Fornisce validazione del trust crittografico per tutte le operazioni del registro e autenticazione delle entità.

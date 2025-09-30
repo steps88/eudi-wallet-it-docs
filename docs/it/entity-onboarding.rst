@@ -70,11 +70,11 @@ Il processo di onboarding segue un approccio strutturato multi-fase:
 
   3. **Integrazione del Registro IT-Wallet**:
 
-    - **Integrazione del Registro Claims**: Le Fonti Autentiche selezionano definizioni di claim standardizzate dal Registro Claims durante la dichiarazione delle capacità.
+    - **Integrazione del Registro Claims**: Le Fonti Autentiche selezionano definizioni di claim standardizzate dal Registro degli Attributi durante la dichiarazione delle specifiche.
     - **Integrazione Tassonomia**: Tutte le entità utilizzano la classificazione gerarchica della Tassonomia (domini, scopi) per la struttura organizzativa per categorizzare le Credenziali.
-    - **Integrazione Registro AS**: Le Fonti Autentiche registrate con i loro claim dichiarati e capacità, abilitando la scoperta e coordinamento CI.
+    - **Integrazione Registro AS**: Le Fonti Autentiche registrate con i loro attributi dichiarati e le relative specifiche, abilitando la discovery e coordinamento CI.
     - **Integrazione Registro di Federazione**: Entità operative incluse per la validazione del trust durante le operazioni delle credenziali.
-    - **Integrazione Catalogo**: Tipi di credenziali pubblicati in :ref:`registry:catalogo degli attestati elettronici` basati sulle politiche dell'organismo di supervisione per l'eleggibilità alla scoperta pubblica.
+    - **Integrazione Catalogo**: Tipi di credenziali pubblicati in :ref:`registry:catalogo degli attestati elettronici` basati sulle politiche dell'organismo di supervisione per l'eleggibilità alla discovery pubblica.
 
 Tutti i componenti del registro e le loro interazioni sono dettagliati in :ref:`registry:Infrastruttura del Registro`.
 
@@ -128,7 +128,7 @@ Durante la registrazione, le Fonti Autentiche DEVONO fornire le seguenti informa
        - Codici identificativi amministrativi come codice di registrazione IPA (RICHIESTO solo per Fonti Autentiche pubbliche) e identificatore legale (Codice Fiscale/Partita IVA).
        - Informazioni di contatto inclusi indirizzi email di contatto tecnico e amministrativo, URI homepage, URI politica privacy, ecc.
    * - **Dichiarazione Capacità Dati**
-     - **RICHIESTO**. Claims disponibili con mappatura Dominio e Scopo:
+     - **RICHIESTO**. Claims disponibili:
 
        - Array di identificatori di claim dal Registro Claims che la Fonte Autentica fornisce (es., ``["given_name", "family_name", "driving_privileges"]``).
        - Classificazione tassonomica per l'ambito della Fonte Autentica (es., domini ``[AUTHORIZATION]`` e scopi ``["DRIVING_LICENSE"]``).
@@ -234,7 +234,7 @@ L'integrazione tecnica comprende:
 
 - **Configurazione Endpoint API**: Istituzione di connessioni API sicure come specificato nelle Specifiche Tecniche AS (e-service PDND per AS pubbliche, implementazioni OpenAPI 3.0 per AS private).
 - **Validazione Mappatura Claims**: Verifica che l'implementazione CI mappi correttamente le risposte dei dati AS agli identificatori standardizzati del Registro Claims.
-- **Test Flusso Dati**: Validazione delle capacità di fornitura dati immediata/differita e meccanismi di gestione degli errori.
+- **Test Flusso Dati**: Validazione delle specifiche di fornitura dati immediata/differita e meccanismi di gestione degli errori.
 - **Implementazione Sicurezza**: Configurazione di autenticazione, autorizzazione e logging di audit come richiesto dagli standard di sicurezza AS.
 
 Processo di Onboarding delle Entità di Federazione

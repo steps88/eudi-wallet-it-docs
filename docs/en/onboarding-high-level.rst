@@ -53,7 +53,7 @@ Authentic Source Registration Process
 
 Authentic Source registration allows data providers to establish their authoritative role in the Digital Credential ecosystem through the registration of their data capabilities and standardized access mechanisms based on the Claims Registry and Taxonomy classifications.
 
-Authentic Source entities MUST undergo registration procedures that validate their data authority, declare their available claims from the standardized Claims Registry, and establish technical integration mechanisms. Authentic Source entities specify intended use cases (formally purposes) that determine catalog eligibility per Supervisory Body policies. 
+Authentic Source entities MUST undergo registration procedures that validate their data authority, declare their available claims from the standardized Claims Registry, and establish technical integration mechanisms. Authentic Source entities specify intended use cases (formally ``purposes``) that determine catalog eligibility per Supervisory Body policies. 
 
 Public Authentic Sources MUST leverage PDND integration to provide government data through standardized national infrastructure.
 

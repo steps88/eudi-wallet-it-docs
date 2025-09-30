@@ -130,7 +130,7 @@ During registration, Authentic Sources MUST provide the following information:
        - Administrative identifier codes such as IPA registration code (REQUIRED only for public Authentic Sources) and legal identifier (Fiscal Code/VAT Number).
        - Contact Information including technical and administrative contact email addresses, homepage URI, privacy policy URI, etc.
    * - **Data Capabilities Declaration**
-     - **REQUIRED**. Available claims with Domain and Purpose mapping:
+     - **REQUIRED**. Available claims:
 
        - Array of claim identifiers from Claims Registry that the Authentic Source provides (e.g., ``["given_name", "family_name", "driving_privileges"]``).
        - Taxonomy classification for Authentic Source scope (e.g., ``[AUTHORIZATION]`` domains and ``["DRIVING_LICENSE"]`` purposes).
