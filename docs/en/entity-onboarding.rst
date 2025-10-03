@@ -323,7 +323,7 @@ The federation onboarding follows a structured 4-step procedure, it can be perfo
    * - **Certificate Signing Request (CSR)**
      - **REQUIRED**. CSR in PKCS #10 format for X.509 Certificate issuance by the Federation Authority. The CSR MUST:
 
-       - Contain **only the Federation Entity Public Key** to be certified.
+       - Contain **only the Federation Entity Public Keys**.
        - Be signed with the corresponding Federation Private Key.
        - Define the certificate Subject with required attributes as specified in :ref:`trust:X.509 Certificates Issuance` for Federation Entities.
 
@@ -336,7 +336,7 @@ A non-normative example of the technical information structure that Federation E
 .. code-block:: json
 
   {
-    "entity_id": "https://credentials.example.gov",
+    "entity_id": "https://credential-issuer.example.gov",
     "entity_type": "credential_issuer",
     "jwks": {
       "kid": "NsXymfIILEPR5Y0t",
@@ -376,18 +376,18 @@ The following shows the decoded content of the CSR example above for reference:
 **Step 2 - Federation Authority Validation and Certificate Issuance**: Following the onboarding request submission, the **Federation Authority** MUST perform:
 
   - Verification of information provided in the registration request.
-  - Validation of the Entity Configuration published at the entity's ``/.well-known/openid-federation`` endpoint and its contained metadata (as defined in :ref:`trust:The Infrastructure of Trust`).
+  - Validation of the Entity Configuration, and the metadata contained in it, published at the entity's ``/.well-known/openid-federation`` endpoint (as defined in :ref:`trust:The Infrastructure of Trust`).
   - **Metadata Policy Application**: Application of federation-specific metadata policies to the entity's metadata based on organizational characteristics and authorization scope as defined in :ref:`trust:Subordinate Statements`. When onboarded through an Intermediate, both Intermediate and Trust Anchor policies apply, with Trust Anchor policies taking precedence in case of conflicts.
-  - **Certificate Issuance**: Certification of the Federation Entity Public Key with X.509 certificate issuance using the trust infrastructure detailed in :ref:`trust:Trust Infrastructure Requirements`. Intermediates issue certificates with appropriate **naming constraints** to scope certificate usage to their subordinates only.
+  - **Certificate Issuance**: Certification of the Federation Entity Public Key with X.509 Certificate issuance using the trust infrastructure detailed in :ref:`trust:Trust Infrastructure Requirements`. Intermediates issue Certificates with appropriate **naming constraints** to scope Certificate usage to their subordinates only.
 
-Upon successful validation, the entity receives a response containing a certificate chain where:
+Upon successful validation, the entity receives a response containing an X.509 Certificate Chain where:
 
-  - The first element is the X.509 certificate that certifies the Federation Entity Public Key (issued by the Federation Authority).
-  - **For Trust Anchor onboarding**: The second element is the Trust Anchor's self-signed X.509 certificate for validating the first certificate.
-  - **For Intermediate onboarding**: Additional elements include the Intermediate's certificate and the Trust Anchor's self-signed certificate, forming a complete certificate chain.
-  - All certificates are expressed in DER format encoded in Base64.
+  - The first element is the X.509 Certificate that certifies the Federation Entity Public Key (issued by the Federation Authority).
+  - **For Trust Anchor onboarding**: The second element is the Trust Anchor's self-signed X.509 Certificate for validating the first X.509 Certificate.
+  - **For Intermediate onboarding**: Additional elements include the Intermediate's X.509 Certificate and the Trust Anchor's self-signed Certificate, forming a complete X.509 Certificate chain.
+  - All X.509 Certificates are expressed in DER format encoded in Base64.
 
-Example certificate chain response:
+Example X.509 Certificate chain response:
 
 .. code-block:: json
 
@@ -397,15 +397,15 @@ Example certificate chain response:
    ]
 
 .. note::
-   If validation fails, the entity receives a response with identified issues that must be resolved before submitting a new onboarding request.
+   If validation fails, the entity receives a response with identified issues to be resolved before submitting a new onboarding request.
 
-**Step 3 - Entity Configuration Update and Resolve Request**: After receiving the certificate chain from the Federation Authority, the entity MUST:
+**Step 3 - Entity Configuration Update and Resolve Request**: After receiving the X.509 Certificate chain from the Federation Authority, the entity MUST:
 
   1. **Update Entity Configuration**:
 
     - Add an ``authority_hints`` claim with a JSON Array containing the **immediate Federation Authority's** Federation Entity Identifier (Trust Anchor for direct onboarding, or Intermediate for mediated onboarding) as defined in :ref:`trust:Federation Roles`.
-    - Update the Federation Entity Public Key in the ``jwks`` claim by adding an ``x5c`` claim with the complete certificate chain received from the Federation Authority.
-    - Update the Protocol Keys in the metadata ``jwks`` claims by extending their existing ``x5c`` claims to include the Federation certificate chain, creating complete trust chains from Protocol Keys to the Root Authority.
+    - Update the Federation Entity Public Key in the ``jwks`` claim by adding an ``x5c`` claim with the complete X.509 Certificate chain received from the Federation Authority.
+    - Update the Protocol Keys in the metadata ``jwks`` claims by extending their existing ``x5c`` claims to include the X.509 Certificate chain, creating a complete Trust Chain from Protocol Keys to the Root Authority.
 
     Example authority_hints addition:
 
@@ -471,16 +471,16 @@ Example certificate chain response:
 
 Following the resolve request, the **Federation Authority** performs:
 
-  - **Trust Chain Reconstruction**: Reconstruction of a valid trust chain for the entity as defined in :ref:`trust:The Infrastructure of Trust`.
+  - **Trust Chain Reconstruction**: Reconstruction of a valid Trust Chain for the entity as defined in :ref:`trust:The Infrastructure of Trust`.
   - **Federation Trust Mark Generation**: Generation of an IT-Wallet Federation Trust Mark as a signed JWT attestation of the entity's federation membership and compliance with IT-Wallet technical requirements.
   - **Trust Mark Integration in Subordinate Statement**: The generated Trust Mark is included in the entity's Subordinate Statement as defined in :ref:`trust:Subordinate Statements`.
-  - **Metadata Policy Application**: Application of cascading metadata policies during trust chain construction, ensuring Trust Anchor policies take precedence over Intermediate policies.
-  - Generation of a signed JSON Web Token (JWT) using algorithms specified in :ref:`algorithms:Cryptographic Algorithms` containing the reconstructed trust chain and validated entity metadata.
+  - **Metadata Policy Application**: Application of cascading metadata policies during Trust Chain construction, where Trust Anchor policies take precedence over Intermediate policies.
+  - Generation of a signed JSON Web Token (JWT) using algorithms specified in :ref:`algorithms:Cryptographic Algorithms` containing the reconstructed Trust Chain and validated entity metadata.
   - Transmission of an HTTP response containing the created JWT (Resolve Response).
 
-If the response status code is 200 OK, the Federation Entity MUST complete the onboarding process by:
+If the response status code is ``200 OK``, the Federation Entity MUST complete the onboarding process by:
 
-  - **Validate Resolve Response**: Validate the JWT contained in the Resolve Response and extract the trust chain and validated metadata from the JWT payload.
+  - **Validate Resolve Response**: Validate the JWT contained in the Resolve Response and extract the Trust Chain and validated metadata from the JWT payload.
   - **Fetch Subordinate Statement**: Retrieve its own Subordinate Statement from the immediate Federation Authority using the ``/fetch`` endpoint as defined in :ref:`trust:Federation API endpoints`.
   - **Extract Trust Mark**: Extract the Federation Trust Mark from the Subordinate Statement ``trust_marks`` claim.
   - **Trust Mark Integration**: Include the extracted Trust Mark in its Entity Configuration using the ``trust_marks`` claim as specified in :ref:`trust:Entity Configuration Leaves and Intermediates`.
@@ -489,7 +489,7 @@ If the response status code is 200 OK, the Federation Entity MUST complete the o
 Upon successful completion of Step 4, the **entity onboarding is successfully completed**. The entity is now operational within the IT-Wallet federation and ready for operational activities.
 
 .. note::
-   If the ``/resolve`` endpoint responds with status code 400 or 404, the entity must resolve the issues described in the response message before calling the resolve endpoint again. 
+   If the ``/resolve`` endpoint responds with status code set to ``400`` or ``404``, the entity MUST resolve the issues described in the response message, before calling the resolve endpoint again. 
 
 .. note::
    **Federation Registry Integration**: Upon successful onboarding completion, the entity's Federation Entity Identifier becomes discoverable through the Trust Anchor's entity listing mechanisms (as defined in :ref:`trust:The Infrastructure of Trust`), indicating active federation participation. The entity becomes part of the federation infrastructure detailed in :ref:`registry:Registry Infrastructure`.
@@ -570,11 +570,11 @@ The following non-normative examples illustrate different Trust Mark JWT content
    {
      "iss": "https://trust-anchor.eid-wallet.example.it",
      "sub": "https://ci.public-authority.gov.example",
-     "id": "https://trust-anchor.eid-wallet.example.it/trust_marks/federation-entity/credential-issuer",
+     "trust_mark_type": "https://trust-anchor.eid-wallet.example.it/trust_marks/federation-entity/credential-issuer",
      "iat": 1718207217,
      "exp": 1749743216,
      "organization_type": "public",
-     "id_code": {
+     "subject_id_codes": {
        "ipa_code": "pub_001",
        "legal_identifier": "12345678901"
      },
@@ -587,7 +587,7 @@ The following non-normative examples illustrate different Trust Mark JWT content
    {
      "iss": "https://trust-anchor.eid-wallet.example.it",
      "sub": "https://rental.cars.example.com",
-     "id": "https://trust-anchor.eid-wallet.example.it/trust_marks/authorization_policy/relying-party",
+     "trust_mark_type": "https://trust-anchor.eid-wallet.example.it/trust_marks/authorization_policy/relying-party",
      "iat": 1718207217,
      "exp": 1749743216,
      "organization_type": "private",
@@ -610,7 +610,7 @@ The following non-normative examples illustrate different Trust Mark JWT content
    {
      "iss": "https://trust-anchor.eid-wallet.example.it",
      "sub": "https://private-badge.ci.example.com",
-     "id": "https://trust-anchor.eid-wallet.example.it/trust_marks/authorization_policy/credential-issuer",
+     "trust_mark_type": "https://trust-anchor.eid-wallet.example.it/trust_marks/authorization_policy/credential-issuer",
      "iat": 1718207217,
      "exp": 1749743216,
      "organization_type": "private",
