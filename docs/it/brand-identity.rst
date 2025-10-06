@@ -19,7 +19,7 @@ Gli Attori Primari DEVONO utilizzare esclusivamente queste Risorse Ufficiali e D
 Naming 
 ------
 
-Il termine “Sistema IT-Wallet”, così come definito dalla norma istitutiva, rappresenta la denominazione ufficiale che DOVREBBE essere utilizzata in contesti a carattere istituzionale, formale o giuridico per riferirsi al sistema.  
+Il termine "Sistema IT-Wallet", così come definito dalla norma istitutiva, rappresenta la denominazione ufficiale che DOVREBBE essere utilizzata in contesti a carattere istituzionale, formale o giuridico per riferirsi al sistema.  
 
 La declinazione contratta "IT-Wallet" rappresenta, invece, il Brand naming ufficiale che DEVE essere utilizzato in ogni contesto comunicativo e divulgativo, scritto o verbale, fisico o digitale, per riferirsi al "Sistema IT-Wallet".  Di seguito i relativi requisiti per la corretta scrittura e pronuncia: 
 
