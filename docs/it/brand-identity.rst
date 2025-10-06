@@ -23,7 +23,7 @@ Il termine "Sistema IT-Wallet", così come definito dalla norma istitutiva, rapp
 
 La declinazione contratta "IT-Wallet" rappresenta, invece, il Brand naming ufficiale che DEVE essere utilizzato in ogni contesto comunicativo e divulgativo, scritto o verbale, fisico o digitale, per riferirsi al "Sistema IT-Wallet".  Di seguito i relativi requisiti per la corretta scrittura e pronuncia: 
 
-- si DEVE rispettare l'uso delle maiuscole nel termine “IT” e nelle iniziali di “Wallet” e “Sistema”; 
+- si DEVE rispettare l'uso delle maiuscole nel termine "IT" e nelle iniziali di "Wallet" e "Sistema"; 
 
 - si DEVE rispettare l'uso del trattino tra i termini “IT” e “Wallet”, senza l'uso di spaziature; 
 
