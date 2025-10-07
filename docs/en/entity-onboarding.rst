@@ -223,7 +223,7 @@ The Authentic Source registration follows a technical process as described below
 
 **Step 3 - AS Registry Publication**: Upon successful validation:
 
-  - Authentic Source Entity is published in AS Registry with complete declared capabilities.
+  - Authentic Source Entity is published in the AS Registry with complete declared capabilities.
   - Authentic Source becomes discoverable by Credential Issuers for integration requests.
   - Authentic Source is ready for operational data provision.
 
@@ -257,7 +257,7 @@ The IT-Wallet federation implements a **hierarchical onboarding model** where Fe
   1. **Trust Anchor**: The root authority that has the capability to directly onboard any Federation Entity.
   2. **Intermediates**: Delegated authorities that onboard Leaf Entities on behalf of Trust Anchor.
 
-This hierarchical approach enables **distributed onboarding management** while maintaining a unified trust establishment. Both Trust Anchors and Intermediates act as **Federation Authorities** with the following onboarding capabilities:
+Both Trust Anchors and Intermediates act as **Federation Authorities** with the following onboarding capabilities:
 
   - **Certificate Issuance**: Issue X.509 Certificates to their Immediate Subordinates with appropriate naming constraints as defined in :ref:`trust:X.509 PKI`.
   - **Metadata Policy Application**: Apply federation-specific metadata policies with **cascading effect** (Trust Anchor policies override Intermediate policies).
