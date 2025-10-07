@@ -4,7 +4,7 @@
 Entity Onboarding
 =================
 
-This section defines the technical specifications for entity lifecycle management in the IT-Wallet ecosystem based on the **Registry Infrastructure** defined in :ref:`registry:Registry Infrastructure`. This includes initial onboarding procedures, ongoing management operations (data updates, modifications), and federation exit processes. The lifecycle management system establishes and maintains the federated trust infrastructure and registry coordination necessary for secure Digital Credential operations.
+This section defines the technical specifications for entity lifecycle management in the IT-Wallet ecosystem based on the **Registry Infrastructure** defined in :ref:`registry:Registry Infrastructure`. This includes initial onboarding procedures, ongoing management operations, such as data updates and modifications, and federation exit processes. The lifecycle management system establishes and maintains the federated trust infrastructure and registry coordination necessary for secure Digital Credential operations.
 
 For a high-level overview of the onboarding process, see :ref:`onboarding-high-level:Onboarding System`. In particular, the Section :ref:`onboarding-high-level:Onboarding Journey Maps` provides an onboarding journey map from the perspective of Entity's operators.
 
@@ -14,7 +14,7 @@ Overview
 Entity Onboarding System Architecture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The IT-Wallet ecosystem is based on a federated trust infrastructure where participating entities MUST establish cryptographic trust relationships and maintain compliance with common security standards. 
+The IT-Wallet ecosystem is based on a federated trust infrastructure where participating entities MUST establish trust with each other. 
 
 The onboarding framework MUST allow technical registration procedures that are tailored to the participant's role in the IT-Wallet ecosystem:
 
@@ -39,7 +39,7 @@ The following table summarizes entity types, their roles, and corresponding onbo
    * - Authentic Sources
      - Authoritative data providers for Digital Credential attributes
      - :ref:`entity-onboarding:Authentic Sources Registration Process`
-     - Data authority validation, API integration (PDND/Custom).
+     - Data authority validation, API integration, such as PDND.
    * - Credential Issuers
      - Generate and issue Digital Credentials using Authentic Source's data
      - :ref:`entity-onboarding:Federation Entities Onboarding Process`
