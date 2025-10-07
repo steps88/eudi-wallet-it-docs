@@ -215,10 +215,97 @@ Tutti gli endpoint elencati di seguito sono definiti nelle specifiche `OID-FED`_
      - **GET** /historical-jwks
      - Elenca le chiavi scadute e revocate, con la motivazione della revoca.
      - Trust Anchor, Intermediario
+   * - subordinate events
+     - **GET** /federation_subordinate_events_endpoint?sub=https://rp.example.org
+     - Restituisce una traccia storica degli eventi di registrazione sui Subordinati Immediati, come registrazione, revoca e aggiornamenti delle loro Chiavi dell'Entità di Federazione.
+     - Trust Anchor, Intermediario
 
 
-Tutte le risposte degli endpoint di federazione sono sotto forma di JWT firmato, ad eccezione dell'**endpoint di Elenco Subordinati** e dell'**endpoint di Stato Trust Mark** che sono serviti come JSON semplice per impostazione predefinita.
+Tutte le risposte degli endpoint di federazione sono sotto forma di JWT firmato, ad eccezione dell'**endpoint di Elenco Subordinati** e dell'**endpoint di Stato Trust Mark** che sono serviti come JSON semplice per impostazione predefinita. L'**Endpoint Eventi Subordinati della Federazione** restituisce anche JWT firmati con il tipo di contenuto ``application/entity-events-statement+jwt``.
 
+Federation Subordinate Events Endpoint
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+L'Endpoint Eventi Subordinati della Federazione fornisce un meccanismo per Trust Anchor e Intermediari per pubblicare eventi storici relativi ai loro Subordinati Immediati. Questo endpoint fornisce trasparenza e responsabilità all'interno della federazione fornendo un record storico completo di eventi significativi che influenzano i partecipanti della federazione.
+
+**Endpoint Location**:
+
+L'Endpoint Eventi Subordinati della Federazione è pubblicato nei metadati ``federation_entity`` utilizzando il parametro ``federation_subordinate_events_endpoint``.
+
+**Request Format**:
+
+La richiesta all'``federation_subordinate_events_endpoint`` DEVE essere una richiesta HTTP GET con i seguenti parametri di query:
+
+- **sub**: (OBBLIGATORIO) L'Identificativo dell'Entità del soggetto per cui viene richiesta la traccia storica.
+
+**Response Format**:
+
+Una risposta di successo DEVE utilizzare il codice di stato HTTP 200 e il tipo di contenuto ``application/entity-events-statement+jwt``. La risposta è un JWT firmato che è esplicitamente tipizzato impostando il parametro header ``typ`` su ``entity-events-statement+jwt`` per prevenire la confusione cross-JWT.
+
+**JWT Claims**:
+
+I claim nella risposta della dichiarazione eventi subordinati sono:
+
+- **iss**: (OBBLIGATORIO) Identificativo dell'Entità dell'emittente della risposta
+- **sub**: (OBBLIGATORIO) Identificativo dell'Entità del soggetto della risposta  
+- **iat**: (OBBLIGATORIO) Ora in cui questa risposta è stata emessa, espressa come Secondi dall'Epoch
+- **exp**: (OPZIONALE) Ora in cui questa risoluzione non è più valida, espressa come Secondi dall'Epoch
+- **federation_registration_events**: (OBBLIGATORIO) Array di oggetti JSON, ognuno rappresentante un evento di particolare interesse dalla prospettiva della federazione
+
+**Event Object Parameters**:
+
+- **iat**: (OBBLIGATORIO) Ora in cui si è verificato l'evento, utilizzando il formato ora definito per il claim ``iat``
+- **event**: (OBBLIGATORIO) Stringa che identifica il tipo di evento
+- **event_description**: (OPZIONALE) Stringa che può offrire informazioni aggiuntive sull'evento
+
+**Supported Event Types**:
+
+- **registration**: Indica quando un'Entità è stata registrata nella federazione
+- **revocation**: Indica quando la registrazione di un'Entità è stata revocata
+- **suspension**: Indica quando la registrazione di un'Entità è stata sospesa
+- **jwks_update**: Indica quando le Chiavi dell'Entità di Federazione di un'Entità sono state aggiornate
+- **metadata_update**: Indica quando i metadati di un'Entità sono stati aggiornati nel Subordinate Statement
+- **metadata_policy_update**: Indica quando la policy dei metadati di un'Entità è stata aggiornata nel Subordinate Statement
+
+**Example Request**:
+
+.. code-block:: text
+
+   GET /federation_subordinate_events_endpoint?sub=https%3A%2F%2Frp%2Eexample%2Eorg HTTP/1.1
+   Host: immediate-superior.example.org
+
+**Example Response**:
+
+.. code-block:: json
+
+   {
+     "iss": "https://immediate-superior.example.org",
+     "sub": "https://rp.example.org",
+     "iat": 1590000000,
+     "federation_registration_events": [
+       {
+         "iat": 1590000000,
+         "event": "registration"
+       },
+       {
+         "iat": 1590000000,
+         "event": "jwks_updates"
+       },
+       {
+         "iat": 1600000000,
+         "event": "revocation",
+         "event_description": "compromised node"
+       },
+       {
+         "iat": 1610000000,
+         "event": "registration"
+       }
+     ]
+   }
+
+**Integration with Entity Lifecycle Management**:
+
+Questo endpoint completa le procedure di gestione del ciclo di vita delle entità definite in :ref:`entity-onboarding:Gestione del Ciclo di Vita delle Entità` fornendo un tracciamento dettagliato di tutti gli eventi significativi che influenzano i partecipanti della federazione. Supporta sia il monitoraggio automatizzato della conformità che i processi di audit manuale.
 
 Configurazione della Federazione
 --------------------------------
@@ -250,7 +337,8 @@ Di seguito è riportato un esempio non normativo di un'Entity Configuration del 
                     "kid": "X2ZOMHNGSDc4ZlBrcXhMT3MzRmRZOG9Jd3o2QjZDam51cUhhUFRuOWd0WQ",
                     "crv": "P-256",
                     "x": "1kNR9Ar3MzMokYTY8BRvRIue85NIXrYX4XD3K4JW7vI",
-                    "y": "slT14644zbYXYF-xmw7aPdlbMuw3T1URwI4nafMtKrY"
+                    "y": "slT14644zbYXYF-xmw7aPdlbMuw3T1URwI4nafMtKrY",
+                    "x5c": [ <self-issued X.509 certificate about the Trust Anchor> ]
                 }
             ]
         },
@@ -265,7 +353,8 @@ Di seguito è riportato un esempio non normativo di un'Entity Configuration del 
                 "federation_fetch_endpoint": "https://trust-anchor.eid-wallet.example.it/fetch",
                 "federation_resolve_endpoint": "https://trust-anchor.eid-wallet.example.it/resolve",
                 "federation_list_endpoint": "https://trust-anchor.eid-wallet.example.it/list",
-                "federation_trust_mark_status_endpoint": "https://trust-anchor.eid-wallet.example.it/trust_mark_status"
+                "federation_trust_mark_status_endpoint": "https://trust-anchor.eid-wallet.example.it/trust_mark_status",
+                "federation_subordinate_events_endpoint": "https://trust-anchor.eid-wallet.example.it/events"
             }
         },
         "trust_mark_issuers": {
@@ -325,6 +414,8 @@ Le Entity Configuration di tutti i partecipanti nella federazione DEVONO avere i
      - UNIX Timestamp con il tempo di scadenza del JWT, codificato come NumericDate come indicato in :rfc:`7519`.
    * - **jwks**
      - Un JSON Web Key Set (JWKS) :rfc:`7517` che rappresenta la parte pubblica delle chiavi di firma dell'Entità in questione. Ogni JWK nel set JWK DEVE avere un ID chiave (claim kid) e PUÒ avere un parametro `x5c`, come definito in :rfc:`7517`. Contiene le Chiavi dell'Entità di Federazione richieste per le operazioni di Trust Evaluation.
+
+       **x5c**: Il parametro `x5c` incluso nel parametro `jwks` dell'Entity Configuration DEVE contenere solo il Certificato X.509 auto-emesso relativo al corrispondente `jwk`.
    * - **metadata**
      - Oggetto JSON. Ogni chiave dell'Oggetto JSON rappresenta un identificatore di tipo di metadati contenente un Oggetto JSON che rappresenta i metadati, secondo lo schema di metadati di quel tipo. Un'Entity Configuration PUÒ contenere più dichiarazioni di metadati, ma solo una per ogni tipo di metadati (<**entity_type**>). i tipi di metadati sono definiti nella sezione `Tipi di Metadati <Metadata Types>`_.
 
@@ -344,9 +435,6 @@ L'Entity Configuration del Trust Anchor, oltre ai parametri comuni elencati sopr
      - **Richiesto**
    * - **trust_mark_issuers**
      - Array JSON che definisce quali autorità di Federazione sono considerate affidabili per l'emissione di Trust Mark specifici, assegnati con i loro identificatori unici.
-     - |uncheck-icon|
-   * - **trust_mark_owners**
-     - Array JSON che elenca quali entità sono considerate proprietarie di Trust Mark specifici.
      - |uncheck-icon|
 
 
@@ -697,9 +785,9 @@ Nel processo di emissione, la Trust Evaluation garantisce l'integrità e l'auten
 
 Le Trust Evaluation implementano modi diversi, come definito di seguito:
 
-* **Scoperta di Entità di Federazione**: Le Istanze del Wallet e i Relying Party DEVONO verificare l'identità dell'Emittente utilizzando il processo di Scoperta di Entità di Federazione definito in :ref:`trust:Discovery della Federazione`. Questo comporta l'interrogazione degli endpoint di federazione per confermare lo stato di validità dell'Emittente e la conformità al Trust Framework.
+* **Scoperta di Entità di Federazione**: Le Istanze del Wallet e i Relying Party DEVONO verificare l'identità dell'Emittente utilizzando il processo di Scoperta di Entità di Federazione definito in :ref:`trust-infrastructure:Discovery della Federazione`. Questo comporta l'interrogazione degli endpoint di federazione per confermare lo stato di validità dell'Emittente e la conformità al Trust Framework.
 
-* **Trust Chain**: Le Istanze del Wallet e i Relying Party valutano le Trust Chain dell'Emittente utilizzando i meccanismi definiti in :ref:`trust:Trust Chain`. Le Trust Chain possono essere fornite staticamente o costruite attraverso un processo di Scoperta di Entità di Federazione, per garantire che l'entità che richiede la Credenziale faccia parte di una federazione riconosciuta e fidata.
+* **Trust Chain**: Le Istanze del Wallet e i Relying Party valutano le Trust Chain dell'Emittente utilizzando i meccanismi definiti in :ref:`trust-infrastructure:Trust Chain`. Le Trust Chain possono essere fornite staticamente o costruite attraverso un processo di Scoperta di Entità di Federazione, per garantire che l'entità che richiede la Credenziale faccia parte di una federazione riconosciuta e fidata.
 
 * **Valutazione dei Trust Mark**: I Trust Mark sono valutati per garantire la conformità continua alle policy di federazione. Questi marchi indicano l'aderenza a standard e pratiche specifici richiesti dalla federazione.
 
@@ -729,9 +817,9 @@ I meccanismi di Trust Evaluation sono distinti dai flussi di protocollo e sono i
 
 Le Trust Evaluation sono condotte come segue:
 
-* **Scoperta di Entità di Federazione**: Quando l'Istanza del Wallet riceve una richiesta firmata emessa da un Relying Party, l'Istanza del Wallet DEVE verificare l'identità del Relying Party utilizzando il processo di Scoperta di Entità di Federazione definito in :ref:`trust:Discovery della Federazione`. Questo comporta l'interrogazione degli endpoint di federazione per confermare lo stato di validità del Relying Party e la conformità al Trust Framework e valutare la firma della richiesta utilizzando il materiale crittografico ottenuto dalla Trust Chain.
+* **Scoperta di Entità di Federazione**: Quando l'Istanza del Wallet riceve una richiesta firmata emessa da un Relying Party, l'Istanza del Wallet DEVE verificare l'identità del Relying Party utilizzando il processo di Scoperta di Entità di Federazione definito in :ref:`trust-infrastructure:Discovery della Federazione`. Questo comporta l'interrogazione degli endpoint di federazione per confermare lo stato di validità del Relying Party e la conformità al Trust Framework e valutare la firma della richiesta utilizzando il materiale crittografico ottenuto dalla Trust Chain.
 
-* **Trust Chain**: L'Istanza del Wallet valuta le Trust Chain del Relying Party utilizzando i meccanismi definiti in :ref:`trust:Trust Chain`. Le Trust Chain possono essere fornite staticamente o costruite attraverso un processo di Scoperta di Entità di Federazione, per garantire che il Relying Party faccia parte di una federazione riconosciuta e fidata.
+* **Trust Chain**: L'Istanza del Wallet valuta le Trust Chain del Relying Party utilizzando i meccanismi definiti in :ref:`trust-infrastructure:Trust Chain`. Le Trust Chain possono essere fornite staticamente o costruite attraverso un processo di Scoperta di Entità di Federazione, per garantire che il Relying Party faccia parte di una federazione riconosciuta e fidata.
 
 * **Valutazione dei Trust Mark**: I Trust Mark sono valutati per garantire la conformità continua alle policy di federazione. Questi marchi indicano l'aderenza a standard e pratiche specifici richiesti dalla federazione. I Relying Party POSSONO includere Trust Mark nella loro Entity Configuration per segnalare proprietà amministrative e conformità a profili specifici, come le concessioni nell'interagire con utenti minorenni.
 

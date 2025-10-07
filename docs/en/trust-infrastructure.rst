@@ -227,101 +227,6 @@ All the endpoints listed below are defined in the `OID-FED`_ specs.
 
 All the responses of the federation endpoints are in the form of signed JWT, with the exception of the **Subordinate Listing endpoint** and the **Trust Mark Status endpoint** that are served as plain JSON by default. The **Federation Subordinate Events Endpoint** also returns signed JWTs with the content type ``application/entity-events-statement+jwt``.
 
-Federation Subordinate Events Endpoint
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The Federation Subordinate Events Endpoint provides a mechanism for Trust Anchors and Intermediates to publish historical events related to their Immediate Subordinates. This endpoint enhances transparency and accountability within the federation by providing a comprehensive historical record of significant events affecting federation participants.
-
-**Purpose and Benefits**:
-
-- **Transparency**: Provides visibility into the lifecycle events of federation participants
-- **Accountability**: Maintains an auditable trail of registration, updates, and revocation events
-- **Compliance Monitoring**: Enables tracking of entity status changes and policy updates
-- **Historical Analysis**: Supports forensic analysis and compliance auditing
-
-**Endpoint Location**:
-
-The Federation Subordinate Events Endpoint is published in the ``federation_entity`` metadata using the ``federation_subordinate_events_endpoint`` parameter. The endpoint MUST use the ``https`` scheme and MAY include port, path, and query parameter components.
-
-**Request Format**:
-
-The request to the ``federation_subordinate_events_endpoint`` MUST be an HTTP GET request with the following query parameters:
-
-- **sub**: (REQUIRED) The Entity Identifier of the subject for which the historical track is being requested
-
-**Response Format**:
-
-A successful response MUST use the HTTP status code 200 and the content type ``application/entity-events-statement+jwt``. The response is a signed JWT that is explicitly typed by setting the ``typ`` header parameter to ``entity-events-statement+jwt`` to prevent cross-JWT confusion.
-
-**JWT Claims**:
-
-The claims in the Subordinate events statement response are:
-
-- **iss**: (REQUIRED) Entity Identifier of the issuer of the response
-- **sub**: (REQUIRED) Entity Identifier of the subject of the response  
-- **iat**: (REQUIRED) Time when this response was issued, expressed as Seconds Since the Epoch
-- **exp**: (OPTIONAL) Time when this resolution is no longer valid, expressed as Seconds Since the Epoch
-- **federation_registration_events**: (REQUIRED) Array of JSON objects, each representing an event of particular interest from the federation's perspective
-
-**Event Object Parameters**:
-
-- **iat**: (REQUIRED) Time when the event occurred, using the time format defined for the ``iat`` claim
-- **event**: (REQUIRED) String that identifies the event type
-- **event_description**: (OPTIONAL) String that may offer additional information about the event
-
-**Supported Event Types**:
-
-- **registration**: Indicates when an Entity was registered in the federation
-- **revocation**: Indicates when an Entity's registration was revoked
-- **suspension**: Indicates when an Entity's registration was suspended
-- **jwks_update**: Indicates when an Entity's Federation Entity Keys were updated
-- **metadata_update**: Indicates when an Entity's metadata was updated in the Subordinate Statement
-- **metadata_policy_update**: Indicates when an Entity's metadata policy was updated in the Subordinate Statement
-
-**Example Request**:
-
-.. code-block:: text
-
-   GET /federation_subordinate_events_endpoint?sub=https%3A%2F%2Frp%2Eexample%2Eorg HTTP/1.1
-   Host: immediate-superior.example.org
-
-**Example Response**:
-
-.. code-block:: json
-
-   {
-     "iss": "https://immediate-superior.example.org",
-     "sub": "https://rp.example.org",
-     "iat": 1590000000,
-     "federation_registration_events": [
-       {
-         "iat": 1590000000,
-         "event": "registration"
-       },
-       {
-         "iat": 1590000000,
-         "event": "jwks_updates"
-       },
-       {
-         "iat": 1600000000,
-         "event": "revocation",
-         "event_description": "compromised node"
-       },
-       {
-         "iat": 1610000000,
-         "event": "registration"
-       }
-     ]
-   }
-
-**Security Considerations**:
-
-The Federation Subordinate Events Endpoint inherits all security considerations from OpenID Federation 1.0. The endpoint responses are signed JWTs that can be verified using the issuer's Federation Entity Keys, ensuring the integrity and authenticity of the historical event data.
-
-**Integration with Entity Lifecycle Management**:
-
-This endpoint complements the entity lifecycle management procedures defined in :ref:`entity-onboarding:Entity Lifecycle Management` by providing detailed historical tracking of all significant events affecting federation participants. It supports both automated compliance monitoring and manual auditing processes.
-
 Configuration of the Federation
 -------------------------------
 
@@ -354,7 +259,8 @@ Below is a non-normative example of a Trust Anchor Entity Configuration, where e
                     "kid": "X2ZOMHNGSDc4ZlBrcXhMT3MzRmRZOG9Jd3o2QjZDam51cUhhUFRuOWd0WQ",
                     "crv": "P-256",
                     "x": "1kNR9Ar3MzMokYTY8BRvRIue85NIXrYX4XD3K4JW7vI",
-                    "y": "slT14644zbYXYF-xmw7aPdlbMuw3T1URwI4nafMtKrY"
+                    "y": "slT14644zbYXYF-xmw7aPdlbMuw3T1URwI4nafMtKrY",
+                    "x5c": [ <self-issued X.509 certificate about the Trust Anchor> ]
                 }
             ]
         },
@@ -432,7 +338,7 @@ The Entity Configurations of all the participants in the federation MUST have in
    * - **jwks**
      - A JSON Web Key Set (JWKS) :rfc:`7517` that represents the public part of the signing keys of the Entity at issue. Each JWK in the JWK set MUST have a key ID (claim kid) and MAY have a `x5c` parameter, as defined in :rfc:`7517`. It contains the Federation Entity Keys required for the operations of Trust Evaluation.
 
-       **x5c Parameter**: The `x5c` parameter, when present, contains an array of X.509 Certificates that form a certificate chain. The first certificate in the array MUST be the X.509 certificate corresponding to the public key represented by the JWK. Subsequent certificates in the array MUST form a valid certificate chain leading to a trusted root certificate. This parameter enables X.509 certificate-based verification alongside JWK-based verification, providing interoperability with legacy systems and enhanced trust validation. The `x5c` parameter included in Entity Configuration's `jwks` parameter MUST only contain the self-issued X.509 Certificate about the corresponding `jwk`.
+       **x5c**: The `x5c` parameter included in Entity Configuration's `jwks` parameter MUST only contain the self-issued X.509 Certificate about the corresponding `jwk`.
    * - **metadata**
      - JSON Object. Each key of the JSON Object represents a metadata type identifier
        containing JSON Object representing the metadata, according to the metadata
@@ -456,10 +362,6 @@ The Trust Anchor Entity Configuration, in addition to the common parameters list
    * - **trust_mark_issuers**
      - JSON Array that defines which Federation authorities are considered trustworthy
        for issuing specific Trust Marks, assigned with their unique identifiers.
-     - |uncheck-icon|
-   * - **trust_mark_owners**
-     - JSON Array that lists which entities are considered to be the owners of
-       specific Trust Marks.
      - |uncheck-icon|
 
 
@@ -1029,6 +931,89 @@ Below is a non-normative example, in plain text, illustrating the content of a C
     Signature:
         5c:4f:3b:...
 
+Federation Subordinate Events Endpoint
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Federation Subordinate Events Endpoint provides a mechanism for Trust Anchors and Intermediates to publish historical events related to their Immediate Subordinates registration status. This endpoint provides transparency and accountability within the federation by providing a comprehensive historical record of significant events affecting federation participants.
+
+**Endpoint Location**:
+
+The Federation Subordinate Events Endpoint is published in the ``federation_entity`` metadata using the ``federation_subordinate_events_endpoint`` parameter.
+
+**Request Format**:
+
+The request to the ``federation_subordinate_events_endpoint`` MUST be an HTTP GET request with the following query parameters:
+
+- **sub**: (REQUIRED) The Entity Identifier of the subject for which the historical track is being requested.
+
+**Response Format**:
+
+A successful response MUST use the HTTP status code 200 and the content type ``application/entity-events-statement+jwt``. The response is a signed JWT that is explicitly typed by setting the ``typ`` header parameter to ``entity-events-statement+jwt`` to prevent cross-JWT confusion.
+
+**JWT Claims**:
+
+The claims in the Subordinate events statement response are:
+
+- **iss**: (REQUIRED) Entity Identifier of the issuer of the response
+- **sub**: (REQUIRED) Entity Identifier of the subject of the response  
+- **iat**: (REQUIRED) Time when this response was issued, expressed as Seconds Since the Epoch
+- **exp**: (OPTIONAL) Time when this resolution is no longer valid, expressed as Seconds Since the Epoch
+- **federation_registration_events**: (REQUIRED) Array of JSON objects, each representing an event of particular interest from the federation's perspective
+
+**Event Object Parameters**:
+
+- **iat**: (REQUIRED) Time when the event occurred, using the time format defined for the ``iat`` claim
+- **event**: (REQUIRED) String that identifies the event type
+- **event_description**: (OPTIONAL) String that may offer additional information about the event
+
+**Supported Event Types**:
+
+- **registration**: Indicates when an Entity was registered in the federation
+- **revocation**: Indicates when an Entity's registration was revoked
+- **suspension**: Indicates when an Entity's registration was suspended
+- **jwks_update**: Indicates when an Entity's Federation Entity Keys were updated
+- **metadata_update**: Indicates when an Entity's metadata was updated in the Subordinate Statement
+- **metadata_policy_update**: Indicates when an Entity's metadata policy was updated in the Subordinate Statement
+
+**Example Request**:
+
+.. code-block:: text
+
+   GET /federation_subordinate_events_endpoint?sub=https%3A%2F%2Frp%2Eexample%2Eorg HTTP/1.1
+   Host: immediate-superior.example.org
+
+**Example Response**:
+
+.. code-block:: json
+
+   {
+     "iss": "https://immediate-superior.example.org",
+     "sub": "https://rp.example.org",
+     "iat": 1590000000,
+     "federation_registration_events": [
+       {
+         "iat": 1590000000,
+         "event": "registration"
+       },
+       {
+         "iat": 1590000000,
+         "event": "jwks_updates"
+       },
+       {
+         "iat": 1600000000,
+         "event": "revocation",
+         "event_description": "compromised node"
+       },
+       {
+         "iat": 1610000000,
+         "event": "registration"
+       }
+     ]
+   }
+
+**Integration with Entity Lifecycle Management**:
+
+This endpoint complements the entity lifecycle management procedures defined in :ref:`entity-onboarding:Entity Lifecycle Management` by providing detailed historical tracking of all significant events affecting federation participants. It supports both automated compliance monitoring and manual auditing processes.
 
 Privacy Remarks
 ---------------
