@@ -267,7 +267,7 @@ All federation entities MUST maintain at least two signing keys attested by the 
 This dual-key approach enables:
 - Secure key rotation without service interruption
 - Rapid incident response when primary keys are compromised
-- Continuity for clients with cached entity configurations
+- Continuity for entities with cached Entity Configurations
 - Prevention of validation issues during key transitions
 
 The backup key MUST be:
