@@ -45,7 +45,7 @@ Versione Italiana:
 
 ### Releases
 
-Released versions can be navigated by adding the tag in the webpath leaded by a _v_, as follows:
+Released versions can be navigated by adding the tag in the webpath (e.g. `1.1.0/$language`), as follows:
 
 Italian:
 
