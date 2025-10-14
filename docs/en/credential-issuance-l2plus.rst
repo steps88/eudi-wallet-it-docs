@@ -675,11 +675,11 @@ HTTP Status Code Mapping
 
 Error responses MUST use appropriate HTTP status codes:
 
-	- **400 Bad Request**: For ``invalid_request`` errors.
-	- **401 Unauthorized**: For ``invalid_client`` errors.
-	- **403 Forbidden**: For ``access_denied`` errors.
-  - **422 Unprocessable Entity**: For ``invalid_document`` or ``id_matching_failed errors``.
-	- **503 Service Unavailable**: For ``temporarily_unavailable`` errors.
+- **400 Bad Request**: For ``invalid_request`` errors.
+- **401 Unauthorized**: For ``invalid_client`` errors.
+- **403 Forbidden**: For ``access_denied`` errors.
+- **422 Unprocessable Entity**: For ``invalid_document`` or ``id_matching_failed errors``.
+- **503 Service Unavailable**: For ``temporarily_unavailable`` errors.
 
 Security Considerations
 -----------------------
@@ -721,16 +721,17 @@ Nonce Lifecycle Management
 
 Each step in the eID Substantial Authentication with MRTD Verification flow MUST use unique nonce values (minimum 128 bits) to prevent replay attacks. Nonce values MUST have appropriate expiration times and MUST be invalidated after successful use. The PID Authorization Server and MRTD PoP Service MUST maintain synchronized nonce validation to ensure session integrity.
 
-Moreover, each nonce serves a specific security purpose:
+Moreover, each nonce serves a specific security purpose.
+
 - ``mrtd_pop_jwt_nonce`` MUST be correlated with the MRTD Proof JWT.
 - ``mrtd_pop_nonce `` MUST:
-  - Be cryptographically independent from ``mrtd_pop_jwt_nonce``.
-  - Incorporate the ``mrtd_pop_jwt_nonce`` as input to maintain the chain of trust.
-  - Use a different entropy source to prevent correlation attacks.
-- ``mrtd_val_pop_nonce`` MUST:
-  - Be signed by the Wallet Instance private key.
-  - Include anti-replay timestamp validation.
-  - Be verified against the entire nonce chain for integrity.
+- Be cryptographically independent from ``mrtd_pop_jwt_nonce``.
+ - Incorporate the ``mrtd_pop_jwt_nonce`` as input to maintain the chain of trust.
+ - Use a different entropy source to prevent correlation attacks.
+ - ``mrtd_val_pop_nonce`` MUST:
+- Be signed by the Wallet Instance private key.
+ - Include anti-replay timestamp validation.
+ - Be verified against the entire nonce chain for integrity.
 
 Security Controls
 ^^^^^^^^^^^^^^^^^

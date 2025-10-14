@@ -676,11 +676,11 @@ Mappatura Codici di Stato HTTP
 
 Le risposte di errore DEVONO utilizzare codici di stato HTTP appropriati:
 
-	- **400 Bad Request**: Per errori ``invalid_request``.
-	- **401 Unauthorized**: Per errori ``invalid_client``.
-	- **403 Forbidden**: Per errori ``access_denied``.
-  - **422 Unprocessable Entity**: Per errori ``invalid_document`` o ``id_matching_failed errors``.
-	- **503 Service Unavailable**: Per errori ``temporarily_unavailable``.
+- **400 Bad Request**: Per errori ``invalid_request``.
+- **401 Unauthorized**: Per errori ``invalid_client``.
+- **403 Forbidden**: Per errori ``access_denied``.
+- **422 Unprocessable Entity**: Per errori ``invalid_document`` o ``id_matching_failed errors``.
+- **503 Service Unavailable**: Per errori ``temporarily_unavailable``.
 
 Considerazioni di Sicurezza
 ---------------------------
@@ -723,13 +723,13 @@ Ogni step nel flusso di Autenticazione eID Substantial con Verifica MRTD DEVE ut
 Inoltre, ogni nonce ha uno scopo di sicurezza specifico:
 - ``mrtd_pop_jwt_nonce`` DEVE essere correlato con il JWT di prova MRTD.
 - ``mrtd_pop_nonce`` DEVE:
-- Essere crittograficamente indipendente da ``mrtd_pop_jwt_nonce``.
-- Incorporare ``mrtd_pop_jwt_nonce`` come input per mantenere la catena di fiducia.
-- Utilizzare una diversa sorgente di entropia per prevenire attacchi di correlazione.
+ - Essere crittograficamente indipendente da ``mrtd_pop_jwt_nonce``.
+ - Incorporare ``mrtd_pop_jwt_nonce`` come input per mantenere la catena di fiducia.
+ - Utilizzare una diversa sorgente di entropia per prevenire attacchi di correlazione.
 - ``mrtd_val_pop_nonce`` DEVE:
-- Essere firmato dalla chiave privata dell'istanza del wallet.
-- Includere la convalida del timestamp anti-replay.
-- Essere verificato rispetto all'intera catena di nonce per verificarne l'integrità.
+ - Essere firmato dalla chiave privata dell'istanza del wallet.
+ - Includere la convalida del timestamp anti-replay.
+ - Essere verificato rispetto all'intera catena di nonce per verificarne l'integrità.
 
 Controlli di Sicurezza
 ^^^^^^^^^^^^^^^^^^^^^^^
