@@ -588,13 +588,13 @@ Below a non-normative example of an MRTD PoP Validation Response:
 
 **The MRTD PoP Service MUST:**
 
-- Generate a new nonce  ``mrtd_val_pop_nonce `` for browser-based final confirmation.
+- Generate a new nonce  ``mrtd_val_pop_nonce`` for browser-based final confirmation. 
 - Return HTTP 202 status to indicate async processing completion.
 
 **The Wallet Instance MUST:**
 
 - Validate the response.
-- Extracts the parameters nonce  ``mrtd_val_pop_nonce`` and  ``redirect_uri `` to prepare the next browser-based GET Request.
+- Extracts the parameters nonce  ``mrtd_val_pop_nonce`` and  ``redirect_uri`` to prepare the next browser-based GET Request.
 
 Browser-based Final Confirmation
 """""""""""""""""""""""""""""""""
@@ -724,14 +724,17 @@ Each step in the eID Substantial Authentication with MRTD Verification flow MUST
 Moreover, each nonce serves a specific security purpose.
 
 - ``mrtd_pop_jwt_nonce`` MUST be correlated with the MRTD Proof JWT.
-- ``mrtd_pop_nonce `` MUST:
+- ``mrtd_pop_nonce`` MUST:
+
 - Be cryptographically independent from ``mrtd_pop_jwt_nonce``.
- - Incorporate the ``mrtd_pop_jwt_nonce`` as input to maintain the chain of trust.
- - Use a different entropy source to prevent correlation attacks.
+- Incorporate the ``mrtd_pop_jwt_nonce`` as input to maintain the chain of trust.
+- Use a different entropy source to prevent correlation attacks.
+
  - ``mrtd_val_pop_nonce`` MUST:
+ 
 - Be signed by the Wallet Instance private key.
- - Include anti-replay timestamp validation.
- - Be verified against the entire nonce chain for integrity.
+- Include anti-replay timestamp validation.
+- Be verified against the entire nonce chain for integrity.
 
 Security Controls
 ^^^^^^^^^^^^^^^^^
