@@ -367,15 +367,15 @@ Di seguito un esempio non normativo di una Risposta MRTD PoP:
 
 **L'Istanza del Wallet DEVE:**
 
-	- Validare stato risposta HTTP (*202 Accepted*) e content type.
-	- Analizzare risposta JSON e validare parametri richiesti (``challenge``, ``mrtd_pop_nonce``).
-	- Estrarre dati di challenge per validazione crittografica del documento.
-	- Memorizzare nuovo valore ``mrtd_pop_nonce`` in modo sicuro per richieste di validazione successive.
-	- Validare informazioni MRZ opzionali se presenti nella risposta.
-  - Estrarre HTTP target URI (``htu``) e metodo (``htm``) per lo step successivo.
-	- Gestire errori, fornendo feedback utente relativo.
-	- Memorizzare dati di challenge temporaneamente in memoria sicura (non storage persistente).
-	- Preparare sessione di lettura NFC.
+- Validare stato risposta HTTP (*202 Accepted*) e content type.
+- Analizzare risposta JSON e validare parametri richiesti (``challenge``, ``mrtd_pop_nonce``).
+- Estrarre dati di challenge per validazione crittografica del documento.
+- Memorizzare nuovo valore ``mrtd_pop_nonce`` in modo sicuro per richieste di validazione successive.
+- Validare informazioni MRZ opzionali se presenti nella risposta.
+- Estrarre HTTP target URI (``htu``) e metodo (``htm``) per lo step successivo.
+- Gestire errori, fornendo feedback utente relativo. 
+- Memorizzare dati di challenge temporaneamente in memoria sicura (non storage persistente).
+- Preparare sessione di lettura NFC.
 
 L'Istanza del Wallet esegue lettura e validazione di documento elettronico basata su NFC, poi invia l'evidenza al Provider PID per verifica finale e correlazione di identità con il risultato di autenticazione LoA3.
 
@@ -723,10 +723,13 @@ Ogni step nel flusso di Autenticazione eID Substantial con Verifica MRTD DEVE ut
 Inoltre, ogni nonce ha uno scopo di sicurezza specifico:
 - ``mrtd_pop_jwt_nonce`` DEVE essere correlato con il JWT di prova MRTD.
 - ``mrtd_pop_nonce`` DEVE:
+
  - Essere crittograficamente indipendente da ``mrtd_pop_jwt_nonce``.
  - Incorporare ``mrtd_pop_jwt_nonce`` come input per mantenere la catena di fiducia.
  - Utilizzare una diversa sorgente di entropia per prevenire attacchi di correlazione.
+
 - ``mrtd_val_pop_nonce`` DEVE:
+
  - Essere firmato dalla chiave privata dell'istanza del wallet.
  - Includere la convalida del timestamp anti-replay.
  - Essere verificato rispetto all'intera catena di nonce per verificarne l'integrità.
