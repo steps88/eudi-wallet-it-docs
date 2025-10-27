@@ -738,6 +738,11 @@ Moreover, each nonce serves a specific security purpose.
 - Include anti-replay timestamp validation.
 - Be verified against the entire nonce chain for integrity.
 
+PID Provider Metadata
+^^^^^^^^^^^^^^^^^^^^^^
+
+In addition to the ``trust_frameworks_supported`` values defined in section :ref:`credential-issuer-metadata:Metadata for openid_credential_issuer`, the PID Provider Metadata for ``openid_credential_issuer`` MUST also support the value ``it_l2+document_proof`` indicating the multi-step Authentication protocol described in this Specification.
+
 Security Controls
 ^^^^^^^^^^^^^^^^^
 
