@@ -118,7 +118,6 @@ Below a non-normative example of PAR:
 When the ``it_l2+document_proof object`` is not present in the authorization_details array, the PID Provider MUST authenticate the User with CIEid LoA High.
 The PAR Response and the Authorization Request are the same as in the IT-Wallet Specification.
 
-
 Phase 2: Primary Authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -706,7 +705,6 @@ When components operate outside the PID Provider boundary, the following additio
 - Encryption and integrity of sensitive session data and/or personal identity information (for example, using JWE/JWS tokens).
 - Distributed locks for session state updates. 
 
-
 .. _fig_eID_MRTD_Security_Controls:
 .. plantuml:: plantuml/l2plus-security-controls.puml
     :width: 99%
@@ -724,7 +722,6 @@ Nonce Lifecycle Management
 Each step in the eID Substantial Authentication with MRTD Verification flow MUST use unique nonce values (minimum 128 bits) to prevent replay attacks. Nonce values MUST have appropriate expiration times and MUST be invalidated after successful use. The PID Authorization Server and MRTD PoP Service MUST maintain synchronized nonce validation to ensure session integrity.
 
 Moreover, each nonce serves a specific security purpose.
-
 - ``mrtd_pop_jwt_nonce`` MUST be correlated with the MRTD Proof JWT.
 - ``mrtd_pop_nonce`` MUST:
 
@@ -824,6 +821,4 @@ Implementations SHOULD incorporate rate-limiting mechanisms to protect against a
 PID Provider SHOULD implement session timeouts approach with proper cleanup mechanisms, ensuring session resources are released and temporary cryptographic material is securely deleted when sessions expire.
 
 All security-relevant events throughout the eID Substantial Authentication with MRTD Verification flow MUST be logged with sufficient detail for auditing purposes while preserving the privacy of the User, ensuring that personally identifiable information, when stored, is appropriately hashed. The audit logs SHOULD have consistent correlation identifiers, enabling end-to-end tracing across all protocol phases, with cryptographic integrity protection to prevent tampering.
-
-
 
