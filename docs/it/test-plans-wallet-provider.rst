@@ -469,7 +469,7 @@ Questa sezione elenca i casi di test dalle Sezioni:
    * - WP_056c
      - Issuance, Sicurezza
      - Abbinare la prova chiave Attestato Elettronico alla chiave DPoP
-     - Istanza del Wallet include un oggetto JSON come valore del parametro ``proof`` nella Credential Request. Al suo interno sono presenti i parametri ``proof_type``, valorizzato come ``jwt``, e ``jwt``. Quest'ultimo è valorizzato con un JWT il cui parametro dell'header ``jwk`` prova il possesso della chiave pubblica referenziata nel DPoP-JWT della Token Request.
+     - Istanza del Wallet include un oggetto JSON come valore del parametro ``proofs`` nella Credential Request. Al suo interno sono è presente l'array ``jwt``. Quest'ultimo è valorizzato con uno o più JWT i cui parametro dell'header ``jwk`` rappresenta la prova il possesso della chiave pubblica referenziata nel DPoP-JWT della Token Request.
    * - WP_057
      - Issuance, Interoperabilità
      - Richiesta di Attestati Elettronici multipli

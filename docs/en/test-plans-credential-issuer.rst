@@ -335,7 +335,7 @@ This section provides the set of test cases designed for technical implementers 
   * - CI_069
     - Issuance, Security
     - C_nonce Format and Security
-    - The c_nonce parameter is provided as a string value with sufficient unpredictability to prevent guessing attacks, serving as a cryptographic challenge that the Wallet Instance uses to create proof of possession of the key (proof claim)
+    - The c_nonce parameter is provided as a string value with sufficient unpredictability to prevent guessing attacks, serving as a cryptographic challenge that the Wallet Instance uses to create proof of possession of the key (proofs claim)
   * - CI_070
     - Issuance, Security
     - C_nonce Reusability and Renewal
@@ -423,7 +423,7 @@ This section provides the set of test cases designed for technical implementers 
   * - CI_088a
     - Issuance, Security
     - Deferred Endpoint Access Authorization
-    - Access Token allows access to Deferred endpoint for obtaining new Digital Credentials after lead_time or readiness notification
+    - Access Token allows access to Deferred endpoint for obtaining new Digital Credentials after interval or readiness notification
   * - CI_088b
     - Issuance, Security
     - Notification Endpoint Access Authorization
