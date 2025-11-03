@@ -178,4 +178,4 @@ Below is a non-normative example.
     GET /.well-known/oauth-authorization-server HTTP/1.1
     Host: oauth-authorization-server.example.com
 
-The Oauth Authorization Server MUST respond with HTTP Status Code 200 and return the Oauth Authorization Server Metadata containing the parameters defined in :ref:`credential-issuer-metadata:Metadata for openid_credential_issuer` within in a JSON document using the media type *application/json*.
+The Oauth Authorization Server MUST respond with HTTP Status Code 200 and return the Oauth Authorization Server Metadata containing the parameters defined in :ref:`credential-issuer-metadata:Metadata for oauth_authorization_server` within in a JSON document using the media type *application/json*.
