@@ -133,7 +133,7 @@
                             ]
                         }
                     },
-                    "vct": "https://trust-registry.eid-wallet.example.it/v1.0/EuropeanDisabilityCard",
+                    "vct": "urn:eudi:EuropeanDisabilityCard:it:1",
                     "schema_uri": "https://trust-registry.eid-wallet.example.it/.well-known/schemas/sd-jwt/EuropeanDisabilityCard",
                     "schema_uri#integrity": "sha256-c0d841be52cfc75b8da3295593eced2b9fca8197ee7e340199cd881a7bf61029",
                     "credential_metadata": {
@@ -288,7 +288,7 @@
                             ]
                         }
                     },
-                    "vct": "https://trust-registry.eid-wallet.example.it/v1.0/mDL",
+                    "vct": "urn:eudi:mDL:it:1",
                     "schema_uri": "https://trust-registry.eid-wallet.example.it/.well-known/schemas/sd-jwt/mDL",
                     "schema_uri#integrity": "sha256-0a03d9ffe11e39fd748585e433a962f223d7d14b0a49068ad52452bd0b021f63",                   
                     "credential_metadata": {
@@ -682,52 +682,7 @@
             ]
         },
         "openid_credential_verifier": {
-            "application_type": "web",
-            "client_id": "https://eaa-provider.example.org",
-            "client_name": "Organization Name",
-            "contacts": [
-                "informazioni@example.it",
-                "protocollo@pec.example.it"
-            ],
-            "request_uris": [
-                "https://eaa-provider.example.org/request_uri"
-            ],
-            "response_uris": [
-                "https://eaa-provider.example.org/response_uri"
-            ],
-            "default_acr_values": [
-                "https://trust-registry.eid-wallet.example.it/loa/substantial",
-                "https://trust-registry.eid-wallet.example.it/loa/high"
-            ],
-            "request_object_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-            ],
-            "authorization_signing_alg_values_supported": [
-                "ES256",
-                "ES384",
-                "ES512"
-            ],
-            "authorization_encryption_alg_values_supported": [
-                "RSA-OAEP-256"
-            ],
-            "authorization_encryption_enc_values_supported": [
-                "A128CBC-HS256",
-                "A192CBC-HS384",
-                "A256CBC-HS512",
-                "A128GCM",
-                "A192GCM",
-                "A256GCM"
-            ],
-            "vp_formats": {
-                "dc+sd-jwt": {
-                    "sd-jwt_alg_values": [
-                        "ES256",
-                        "ES384",
-                        "ES512"
-                    ]
-                }
+            ## see relying party metadata section and endpoints
             },
             "jwks": {
                 "keys": [

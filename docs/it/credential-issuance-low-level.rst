@@ -188,7 +188,7 @@ Il Credential Issuer restituisce il ``request_uri`` emesso all'Istanza del Walle
 
 
 .. note::
-   **Autenticazione dell'Utente e Consenso**: Il PID Provider esegue l'autenticazione dell'Utente basata sullo schema CieID con Livello di Garanzia Alto (CIE L3) e richiede il consenso dell'Utente per l'emissione del PID.
+   **Autenticazione dell'Utente e Consenso**: Il PID Provider esegue l'autenticazione dell'Utente basata sullo schema CieID con Livello di Garanzia Alto (CIE L3), o secondo l'Autenticazione eID Substantial con Verifica MRTD come definita in :ref:`credential-issuance-l2plus:Autenticazione eID Substantial con Verifica MRTD per Emissione PID`, e richiede il consenso dell'Utente per l'emissione del PID.
    Il (Q)EAA Provider esegue l'autenticazione dell'Utente richiedendo un PID valido all'Istanza del Wallet. Il (Q)EAA Provider DEVE utilizzare [`OpenID4VP`_] per richiedere la presentazione del PID. In questa circostanza, il (Q)EAA Provider agisce come una Relying Party, fornendo la richiesta di presentazione all'Istanza del Wallet. L'Istanza del Wallet DEVE avere un PID valido, ottenuto in precedenza, per avviare la transazione con il (Q)EAA Provider. Durante questo passaggio, i Credential Issuer POSSONO chiedere i dettagli di contatto dell'Utente (ad esempio, il loro indirizzo email) per inviare notifiche sugli Attestati Elettronici emessi.
 
 
@@ -373,7 +373,7 @@ Il contenuto decodificato degli elementi ``jwt`` nell'array ``jwt`` è simile a 
     1. DEVE verificare che il PID/(Q)EAA contenuto nella `Credential Response` contenga tutti i parametri obbligatori e i valori siano validati secondo la :ref:`Tabella dei parametri della Credential Response <table_credential_response_claim>` (:ref:`WP_059 <wallet-credential-issuance-testcases>`).
     2. DEVE verificare l'integrità dell'Attestato Elettronico verificando la firma utilizzando l'algoritmo specificato nel parametro dell'header ``alg`` di SD-JWT (:ref:`credential-data-model:Modello di Dati degli Attestati Elettronici`) e la chiave pubblica che è identificata utilizzando l'header ``kid`` dell'SD-JWT (:ref:`WP_062a <wallet-credential-issuance-testcases>`).
     3. DEVE verificare che l'Attestato o gli Attestati Elettronici ricevuti (nel claim ``credential``) corrispondano al tipo di Attestato Elettronico richiesto e sia conforme allo schema specifico di quell'Attestato Elettronico definito in :ref:`credential-data-model:Modello di Dati degli Attestati Elettronici` (:ref:`WP_060 <wallet-credential-issuance-testcases>`).
-    4. DEVE elaborare e verificare l'Attestato Elettronico nel formato SD-JWT VC (secondo la Sezione 5 di `SD-JWT`_) o nel formato mdoc-CBOR (:ref:`WP_062 <wallet-credential-issuance-testcases>`).
+    4. DEVE elaborare e verificare l'Attestato Elettronico nel formato SD-JWT VC (secondo la Sezione 4 di `SD-JWT`_) o nel formato mdoc-CBOR (:ref:`WP_062 <wallet-credential-issuance-testcases>`).
     5. DEVE verificare la Trust Chain nell'header dell'SD-JWT VC per verificare che il Credential Issuer sia affidabile (:ref:`WP_061 <wallet-credential-issuance-testcases>`).
 
 Se i controlli sopra hanno successo, l'Istanza del Wallet richiede il consenso dell'Utente per memorizzare l'Attestato o gli Attestati Elettronici. Dopo aver ricevuto il consenso, l'Istanza del Wallet memorizza in modo sicuro l'Attestato Elettronico (:ref:`WP_063 <wallet-credential-issuance-testcases>`).
