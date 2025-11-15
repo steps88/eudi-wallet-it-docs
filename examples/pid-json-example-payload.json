@@ -5,6 +5,7 @@
   "exp": 1883000000,
   "issuing_authority": "Istituto Poligrafico e Zecca dello Stato",
   "issuing_country": "IT",
+  "date_of_expiry": "2033-03-19",
   "status": {
     "status_assertion": {
       "credential_hash_alg": "sha-256"
@@ -32,8 +33,8 @@
   },
   "given_name": "Mario",
   "family_name": "Rossi",
-  "birth_date": "1980-01-10",
-  "birth_place": "Roma",
+  "birthdate": "1980-01-10",
+  "place_of_birth": { "locality": "Roma" },
   "nationalities": ["IT"],
   "personal_administrative_number": "XX00000XX",
   "tax_id_code": "TINIT-XXXXXXXXXXXXXXXX"

@@ -19,6 +19,8 @@ The User attributes provided within the Italian PID are the ones listed below:
     - Current Family Name
     - Current First Name
     - Date of Birth
+    - Place of Birth
+    - Nationality
     - Taxpayer identification number
 
 The (Q)EAAs are issued by (Q)EAA Issuers to a Wallet Instance and MUST be provided in SD-JWT-VC or mdoc-CBOR data format.
@@ -28,7 +30,7 @@ The Digital Credential data format and the mechanism through which a Digital Cre
 SD-JWT-VC Credential Format
 ---------------------------
 
-The PID/(Q)EAA is issued in the form of a Digital Credential. The Digital Credential format is `SD-JWT`_ as specified in `SD-JWT-VC`_ using the Compact Serialization.
+The PID/(Q)EAA is issued in the form of a Digital Credential. The Digital Credential format is `SD-JWT`_ as specified in `SD-JWT-VC`_.
 
 SD-JWT MUST be signed using the Issuer's private key. SD-JWT MUST be provided along with a Type Metadata related to the issued Digital Credential according to Sections 6 and 6.3 of [`SD-JWT-VC`_]. The payload MUST contain the **_sd_alg** claim described in Section 4.1.1 `SD-JWT`_ and other claims specified in this section.
 
@@ -77,7 +79,7 @@ The JOSE header contains the following mandatory parameters:
     - **Description**
     - **Reference**
   * - **typ**
-    - REQUIRED. It MUST be set to ``dc+sd-jwt`` as defined in `SD-JWT-VC`_. It MUST NOT be set to ``none``.
+    - REQUIRED. It MUST be set to ``dc+sd-jwt`` as defined in `SD-JWT-VC`_.
     - :rfc:`7515` Section 4.1.9.
   * - **alg**
     - REQUIRED. Signature Algorithm.
@@ -107,10 +109,10 @@ The JWT payload contains the following claims. Some of these claims can be discl
       - [NSD]. REQUIRED. URL string representing the Credential Issuer unique identifier.
       - `[RFC7519, Section 4.1.1] <https://www.iana.org/go/rfc7519>`_.
     * - **sub**
-      - [NSD]. OPTIONAL. The identifier of the subject of the Digital Credential, the User, MUST be opaque and MUST NOT correspond to any anagraphic data or be derived from the User's anagraphic data via pseudonymization. Additionally, it is required that two different Credential instances issued MUST NOT use the same ``sub`` value.
+      - [NSD]. OPTIONAL. The identifier of the subject of the Digital Credential, the User, MUST be opaque and MUST NOT correspond to any anagraphic data or be derived from the User's anagraphic data via pseudonymization. Additionally, it is required that two different Credentials issued MUST NOT use the same ``sub`` value.
       - `[RFC7519, Section 4.1.2] <https://www.iana.org/go/rfc7519>`_.
     * - **iat**
-      - [SD]. REQUIRED. UNIX Timestamp with the time of JWT issuance, coded as NumericDate as indicated in :rfc:`7519`.
+      - [NSD]. OPTIONAL. UNIX Timestamp with the time of JWT issuance, coded as NumericDate as indicated in :rfc:`7519`.
       - `[RFC7519, Section 4.1.6] <https://www.iana.org/go/rfc7519>`_.
     * - **exp**
       - [NSD]. REQUIRED. UNIX Timestamp with the expiry time of the JWT, coded as NumericDate as indicated in :rfc:`7519`.
@@ -124,6 +126,9 @@ The JWT payload contains the following claims. Some of these claims can be discl
     * - **issuing_country**
       - [NSD]. REQUIRED. Alpha-2 country code, as specified in ISO 3166-1, of the country or territory of the Credential Issuer.
       - Commission Implementing Regulation `EU_2024/2977`_.
+    * - **date_of_expiry**
+      - [SD]. CONDITIONAL. REQUIRED if Credential type is set to `pid`, otherwise is OPTIONAL. Date (and if possible time) when the person identification data will expire. ISO 8601-1 YYYY-MM-DD format. This attribute pertains to the administrative validity period of the PID, which is typically different from the technical validity period expressed by the JWT ``exp`` claim.
+      - Commission Implementing Regulation `EU_2024/2977`_.
     * - **status**
       - [NSD]. REQUIRED only if the Digital Credential is long-lived. JSON object containing the information on how to read the status of the Verifiable Credential. It MUST contain either the JSON member *status_assertion* or *status_list*.
       - Section 3.2.2.2 `SD-JWT-VC`_ and Section 11 `OAUTH-STATUS-ASSERTION`_.
@@ -131,7 +136,7 @@ The JWT payload contains the following claims. Some of these claims can be discl
       - [NSD]. REQUIRED. JSON object containing the proof-of-possession key materials. By including a **cnf** (confirmation) claim in a JWT, the Issuer of the JWT declares that the Holder is in control of the private key related to the public one defined in the **cnf** parameter. The recipient MUST cryptographically verify that the Holder is in control of that key.
       - `[RFC7800, Section 3.1] <https://www.iana.org/go/rfc7800>`_ and Section 3.2.2.2 `SD-JWT-VC`_.
     * - **vct**
-      - [NSD]. REQUIRED. Credential type value MUST be a URN and it MUST be set using one of the values obtained from the Credential Issuer metadata, matching of the literals included in this URN MUST be performed in a case-sensitive manner. It is the identifier of the SD-JWT VC type and it MUST be set with a collision-resistant value as defined in Section 2 of :rfc:`7515`. It MUST contain also the number of version of the Credential type. The following structure MUST be used: ``urn:eudi:{credential_type}:it:{version}``. If the Digital Credential is published within the Digital Credential Catalog, ``vct`` value MUST correspond with the value indicated in the Catalog, see :ref:`registry:Digital Credentials Catalog Structure`.
+      - [NSD]. REQUIRED. Credential type value MUST be a URN and it MUST be set using one of the values obtained from the Credential Issuer metadata, matching of the literals included in this URN MUST be performed in a case-sensitive manner. It is the identifier of the SD-JWT VC type and it MUST be set with a collision-resistant value as defined in Section 2 of :rfc:`7515`. It MUST contain also the number of version of the Credential type. The following structure MUST be used: ``urn:eudi:{credential_type}:it:{version}``. For PIDs, the value MUST be ``urn:eudi:pid:it:1``. If the Digital Credential is published within the Digital Credential Catalog, ``vct`` value MUST correspond with the value indicated in the Catalog, see :ref:`registry:Digital Credentials Catalog Structure`.
       - Section 3.2.2.2 `SD-JWT-VC`_.
     * - **vct#integrity**
       - [NSD]. REQUIRED. The value MUST be an "integrity metadata" string as defined in Section 3 of [`W3C-SRI`_]. *SHA-256*, *SHA-384* and *SHA-512* MUST be supported as cryptographic hash functions. *MD5* and *SHA-1* MUST NOT be used. This claim MUST be verified according to Section 3.3.5 of [`W3C-SRI`_].
@@ -160,6 +165,21 @@ The JWT payload contains the following claims. Some of these claims can be discl
       - [NSD]. REQUIRED. Hash algorithm used by the Issuer to generate the digests.
       - 4.1.1 `SD-JWT`_
 
+
+.. note::
+  The standard JWT claims ``nbf`` and ``exp`` are used to express the technical validity period of a SD-JWT VC-compliant PID.
+
+.. note::
+   The ``verification`` claim is a **domestic extension** defined by the Italian IT-Wallet specification. It is NOT part of the ARF PID Rulebook (EUDI Wallet Architecture Reference Framework, Annex 3.01, PID Rulebook v1.3), but is **permitted under ARF requirement PID_06**, which allows Member States to define additional domestic attributes beyond those specified in Commission Implementing Regulation (CIR) 2024/2977.
+
+   This claim is REQUIRED for Italian PIDs to ensure:
+
+   - Traceability of User authentication method (SPID/CIE/IT-Wallet/EUDI-Wallet)
+   - Level of assurance compliance (LoA High/Substantial per eIDAS Regulation)
+   - Auditability of identity verification processes
+
+   For mdoc-CBOR encoding, this claim is included in the **domestic namespace** as ``nameSpaces.elementIdentifier.verification`` (see cross-format mapping table).
+
 If the ``status`` parameter is set to ``status_list``, it is a JSON Object containing the following sub-parameters:
 
 .. list-table::
@@ -181,10 +201,10 @@ If the ``status`` parameter is set to ``status_list``, it is a JSON Object conta
 If the ``status`` parameter is set to ``status_assertion``, it is a JSON Object containing the *credential_hash_alg* claim indicating the Algorithm used for hashing the Digital Credential to which the Status Assertion is bound. It is RECOMMENDED to use *sha-256*.
 
 
-Digital Credential Type Metadata
+Digital Credential Metadata Type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Type Metadata document MUST be a JSON object and contains the following parameters.
+The Metadata type document MUST be a JSON object and contains the following parameters.
 
 .. _table_metadata_type_json_obj:
 .. list-table::
@@ -202,10 +222,19 @@ The Type Metadata document MUST be a JSON object and contains the following para
       - REQUIRED. A human-readable description of the Digital Credential type. In case of multiple languages, the language tags are added to the member name, delimited by a `#` character as defined in :rfc:`5646`.
       - [`SD-JWT-VC`_] Section 6.2 and [`OIDC`_] Section 5.2.
     * - **extends**
-      - OPTIONAL. String Identifier of an extended type metadata document.
+      - OPTIONAL. String Identifier of an extended metadata type document.
       - [`SD-JWT-VC`_] Section 6.2.
     * - **extends#integrity**
       - CONDITIONAL. REQUIRED if **extends** is present.
+      - [`SD-JWT-VC`_] Section 6.2.
+    * - **schema**
+      - CONDITIONAL. REQUIRED if **schema_uri** is not present.
+      - [`SD-JWT-VC`_] Section 6.2.
+    * - **schema_uri**
+      - CONDITIONAL. REQUIRED if **schema** is not present.
+      - [`SD-JWT-VC`_] Section 6.2.
+    * - **schema_uri#integrity**
+      - CONDITIONAL. REQUIRED if **schema_uri** is present.
       - [`SD-JWT-VC`_] Section 6.2.
     * - **data_source**
       - REQUIRED. Object containing information about the data origin. It MUST contain the object ``verification`` with the following sub-value:
@@ -223,7 +252,7 @@ The Type Metadata document MUST be a JSON object and contains the following para
     * - **display**
       - REQUIRED. Array of objects, one for each language supported, containing display information for the Digital Credential type. It contains for each object the following properties:
 
-          * ``locale``: language tag as defined in Section 2 of :rfc:`5646`, the name of this parameter is aligned with SD-JWT-VC Draft 12. [REQUIRED].
+          * ``lang``: language tag as defined in :rfc:`5646` Section 2. [REQUIRED].
           * ``name``: human-readable label for the Digital Credential type. [REQUIRED].
           * ``description``: human-readable description for the Digital Credential type. [REQUIRED].
           * ``rendering``: object containing rendering methods supported by the Digital Credential type. [REQUIRED]. The rendering method `svg_template` MUST be supported.
@@ -254,11 +283,11 @@ The Type Metadata document MUST be a JSON object and contains the following para
             The use of the SVG template is RECOMMENDED for all applications that support it.
       - [`SD-JWT-VC`_] Section 8.
     * - **claims**
-      - REQUIRED. An Array of objects that contains information for displaying and validating Digital Credential claims. Each object contains the following parameters:
+      - REQUIRED. Array of objects containing information for displaying and validating Digital Credential claims. It contains for each Credential claim the following properties:
 
           * ``path``: array indicating the claim or claims that are being addressed. [REQUIRED].
           * ``display``: array containing display information about the claim indicated in the ``path``. The array contains an object for each language supported by the Digital Credential type. This property is REQUIRED. It contains the following members:
-             * ``locale``: language tag as defined in Section 2 of :rfc:`5646`, the name of this parameter is aligned with SD-JWT-VC Draft 12. [REQUIRED].
+             * ``lang``: language tag as defined in :rfc:`5646` Section 2. [REQUIRED].
              * ``label``: human-readable label for the claim. [REQUIRED].
              * ``description``: human-readable description for the claim. [REQUIRED].
           * ``sd``: string indicating whether the claim is selectively disclosable. It MUST be set to `always` if the claim is selectively disclosure or `never` if not. [REQUIRED].
@@ -266,10 +295,11 @@ The Type Metadata document MUST be a JSON object and contains the following para
       - [`SD-JWT-VC`_] Section 9.
 
 
-A non-normative Digital Credential type metadata is provided below.
+A non-normative Digital Credential metadata type is provided below.
 
 .. literalinclude:: ../../examples/vc-metadata-type.json
   :language: JSON
+
 
 Digital Credential Type Metadata retrieval
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -283,7 +313,7 @@ Below a non-normative example is given.
 .. code-block:: http
 
     GET /.well-known/vct/urn:eudi:pid:it:1 HTTP/1.1
-    Host: issuer.example.it
+    Host: pidprovider.example.it
     Accept: application/jwt
 
     HTTP/1.1 200 OK
@@ -294,15 +324,15 @@ Below a non-normative example is given.
 .. code-block:: http
 
     GET /.well-known/vct/urn:eudi:pid:it:1 HTTP/1.1
-    Host: issuer.example.it
+    Host: pidprovider.example.it
     Accept: application/json
 
     HTTP/1.1 200 OK
     Content-Type: application/json
 
-    {	
-      "name": "...",
-      "description": "...",
+    {
+      "name": "Person Identification Data",
+      "description": "Digital version of Person Identification Data",
       ...
     }
 
@@ -310,7 +340,7 @@ Below a non-normative example is given.
 PID Claims
 ^^^^^^^^^^
 
-Depending on the Digital Credential type additional claims data MAY be added. The PID supports the following data:
+Depending on the Digital Credential type **vct**, additional claims data MAY be added. The PID supports the following data:
 
 .. _table_sd-jwt-vc_pid_parameters:
 .. list-table::
@@ -327,11 +357,11 @@ Depending on the Digital Credential type additional claims data MAY be added. Th
     * - **family_name**
       - [SD]. REQUIRED. Current Family Name. (*String*)
       - Section 5.1 of `OIDC`_ and Commission Implementing Regulation `EU_2024/2977`_
-    * - **birth_date**
+    * - **birthdate**
       - [SD]. REQUIRED. Date of Birth. (*String, [ISO8601‑1] YYYY-MM-DD format*)
       - Commission Implementing Regulation `EU_2024/2977`_
-    * - **birth_place**
-      - [SD]. REQUIRED. Place of Birth. (*String*)
+    * - **place_of_birth**
+      - [SD]. REQUIRED. Place of Birth. (*JSON structure; at least one of country, region, locality MUST be present*)
       - Commission Implementing Regulation `EU_2024/2977`_
     * - **nationalities**
       - [SD]. REQUIRED. One or more alpha-2 country codes as specified in ISO 3166-1. (*Array of strings*)
@@ -342,6 +372,9 @@ Depending on the Digital Credential type additional claims data MAY be added. Th
     * - **tax_id_code**
       - [SD]. CONDITIONAL. REQUIRED if ``personal_administrative_number`` is not present. National tax identification code of natural person as a String format. It MUST be set according to ETSI EN 319 412-1. For example ``TINIT-<ItalianTaxIdentificationNumber>``. (*String*)
       -
+
+.. note::
+   The ``tax_id_code`` claim is a **domestic extension** specific to Italian PIDs. It is NOT defined in the ARF PID Rulebook (EUDI Wallet Architecture Reference Framework, Annex 3.01, PID Rulebook v1.3), but is permitted under ARF requirement PID_06, which allows Member States to define additional domestic attributes beyond those specified in Commission Implementing Regulation (CIR) 2024/2977.
 
 
 PID Non-Normative Examples
@@ -405,21 +438,21 @@ The disclosure list is presented below.
    ``c3NpIl0``
 - Contents: ``["eI8ZWm9QnKPpNPeNenHdhQ", "family_name", "Rossi"]``
 
-**Claim** ``birth_date``:
+**Claim** ``birthdate``:
 
 - SHA-256 Hash: ``s1XK5f2pM3-aFTauXhmvd9pyQTJ6FMUhc-JXfHrxhLk``
 - Disclosure:
-   ``WyJRZ19PNjR6cUF4ZTQxMmExMDhpcm9BIiwgImJpcnRoX2RhdGUiLCAiMTk4``
-   ``MC0wMS0xMCJd``
-- Contents: ``["Qg_O64zqAxe412a108iroA", "birth_date", "1980-01-10"]``
+   ``WyJRZ19PNjR6cUF4ZTQxMmExMDhpcm9BIiwgImJpcnRoZGF0ZSIsICIxOTg``
+   ``wLTAxLTEwIl0``
+- Contents: ``["Qg_O64zqAxe412a108iroA", "birthdate", "1980-01-10"]``
 
-**Claim** ``birth_place``:
+**Claim** ``place_of_birth``:
 
 - SHA-256 Hash: ``tSL-e1nLdWOU9sFMTCUu5P1tCzxA-TW-VWbHGzYtU7E``
 - Disclosure:
-  ``WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImJpcnRoX3BsYWNlIiwgIlJv``
-  ``bWEiXQ``
-- Contents: ``["AJx-095VPrpTtN4QMOqROA", "birth_place", "Roma"]``
+  ``WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgInBsYWNlX29mX2JpcnRoIiwg``
+  ``eyJsb2NhbGl0eSI6ICJSb21hIn1d``
+- Contents: ``["AJx-095VPrpTtN4QMOqROA", "place_of_birth", {"locality": "Roma"}]``
 
 **Claim** ``personal_administrative_number``:
 
@@ -543,21 +576,21 @@ In the following the disclosure list is given:
    ``c3NpIl0``
 - Contents: ``["eI8ZWm9QnKPpNPeNenHdhQ", "family_name", "Rossi"]``
 
-**Claim** ``birth_date``:
+**Claim** ``birthdate``:
 
 - SHA-256 Hash: ``s1XK5f2pM3-aFTauXhmvd9pyQTJ6FMUhc-JXfHrxhLk``
 - Disclosure:
-   ``WyJRZ19PNjR6cUF4ZTQxMmExMDhpcm9BIiwgImJpcnRoX2RhdGUiLCAiMTk4``
-   ``MC0wMS0xMCJd``
-- Contents: ``["Qg_O64zqAxe412a108iroA", "birth_date", "1980-01-10"]``
+   ``WyJRZ19PNjR6cUF4ZTQxMmExMDhpcm9BIiwgImJpcnRoZGF0ZSIsICIxOTg``
+   ``wLTAxLTEwIl0``
+- Contents: ``["Qg_O64zqAxe412a108iroA", "birthdate", "1980-01-10"]``
 
-**Claim** ``expiry_date``:
+**Claim** ``date_of_expiry``:
 
 - SHA-256 Hash: ``aBVdfcnxT0Z5RrwdxZSUhuUxz3gM2vcEZLeYIj61Kas``
 - Disclosure:
-   ``WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImV4cGlyeV9kYXRlIiwgIjIw``
-   ``MjQtMDEtMDEiXQ``
-- Contents: ``["AJx-095VPrpTtN4QMOqROA", "expiry_date", "2024-01-01"]``
+   ``WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImRhdGVfb2ZfZXhwaXJ5Iiwg``
+   ``IjIwMjQtMDEtMDEiXQ``
+- Contents: ``["AJx-095VPrpTtN4QMOqROA", "date_of_expiry", "2024-01-01"]``
 
 **Claim** ``personal_administrative_number``:
 

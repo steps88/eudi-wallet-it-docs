@@ -14,6 +14,7 @@
   "sub": "NzbLsXh8uDCcd7noWXFZAfHkxZsRGC9Xs",
   "issuing_authority": "Istituto Poligrafico e Zecca dello Stato",
   "issuing_country": "IT",
+  "date_of_expiry": "2033-03-19",
   "status": {
     "status_assertion": {
       "credential_hash_alg": "sha-256"
