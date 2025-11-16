@@ -337,8 +337,8 @@ Below a non-normative example is given.
     }
 
 
-PID Claims
-^^^^^^^^^^
+PID Claims (SD-JWT-VC)
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Depending on the Digital Credential type **vct**, additional claims data MAY be added. The PID supports the following data:
 
@@ -711,7 +711,7 @@ The **nameSpaces** contains one or more *nameSpace* entries, each identified by 
 Attributes
 ^^^^^^^^^^
 
-The following **elementIdentifiers** MUST be included in a Digital Credential encoded in mdoc-CBOR within the respective *nameSpace*, unless otherwise specified:
+The following **elementIdentifiers** are defined for Digital Credentials encoded in mdoc-CBOR within the respective *nameSpace*:
 
 .. _table_element_identifiers_mdoc:
 .. list-table::
@@ -724,11 +724,11 @@ The following **elementIdentifiers** MUST be included in a Digital Credential en
      - **Reference**
 
    * - **issuing_country**
-     - *(tstr)*. Alpha-2 country code as defined in [ISO 3166-1], representing the issuing country or territory.
+     - *(tstr, REQUIRED)*. Alpha-2 country code as defined in [ISO 3166-1], representing the issuing country or territory.
      - [ISO 18013-5#7.2]
 
    * - **issuing_authority**
-     - *(tstr)*. Name of the administrative authority that has issued the mDL.
+     - *(tstr, REQUIRED)*. Name of the administrative authority that has issued the mDL.
        The value shall only use Latin1b characters and shall have a maximum length of 150 characters.
      - [ISO 18013-5#7.2]
 
@@ -737,15 +737,77 @@ The following **elementIdentifiers** MUST be included in a Digital Credential en
      -
 
    * - **verification**
-     - *(map, OPTIONAL)*. Contains authentication and verification details of the User. It has the same logic structure and purpose as reported in the :ref:`Table of the SD-JWT parameters <table_sd-jwt-vc_parameters>`.
+     - *(map, OPTIONAL)*. Contains authentication and verification details of the User. The CBOR map MUST contain the following members:
+
+         * ``trust_framework`` *(tstr)*: trust framework used for User authentication.
+         * ``assurance_level`` *(tstr)*: level of identity assurance guaranteed during User authentication.
+         * ``evidence`` *(array)*: each entry MUST contain:
+
+           - ``type`` *(tstr)*: evidence type (e.g., ``vouch``).
+           - ``time`` *(tdate)*: timestamp of authentication or verification.
+           - ``attestation`` *(map)*: MUST contain:
+
+             - ``type`` *(tstr)*: attestation type (e.g., ``digital_attestation``).
+             - ``reference_number`` *(tstr)*: identifier of the authentication/verification response.
+             - ``date_of_issuance`` *(tdate)*: date of issuance of the attestation.
+             - ``voucher`` *(map)*: MUST contain ``organization`` *(tstr)*.
+
      -
 
 .. note::
   Digital Credential User-specific attributes are defined in the Catalog of Digital Credentials.
   User-specific attributes for mdoc Digital Credentials such as those used in mDL or PID are also included by referencing the appropriate `elementIdentifiers` defined in ISO/IEC 18013-5 or the `EIDAS-ARF`_ specification.
 
-.. note:: 
+.. note::
   Regardless of the Digital Credential type, the `sub` value MUST NOT be shown to the User, as it is not a User attribute. It is used for identification purposes by the Credential Issuers.
+
+PID Attributes (mdoc-CBOR)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The PID in mdoc-CBOR format (ISO/IEC 18013-5 compliant) SHALL use the **docType** ``eu.europa.ec.eudi.pid.1`` as specified in ARF requirement **PID_04**.
+
+The PID attributes SHALL be encoded as specified in **Section 3 of the ARF PID Rulebook v1.3** [`EIDAS-ARF`_], which defines:
+
+- Attribute identifiers and their encoding formats (Section 3.1.1)
+- Specific encoding rules for ``nationality`` (Section 3.1.2), ``birth_date`` (Section 3.1.4), and ``place_of_birth`` (Section 3.1.5)
+- CBOR canonical encoding requirements (:RFC:`8949` Section 4.2)
+
+.. note::
+   **Key differences from SD-JWT encoding:**
+
+   ARF uses different claim names between SD-JWT and mdoc-CBOR formats:
+
+   - mdoc uses ``birth_date`` (not ``birthdate`` as in SD-JWT)
+   - mdoc uses ``expiry_date`` (not ``date_of_expiry`` as in SD-JWT)
+   - Both formats use ``place_of_birth`` with the same CBOR map structure
+
+   See ARF Section 3.1.1 (mdoc encoding) and Section 4.1.1 (SD-JWT encoding) for the complete mapping.
+
+**Italian PID Requirements:**
+
+For Italian PIDs, the following requirements apply:
+
+- The ``verification`` attribute (defined in :ref:`Attributes <table_element_identifiers_mdoc>`) is REQUIRED (whereas it is OPTIONAL for other credential types).
+- At least one of the following identifiers MUST be present:
+
+  - ``personal_administrative_number`` (ARF Section 2.2, standard attribute, namespace ``org.iso.18013.5.1``)
+  - ``tax_id_code`` (Italian domestic extension, namespace ``org.iso.18013.5.1.IT``)
+
+**Domestic Extensions (ARF requirement PID_06):**
+
+The following domestic attribute is defined for Italian PIDs and SHALL be placed in the domestic namespace ``org.iso.18013.5.1.IT``:
+
+.. list-table::
+   :class: longtable
+   :widths: 20 20 60
+   :header-rows: 1
+
+   * - **elementIdentifier**
+     - **Encoding**
+     - **Description**
+   * - **tax_id_code**
+     - ``tstr``
+     - Italian fiscal code (Codice Fiscale). Format: ETSI EN 319 412-1 (e.g., ``TINIT-RSSMRA80A10H501U``). Maximum length: 150 characters.
 
 Mobile Security Object
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -788,7 +850,7 @@ The **unprotected header** MUST contain the following parameters, unless otherwi
       - **Reference**
     * - **4**
       - *(tstr, OPTIONAL)*. Unique identifier of the Issuer JWK. Required when the Issuer of mdoc uses OpenID Federation.
-      - :ref:`trust:The Infrastructure of Trust`
+      - :ref:`trust-infrastructure:The Infrastructure of Trust`
     * - **33**
       - *(array)*. X.509 certificate chain about the Issuer. Required for X.509 certificate-based authentication.
       - :rfc:`9360`
@@ -883,7 +945,7 @@ CBOR Acronyms
    * - `bool`
      - Boolean (true/false)
    * - `tdate`
-     - Tagged Date (for example, Tag `0` is used to indicate a date/time string in RFC 3339 format)
+     - Tagged Date (for example, Tag `0` is used to indicate a date/time string in :RFC:`3339` format)
 
 Cross-Format Credential Parameters Mapping
 ------------------------------------------

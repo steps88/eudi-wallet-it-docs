@@ -327,8 +327,8 @@ Di seguito è riportato un esempio non normativo.
     }
 
 
-Attributi PID dell'Utente
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Attributi PID dell'Utente (SD-JWT-VC)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A seconda del tipo di Attestato Elettronico **vct**, possono essere aggiunti dei claim aggiuntivi, il PID supporta i seguenti:
 
@@ -701,7 +701,7 @@ Attributi dei Namespaces
 Attributi
 ^^^^^^^^^
 
-I seguenti **elementIdentifiers** DEVONO essere inclusi in un Attestato Elettronico codificato in mdoc-CBOR all'interno del rispettivo *nameSpace*, se non diversamente specificato:
+I seguenti **elementIdentifiers** sono definiti per gli Attestati Elettronici codificati in mdoc-CBOR all'interno del rispettivo *nameSpace*:
 
 .. _table_element_identifiers_mdoc:
 .. list-table::
@@ -714,11 +714,11 @@ I seguenti **elementIdentifiers** DEVONO essere inclusi in un Attestato Elettron
      - **Riferimento**
 
    * - **issuing_country**
-     - *(tstr)*. Codice paese Alpha-2 come definito in [ISO 3166-1], che rappresenta il paese o territorio di emissione.
+     - *(tstr, OBBLIGATORIO)*. Codice paese Alpha-2 come definito in [ISO 3166-1], che rappresenta il paese o territorio di emissione.
      - [ISO 18013-5#7.2]
 
    * - **issuing_authority**
-     - *(tstr)*. Nome dell'autorità amministrativa che ha emesso l'mDL.
+     - *(tstr, OBBLIGATORIO)*. Nome dell'autorità amministrativa che ha emesso l'mDL.
        Il valore deve contenere solo caratteri Latin1b e deve avere una lunghezza massima di 150 caratteri.
      - [ISO 18013-5#7.2]
 
@@ -728,16 +728,78 @@ I seguenti **elementIdentifiers** DEVONO essere inclusi in un Attestato Elettron
      -
 
    * - **verification**
-     - *(map, OPZIONALE)*. Contiene dettagli di autenticazione e verifica dell'Utente. Ha la stessa struttura logica e scopo di quanto riportato nella :ref:`Tabella dei parametri SD-JWT <table_sd-jwt-vc_parameters>`.
+     - *(map, OPZIONALE)*. Contiene dettagli di autenticazione e verifica dell'Utente. La CBOR map DEVE contenere i seguenti membri:
+
+         * ``trust_framework`` *(tstr)*: trust framework utilizzato per l'autenticazione dell'Utente.
+         * ``assurance_level`` *(tstr)*: livello di garanzia dell'identità garantito durante l'autenticazione dell'Utente.
+         * ``evidence`` *(array)*: ogni voce DEVE contenere:
+
+           - ``type`` *(tstr)*: tipo di evidenza (es., ``vouch``).
+           - ``time`` *(tdate)*: timestamp dell'autenticazione o verifica.
+           - ``attestation`` *(map)*: DEVE contenere:
+
+             - ``type`` *(tstr)*: tipo di attestazione (es., ``digital_attestation``).
+             - ``reference_number`` *(tstr)*: identificativo della risposta di autenticazione/verifica.
+             - ``date_of_issuance`` *(tdate)*: data di emissione dell'attestazione.
+             - ``voucher`` *(map)*: DEVE contenere ``organization`` *(tstr)*.
+
      -
 
 .. note::
   Gli attributi specifici dell'Utente dell'Attestato Elettronico sono definiti nel Catalogo degli Attestati Elettronici.
   Gli attributi specifici dell'Utente per gli Attestati Elettronici in formato mdoc come quelli del PID o mDL sono inclusi facendo riferimento agli corrispettivi `elementIdentifiers` definiti in ISO/IEC 18013-5 o nella specifica `EIDAS-ARF`_.
 
-.. note:: 
-  
+.. note::
+
   Indipendentemente dal tipo di Attestato Elettronico, il valore di ``sub`` NON DEVE essere mostrato all'Utente, in quanto non è un attributo dello stesso. È utilizzato per scopi di identificazione dagli Emittenti di Credenziali.
+
+Attributi PID dell'Utente (mdoc-CBOR)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Il PID in formato mdoc-CBOR (conforme a ISO/IEC 18013-5) DEVE utilizzare il **docType** ``eu.europa.ec.eudi.pid.1`` come specificato dal requisito ARF **PID_04**.
+
+Gli attributi PID DEVONO essere codificati come specificato nella **Sezione 3 dell'ARF PID Rulebook v1.3** [`EIDAS-ARF`_], che definisce:
+
+- Identificatori degli attributi e formati di codifica (Sezione 3.1.1)
+- Regole di codifica specifiche per ``nationality`` (Sezione 3.1.2), ``birth_date`` (Sezione 3.1.4), e ``place_of_birth`` (Sezione 3.1.5)
+- Requisiti di codifica canonica CBOR (:RFC:`8949` Sezione 4.2)
+
+.. note::
+   **Differenze chiave rispetto alla codifica SD-JWT:**
+
+   ARF utilizza nomi diversi tra i formati SD-JWT e mdoc-CBOR:
+
+   - mdoc usa ``birth_date`` (non ``birthdate`` come in SD-JWT)
+   - mdoc usa ``expiry_date`` (non ``date_of_expiry`` come in SD-JWT)
+   - Entrambi i formati usano ``place_of_birth`` con la stessa struttura CBOR map
+
+   Vedere ARF Sezione 3.1.1 (codifica mdoc) e Sezione 4.1.1 (codifica SD-JWT) per la mappatura completa.
+
+**Requisiti per i PID italiani:**
+
+Per i PID italiani si applicano i seguenti requisiti:
+
+- L'attributo ``verification`` (definito in :ref:`Attributes <table_element_identifiers_mdoc>`) è OBBLIGATORIO (mentre è OPZIONALE per altri tipi di credenziali).
+- Almeno uno dei seguenti identificatori DEVE essere presente:
+
+  - ``personal_administrative_number`` (ARF Sezione 2.2, attributo standard, namespace ``org.iso.18013.5.1``)
+  - ``tax_id_code`` (estensione domestica italiana, namespace ``org.iso.18013.5.1.IT``)
+
+**Estensioni Domestiche (requisito ARF PID_06):**
+
+Il seguente attributo domestico è definito per i PID italiani e DEVE essere inserito nel namespace domestico ``org.iso.18013.5.1.IT``:
+
+.. list-table::
+   :class: longtable
+   :widths: 20 20 60
+   :header-rows: 1
+
+   * - **elementIdentifier**
+     - **Codifica**
+     - **Descrizione**
+   * - **tax_id_code**
+     - ``tstr``
+     - Codice Fiscale italiano. Formato: ETSI EN 319 412-1 (es., ``TINIT-RSSMRA80A10H501U``). Lunghezza massima: 150 caratteri.
 
 Mobile Security Object
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -780,7 +842,7 @@ L'**unprotected header** DEVE contenere i seguenti parametri, se non diversament
       - **Riferimento**
     * - **4**
       - *(tstr, OPZIONALE)*. Identificativo univoco del JWK dell'Emittente. Richiesto quando l'Emittente del documento mdoc utilizza OpenID Federation.
-      - :ref:`trust:L'Infrastruttura di Trust`
+      - :ref:`trust-infrastructure:L'Infrastruttura di Trust`
     * - **33**
       - *(array)*. Catena di certificati X.509 relativa all'Emittente. Obbligatorio se l'autenticazione è basata su certificato X.509.
       - :rfc:`9360`
@@ -876,7 +938,7 @@ Acronimi CBOR
    * - `bool`
      - Boolean (Booleano) (vero/falso)
    * - `tdate`
-     - Tagged Date (ad esempio, il Tag `0` è usato per indicare una stringa di data/ora in formato RFC 3339)
+     - Tagged Date (ad esempio, il Tag `0` è usato per indicare una stringa di data/ora in formato :RFC:`3339`)
 
 Mappatura dei Parametri degli Attestati Elettronici tra i vari Formati
 ----------------------------------------------------------------------
