@@ -1,4 +1,4 @@
- {                       
+ {
     "nameSpaces": {
         "eu.europa.ec.eudi.pid.1": [                         
         24(<<    
@@ -58,32 +58,55 @@
             is a full date 
             }  
         >>),
-        24(<<               
-            {                          
-            "digestID": 8, 
+        24(<<
+            {
+            "digestID": 8,
             "random": h'FX8VVN1YN6NBH3CKYPJTNPJIVJ5KDMFA',
-            "elementIdentifier": "birth_place",
-            "elementValue": "Roma"
-            }  
+            "elementIdentifier": "place_of_birth",
+            "elementValue": {"locality": "Roma"}
+            }
         >>),
-        24(<<               
-            {                          
-            "digestID": 9, 
+        24(<<
+            {
+            "digestID": 9,
             "random": h'RGLXZ5CHND8Y2UUMHXXMJWPCHNH9HVIX',
             "elementIdentifier": "nationality",
-            "elementValue": "IT"
-            }  
-        >>)			  
+            "elementValue": ["IT"]
+            }
+        >>)
         ],
         "eu.europa.ec.eudi.pid.it.1": [
             24(<<
                 {
-                "digestID": 10, 
-                "random": h'11aa7273a2d2daa973f5951f0c34c2fbae',
-                "elementIdentifier": "personal_administrative_number", 
-                "elementValue": "XX00000XX"
-                }                         
-            >>)                    
+                "digestID": 10,
+                "random": h'22bb8384b3e3ebb084f6a62f1d45d3fccf',
+                "elementIdentifier": "tax_id_code",
+                "elementValue": "TINIT-RSSMRA56A12H501U"
+                }
+            >>),
+            24(<<
+                {
+                "digestID": 11,
+                "random": h'33cc9495c4f4fcc195g7b73g2e56e4gddg',
+                "elementIdentifier": "verification",
+                "elementValue": {
+                    "trust_framework": "it_cie",
+                    "assurance_level": "high",
+                    "evidence": [{
+                        "type": "vouch",
+                        "time": 0("2023-02-22T06:23:56Z"),
+                        "attestation": {
+                            "type": "digital_attestation",
+                            "reference_number": "6485-1619-3976-6671",
+                            "date_of_issuance": 0("2023-02-22T06:23:56Z"),
+                            "voucher": {
+                                "organization": "Ministero dell'Interno"
+                            }
+                        }
+                    }]
+                }
+                }
+            >>)
         ]            
     }, 
     "issuerAuth": [                
@@ -101,19 +124,21 @@
                       "validFrom": 0("2023-02-22T06:23:56Z"),                                   
                       "validUntil": 0("2024-02-22T00:00:00Z")                               
                   },
-                  "valueDigests": { 
-                      "eu.europa.ec.eudi.pid.1": {        
-                          1: h'0F1571A97FFB799CC8FCDF2BA4FC2909929…',                                          
-                          2: h'0CDFE077400432C055A2B69596C90…',     
-                          3: h'E2382149255AE8E955AF9B8984395…',                                        
-                          4: h'BBC77E6CCA981A3AD0C3E544EDF86…',                                     
+                  "valueDigests": {
+                      "eu.europa.ec.eudi.pid.1": {
+                          1: h'0F1571A97FFB799CC8FCDF2BA4FC2909929…',
+                          2: h'0CDFE077400432C055A2B69596C90…',
+                          3: h'E2382149255AE8E955AF9B8984395…',
+                          4: h'BBC77E6CCA981A3AD0C3E544EDF86…',
+                          5: h'AA5D5C57B6E7D88FC6F98895E4F67…',
                           6: h'BB6E6C68D1B4B4EC5A2AE9206F5t4…',
                           7: h'F8A5966E6DAC9970E0334D8F75E25…',
                           8: h'1F1A0F7CCDD79b29EB4B22F96F54F…',
                           9: h'1A0F7EEDB46B37AS4N22R96D83F3F…'
                       },
-                      "eu.europa.ec.eudi.pid.it.1": {  
-                          10: h'F9EE4D36F67DBD75E23311AC1C29…'
+                      "eu.europa.ec.eudi.pid.it.1": {
+                          10: h'F9EE4D36F67DBD75E23311AC1C29…',
+                          11: h'A2BC5E47G78ECD86F34422BD2D3A…'
                       }
                   },                             
                   "deviceKeyInfo": {                              

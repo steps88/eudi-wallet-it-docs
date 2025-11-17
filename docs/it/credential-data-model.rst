@@ -671,6 +671,107 @@ Un Attestato Elettronico in formato mdoc-CBOR DEVE avere la seguente struttura:
 
 La struttura di una Credenziale in formato mdoc-CBOR è ulteriormente descritta nelle sezioni seguenti.
 
+Mobile Security Object
+^^^^^^^^^^^^^^^^^^^^^^
+
+L'**issuerAuth** rappresenta il `Mobile Security Object` che è un `Documento COSE Sign1` definito in :rfc:`9052`. Ha la seguente struttura di dati:
+
+   * protected header
+   * unprotected header
+   * payload
+   * signature
+
+Il **protected header** DEVE contenere il seguente parametro codificato in formato CBOR:
+
+.. _table_protected_headers_mdoc:
+.. list-table::
+    :class: longtable
+    :widths: 20 60 20
+    :header-rows: 1
+
+    * - **Elemento**
+      - **Descrizione**
+      - **Riferimento**
+    * - **1**
+      - *(int)*. Algoritmo utilizzato per verificare la firma crittografica dell'Attestato Elettronico in formato mdoc.
+      - :rfc:`9053`
+
+.. note::
+  Solo l'algoritmo di firma DEVE essere presente nel protected header, altri elementi NON DOVREBBERO essere presenti.
+
+L'**unprotected header** DEVE contenere i seguenti parametri, se non diversamente specificato:
+
+.. _table_unprotected_headers_mdoc:
+.. list-table::
+    :class: longtable
+    :widths: 20 60 20
+    :header-rows: 1
+
+    * - **Elemento**
+      - **Descrizione**
+      - **Riferimento**
+    * - **4**
+      - *(tstr, OPZIONALE)*. Identificativo univoco del JWK dell'Emittente. Richiesto quando l'Emittente del documento mdoc utilizza OpenID Federation.
+      - :ref:`trust-infrastructure:L'Infrastruttura di Trust`
+    * - **33**
+      - *(array)*. Catena di certificati X.509 relativa all'Emittente. Obbligatorio se l'autenticazione è basata su certificato X.509.
+      - :rfc:`9360`
+
+.. note::
+  `x5chain` è incluso nell'unprotected header con lo scopo di consentire al Titolare di aggiornare la catena di certificati X.509, relativa all'emittente del `Mobile Security Object`, senza invalidare la firma.
+
+Il **payload** DEVE contenere il *MobileSecurityObject*, senza il parametro di header COSE Sign `content-type` e codificato come una *byte string* (bstr) utilizzando il *CBOR Tag* 24.
+
+Il `MobileSecurityObject` DEVE avere i seguenti attributi, se non diversamente specificato:
+
+.. _table_MobileSecurityObject_attributes:
+.. list-table::
+    :class: longtable
+    :widths: 20 60 20
+    :header-rows: 1
+
+    * - **Elemento**
+      - **Descrizione**
+      - **Riferimento**
+    * - **docType**
+      - *(tstr)*. Definisce il tipo di Attestato Elettronico in formato mdoc. Ad esempio, per un mDL, il valore DEVE essere ``org.iso.18013.5.1.mDL``. Specifici `docType` POSSONO essere definiti per Attestati Elettronici diversi da mDL.
+      - [ISO 18013-5#9.1.2.4]
+    * - **version**
+      - *(tstr)*. Versione del `MobileSecurityObject`.
+      - [ISO 18013-5#9.1.2.4]
+    * - **validityInfo**
+      - *(map)*. Contiene le date e gli orari di emissione e scadenza del `MobileSecurityObject`. DEVE contenere i seguenti sub parametri:
+
+          * **signed** *(tdate)*. Il timestamp che indica quando il `MobileSecurityObject` è stato firmato.
+          * **validFrom** *(tdate)*. Timestamp prima del quale il `MobileSecurityObject` non è considerato valido. DEVE essere uguale o successivo a `signed`.
+          * **validUntil** *(tdate)*. Timestamp dopo il quale il `MobileSecurityObject` non è più considerato valido.
+
+      - [ISO 18013-5#9.1.2.4]
+    * - **digestAlgorithm**
+      - *(tstr)*. Identificativo dell'algoritmo di digest, che DEVE corrispondere all'algoritmo definito nel protected header.
+      - [ISO 18013-5#9.1.2.4]
+    * - **valueDigests**
+      - *(map)*. Associa ogni namespace a un insieme di digest, dove ogni digest è indicizzato da un `digestID` univoco e contiene il valore del digest.
+      - [ISO 18013-5#9.1.2.4]
+    * - **deviceKeyInfo**
+      - *(map)*. Contiene le informazioni relative alla chiave pubblica dell'Istanza del Wallet. DEVE includere i seguenti sub parametri, se non diversamente specificato:
+
+          * **deviceKey** *(COSE_Key)*. Contiene i parametri relativi alla chiave pubblica.
+          * **keyAuthorizations** *(map, OPZIONALE)*. Definisce le autorizzazioni per gli interi namespaces o per i singoli dati.
+          * **keyInfo** *(map, OPZIONALE)*. Contiene metadati aggiuntivi della chiave.
+
+      - [ISO 18013-5#9.1.2.4]
+    * - **status**
+      - *(map, CONDIZIONALE)*. OBBLIGATORIO solo se l'Attestato Elettronico ha durata maggiore di 24 ore (long-lived). Contiene le informazioni relative allo stato di revoca del MSO. Se presente, include una *status_list* basata sul meccanismo TOKEN-STATUS-LIST_. Questo meccanismo utilizza un array di bit per contrassegnare gli MSO revocati in base alla loro posizione di indice.
+        La `status_list` DEVE contenere i seguenti sub parametri:
+
+          * **idx**. Indice di posizione nella status list.
+          * **uri**. URI che punta alla status list.
+      - [ISO 18013-5#9.1.2.6]
+
+.. note::
+  La chiave privata relativa alla chiave pubblica memorizzata nel `deviceKey` viene utilizzata per firmare i `DeviceSignedItems` e per dimostrare il possesso dell'Attestato Elettronico durante la fase di presentazione (vedere la fase di presentazione con mdoc-CBOR).
+
 Attributi dei Namespaces
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -782,12 +883,12 @@ Per i PID italiani si applicano i seguenti requisiti:
 - L'attributo ``verification`` (definito in :ref:`Attributes <table_element_identifiers_mdoc>`) è OBBLIGATORIO (mentre è OPZIONALE per altri tipi di credenziali).
 - Almeno uno dei seguenti identificatori DEVE essere presente:
 
-  - ``personal_administrative_number`` (ARF Sezione 2.2, attributo standard, namespace ``org.iso.18013.5.1``)
-  - ``tax_id_code`` (estensione domestica italiana, namespace ``org.iso.18013.5.1.IT``)
+  - ``personal_administrative_number`` (ARF Sezione 2.2, attributo standard, namespace ``eu.europa.ec.eudi.pid.1``)
+  - ``tax_id_code`` (estensione domestica italiana, namespace ``eu.europa.ec.eudi.pid.it.1``)
 
 **Estensioni Domestiche (requisito ARF PID_06):**
 
-Il seguente attributo domestico è definito per i PID italiani e DEVE essere inserito nel namespace domestico ``org.iso.18013.5.1.IT``:
+Il seguente attributo domestico è definito per i PID italiani e DEVE essere inserito nel namespace domestico ``eu.europa.ec.eudi.pid.it.1``:
 
 .. list-table::
    :class: longtable
@@ -801,106 +902,12 @@ Il seguente attributo domestico è definito per i PID italiani e DEVE essere ins
      - ``tstr``
      - Codice Fiscale italiano. Formato: ETSI EN 319 412-1 (es., ``TINIT-RSSMRA80A10H501U``). Lunghezza massima: 150 caratteri.
 
-Mobile Security Object
-^^^^^^^^^^^^^^^^^^^^^^
+**Esempio non normativo:**
 
-L'**issuerAuth** rappresenta il `Mobile Security Object` che è un `Documento COSE Sign1` definito in :rfc:`9052`. Ha la seguente struttura di dati:
+Un esempio non normativo di un PID in formato mdoc-CBOR (notazione diagnostica) è mostrato di seguito:
 
-   * protected header
-   * unprotected header
-   * payload
-   * signature
-
-Il **protected header** DEVE contenere il seguente parametro codificato in formato CBOR:
-
-.. _table_protected_headers_mdoc:
-.. list-table::
-    :class: longtable
-    :widths: 20 60 20
-    :header-rows: 1
-
-    * - **Elemento**
-      - **Descrizione**
-      - **Riferimento**
-    * - **1**
-      - *(int)*. Algoritmo utilizzato per verificare la firma crittografica dell'Attestato Elettronico in formato mdoc.
-      - :rfc:`9053`
-
-.. note::
-  Solo l'algoritmo di firma DEVE essere presente nel protected header, altri elementi NON DOVREBBERO essere presenti.
-
-L'**unprotected header** DEVE contenere i seguenti parametri, se non diversamente specificato:
-
-.. _table_unprotected_headers_mdoc:
-.. list-table::
-    :class: longtable
-    :widths: 20 60 20
-    :header-rows: 1
-
-    * - **Elemento**
-      - **Descrizione**
-      - **Riferimento**
-    * - **4**
-      - *(tstr, OPZIONALE)*. Identificativo univoco del JWK dell'Emittente. Richiesto quando l'Emittente del documento mdoc utilizza OpenID Federation.
-      - :ref:`trust-infrastructure:L'Infrastruttura di Trust`
-    * - **33**
-      - *(array)*. Catena di certificati X.509 relativa all'Emittente. Obbligatorio se l'autenticazione è basata su certificato X.509.
-      - :rfc:`9360`
-
-.. note::
-  `x5chain` è incluso nell'unprotected header con lo scopo di consentire al Titolare di aggiornare la catena di certificati X.509, relativa all'emittente del `Mobile Security Object`, senza invalidare la firma.
-
-Il **payload** DEVE contenere il *MobileSecurityObject*, senza il parametro di header COSE Sign `content-type` e codificato come una *byte string* (bstr) utilizzando il *CBOR Tag* 24.
-
-Il `MobileSecurityObject` DEVE avere i seguenti attributi, se non diversamente specificato:
-
-.. _table_MobileSecurityObject_attributes:
-.. list-table::
-    :class: longtable
-    :widths: 20 60 20
-    :header-rows: 1
-
-    * - **Elemento**
-      - **Descrizione**
-      - **Riferimento**
-    * - **docType**
-      - *(tstr)*. Definisce il tipo di Attestato Elettronico in formato mdoc. Ad esempio, per un mDL, il valore DEVE essere ``org.iso.18013.5.1.mDL``. Specifici `docType` POSSONO essere definiti per Attestati Elettronici diversi da mDL.
-      - [ISO 18013-5#9.1.2.4]
-    * - **version**
-      - *(tstr)*. Versione del `MobileSecurityObject`.
-      - [ISO 18013-5#9.1.2.4]
-    * - **validityInfo**
-      - *(map)*. Contiene le date e gli orari di emissione e scadenza del `MobileSecurityObject`. DEVE contenere i seguenti sub parametri:
-
-          * **signed** *(tdate)*. Il timestamp che indica quando il `MobileSecurityObject` è stato firmato.
-          * **validFrom** *(tdate)*. Timestamp prima del quale il `MobileSecurityObject` non è considerato valido. DEVE essere uguale o successivo a `signed`.
-          * **validUntil** *(tdate)*. Timestamp dopo il quale il `MobileSecurityObject` non è più considerato valido.
-
-      - [ISO 18013-5#9.1.2.4]
-    * - **digestAlgorithm**
-      - *(tstr)*. Identificativo dell'algoritmo di digest, che DEVE corrispondere all'algoritmo definito nel protected header.
-      - [ISO 18013-5#9.1.2.4]
-    * - **valueDigests**
-      - *(map)*. Associa ogni namespace a un insieme di digest, dove ogni digest è indicizzato da un `digestID` univoco e contiene il valore del digest.
-      - [ISO 18013-5#9.1.2.4]
-    * - **deviceKeyInfo**
-      - *(map)*. Contiene le informazioni relative alla chiave pubblica dell'Istanza del Wallet. DEVE includere i seguenti sub parametri, se non diversamente specificato:
-
-          * **deviceKey** *(COSE_Key)*. Contiene i parametri relativi alla chiave pubblica.
-          * **keyAuthorizations** *(map, OPZIONALE)*. Definisce le autorizzazioni per gli interi namespaces o per i singoli dati.
-          * **keyInfo** *(map, OPZIONALE)*. Contiene metadati aggiuntivi della chiave.
-
-      - [ISO 18013-5#9.1.2.4]
-    * - **status**
-      - *(map, CONDIZIONALE)*. OBBLIGATORIO solo se l'Attestato Elettronico ha durata maggiore di 24 ore (long-lived). Contiene le informazioni relative allo stato di revoca del MSO. Se presente, include una *status_list* basata sul meccanismo TOKEN-STATUS-LIST_. Questo meccanismo utilizza un array di bit per contrassegnare gli MSO revocati in base alla loro posizione di indice.
-        La `status_list` DEVE contenere i seguenti sub parametri:
-
-          * **idx**. Indice di posizione nella status list.
-          * **uri**. URI che punta alla status list.
-      - [ISO 18013-5#9.1.2.6]
-
-.. note::
-  La chiave privata relativa alla chiave pubblica memorizzata nel `deviceKey` viene utilizzata per firmare i `DeviceSignedItems` e per dimostrare il possesso dell'Attestato Elettronico durante la fase di presentazione (vedere la fase di presentazione con mdoc-CBOR).
+.. literalinclude:: ../../examples/pid-mdoc-cbor-example.txt
+  :language: text
 
 Esempi mdoc-CBOR
 ^^^^^^^^^^^^^^^^

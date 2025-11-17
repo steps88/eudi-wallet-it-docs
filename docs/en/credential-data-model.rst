@@ -681,6 +681,107 @@ An mdoc-CBOR Digital Credential MUST be compliant with the following structure:
 
 The structure of an mdoc-CBOR Credential is further elaborated in the following sections.
 
+Mobile Security Object
+^^^^^^^^^^^^^^^^^^^^^^
+
+The **issuerAuth** represents the `Mobile Security Object` which is a `COSE Sign1 Document` defined in :rfc:`9052`. It has the following data structure:
+
+   * protected header
+   * unprotected header
+   * payload
+   * signature.
+
+The **protected header** MUST contain the following parameter encoded in CBOR format:
+
+.. _table_protected_headers_mdoc:
+.. list-table::
+    :class: longtable
+    :widths: 20 60 20
+    :header-rows: 1
+
+    * - **Element**
+      - **Description**
+      - **Reference**
+    * - **1**
+      - *(int)*. Algorithm used to verify the cryptographic signature of the mdoc Digital Credential.
+      - :rfc:`9053`
+
+.. note::
+  Only the signature algorithm MUST be present in the protected header, other elements SHOULD not be present in the protected header.
+
+The **unprotected header** MUST contain the following parameters, unless otherwise specified:
+
+.. _table_unprotected_headers_mdoc:
+.. list-table::
+    :class: longtable
+    :widths: 20 60 20
+    :header-rows: 1
+
+    * - **Element**
+      - **Description**
+      - **Reference**
+    * - **4**
+      - *(tstr, OPTIONAL)*. Unique identifier of the Issuer JWK. Required when the Issuer of mdoc uses OpenID Federation.
+      - :ref:`trust-infrastructure:The Infrastructure of Trust`
+    * - **33**
+      - *(array)*. X.509 certificate chain about the Issuer. Required for X.509 certificate-based authentication.
+      - :rfc:`9360`
+
+.. note::
+  The `x5chain` is included in the unprotected header with the aim to allow the Holder to update the X.509 certificate chain, related to the `Mobile Security Object` issuer, without invalidating the signature.
+
+The **payload** MUST contain the *MobileSecurityObject*, without the `content-type` COSE Sign header parameter and encoded as a *byte string* (bstr) using the *CBOR Tag* 24.
+
+The `MobileSecurityObject` MUST have the following attributes, unless otherwise specified:
+
+.. _table_MobileSecurityObject_attributes:
+.. list-table::
+    :class: longtable
+    :widths: 20 60 20
+    :header-rows: 1
+
+    * - **Element**
+      - **Description**
+      - **Reference**
+    * - **docType**
+      - *(tstr)*. Defines the type of mdoc Digital Credential being issued. For example, for an mDL, the value MUST be ``org.iso.18013.5.1.mDL``. Specific `docType` MAY be defined for Digital Credential other than mDL.
+      - [ISO 18013-5#9.1.2.4]
+    * - **version**
+      - *(tstr)*. Version of the `MobileSecurityObject`.
+      - [ISO 18013-5#9.1.2.4]
+    * - **validityInfo**
+      - *(map)*. Contains the `MobileSecurityObject` issuance and expiration datetimes. It MUST contain the following sub-value:
+
+          * **signed** *(tdate)*. The timestamp indicating when the `MobileSecurityObject` was signed.
+          * **validFrom** *(tdate)*. Timestamp before which the `MobileSecurityObject` is not considered valid. MUST be equal to or later than the `signed` time.
+          * **validUntil** *(tdate)*. Timestamp after which the `MobileSecurityObject` is no longer considered valid.
+
+      - [ISO 18013-5#9.1.2.4]
+    * - **digestAlgorithm**
+      - *(tstr)*. Identifier of the digest algorithm, which MUST match the algorithm defined in the protected header.
+      - [ISO 18013-5#9.1.2.4]
+    * - **valueDigests**
+      - *(map)*. Maps each namespace identifier to a set of digests, where each digest is keyed by a unique `digestID` and holds the digest value.
+      - [ISO 18013-5#9.1.2.4]
+    * - **deviceKeyInfo**
+      - *(map)*. Contains metadata about the Wallet Instance's public key. It MUST include the following sub-fields, unless otherwise specified:
+
+          * **deviceKey** *(COSE_Key)*. Contains the public key parameters.
+          * **keyAuthorizations** *(map, OPTIONAL)*. Defines authorizations for either full namespaces or individual data elements.
+          * **keyInfo** *(map, OPTIONAL)*. Contains additional metadata about the key.
+
+      - [ISO 18013-5#9.1.2.4]
+    * - **status**
+      - *(map, CONDITIONAL)*. REQUIRED only if the Digital Credential is long-lived. Contains the MSO revocation information. If present, it includes a *status_list* based on the TOKEN-STATUS-LIST_ mechanism. This mechanism uses a bit array to mark revoked MSOs by their index position.
+        The `status_list` MUST contain the following sub-values:
+
+          * **idx**. Position index in the status list.
+          * **uri**. URI pointing to the status list resource.
+      - [ISO 18013-5#9.1.2.6]
+
+.. note::
+  The private key related to the public key stored in the `deviceKey` map is used to sign the `DeviceSignedItems` and to prove the possession of the Digital Credential during the presentation phase (see the presentation phase with mdoc-CBOR).
+
 Attribute Namespaces
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -790,12 +891,12 @@ For Italian PIDs, the following requirements apply:
 - The ``verification`` attribute (defined in :ref:`Attributes <table_element_identifiers_mdoc>`) is REQUIRED (whereas it is OPTIONAL for other credential types).
 - At least one of the following identifiers MUST be present:
 
-  - ``personal_administrative_number`` (ARF Section 2.2, standard attribute, namespace ``org.iso.18013.5.1``)
-  - ``tax_id_code`` (Italian domestic extension, namespace ``org.iso.18013.5.1.IT``)
+  - ``personal_administrative_number`` (ARF Section 2.2, standard attribute, namespace ``eu.europa.ec.eudi.pid.1``)
+  - ``tax_id_code`` (Italian domestic extension, namespace ``eu.europa.ec.eudi.pid.it.1``)
 
 **Domestic Extensions (ARF requirement PID_06):**
 
-The following domestic attribute is defined for Italian PIDs and SHALL be placed in the domestic namespace ``org.iso.18013.5.1.IT``:
+The following domestic attribute is defined for Italian PIDs and SHALL be placed in the domestic namespace ``eu.europa.ec.eudi.pid.it.1``:
 
 .. list-table::
    :class: longtable
@@ -809,106 +910,12 @@ The following domestic attribute is defined for Italian PIDs and SHALL be placed
      - ``tstr``
      - Italian fiscal code (Codice Fiscale). Format: ETSI EN 319 412-1 (e.g., ``TINIT-RSSMRA80A10H501U``). Maximum length: 150 characters.
 
-Mobile Security Object
-^^^^^^^^^^^^^^^^^^^^^^
+**Non-normative example:**
 
-The **issuerAuth** represents the `Mobile Security Object` which is a `COSE Sign1 Document` defined in :rfc:`9052`. It has the following data structure:
+A non-normative example of a PID in mdoc-CBOR format (diagnostic notation) is shown below:
 
-   * protected header
-   * unprotected header
-   * payload
-   * signature.
-
-The **protected header** MUST contain the following parameter encoded in CBOR format:
-
-.. _table_protected_headers_mdoc:
-.. list-table::
-    :class: longtable
-    :widths: 20 60 20
-    :header-rows: 1
-
-    * - **Element**
-      - **Description**
-      - **Reference**
-    * - **1**
-      - *(int)*. Algorithm used to verify the cryptographic signature of the mdoc Digital Credential.
-      - :rfc:`9053`
-
-.. note::
-  Only the signature algorithm MUST be present in the protected header, other elements SHOULD not be present in the protected header.
-
-The **unprotected header** MUST contain the following parameters, unless otherwise specified:
-
-.. _table_unprotected_headers_mdoc:
-.. list-table::
-    :class: longtable
-    :widths: 20 60 20
-    :header-rows: 1
-
-    * - **Element**
-      - **Description**
-      - **Reference**
-    * - **4**
-      - *(tstr, OPTIONAL)*. Unique identifier of the Issuer JWK. Required when the Issuer of mdoc uses OpenID Federation.
-      - :ref:`trust-infrastructure:The Infrastructure of Trust`
-    * - **33**
-      - *(array)*. X.509 certificate chain about the Issuer. Required for X.509 certificate-based authentication.
-      - :rfc:`9360`
-
-.. note::
-  The `x5chain` is included in the unprotected header with the aim to allow the Holder to update the X.509 certificate chain, related to the `Mobile Security Object` issuer, without invalidating the signature.
-
-The **payload** MUST contain the *MobileSecurityObject*, without the `content-type` COSE Sign header parameter and encoded as a *byte string* (bstr) using the *CBOR Tag* 24.
-
-The `MobileSecurityObject` MUST have the following attributes, unless otherwise specified:
-
-.. _table_MobileSecurityObject_attributes:
-.. list-table::
-    :class: longtable
-    :widths: 20 60 20
-    :header-rows: 1
-
-    * - **Element**
-      - **Description**
-      - **Reference**
-    * - **docType**
-      - *(tstr)*. Defines the type of mdoc Digital Credential being issued. For example, for an mDL, the value MUST be ``org.iso.18013.5.1.mDL``. Specific `docType` MAY be defined for Digital Credential other than mDL.
-      - [ISO 18013-5#9.1.2.4]
-    * - **version**
-      - *(tstr)*. Version of the `MobileSecurityObject`.
-      - [ISO 18013-5#9.1.2.4]
-    * - **validityInfo**
-      - *(map)*. Contains the `MobileSecurityObject` issuance and expiration datetimes. It MUST contain the following sub-value:
-
-          * **signed** *(tdate)*. The timestamp indicating when the `MobileSecurityObject` was signed.
-          * **validFrom** *(tdate)*. Timestamp before which the `MobileSecurityObject` is not considered valid. MUST be equal to or later than the `signed` time.
-          * **validUntil** *(tdate)*. Timestamp after which the `MobileSecurityObject` is no longer considered valid.
-
-      - [ISO 18013-5#9.1.2.4]
-    * - **digestAlgorithm**
-      - *(tstr)*. Identifier of the digest algorithm, which MUST match the algorithm defined in the protected header.
-      - [ISO 18013-5#9.1.2.4]
-    * - **valueDigests**
-      - *(map)*. Maps each namespace identifier to a set of digests, where each digest is keyed by a unique `digestID` and holds the digest value.
-      - [ISO 18013-5#9.1.2.4]
-    * - **deviceKeyInfo**
-      - *(map)*. Contains metadata about the Wallet Instance's public key. It MUST include the following sub-fields, unless otherwise specified:
-
-          * **deviceKey** *(COSE_Key)*. Contains the public key parameters.
-          * **keyAuthorizations** *(map, OPTIONAL)*. Defines authorizations for either full namespaces or individual data elements.
-          * **keyInfo** *(map, OPTIONAL)*. Contains additional metadata about the key.
-
-      - [ISO 18013-5#9.1.2.4]
-    * - **status**
-      - *(map, CONDITIONAL)*. REQUIRED only if the Digital Credential is long-lived. Contains the MSO revocation information. If present, it includes a *status_list* based on the TOKEN-STATUS-LIST_ mechanism. This mechanism uses a bit array to mark revoked MSOs by their index position.
-        The `status_list` MUST contain the following sub-values:
-
-          * **idx**. Position index in the status list.
-          * **uri**. URI pointing to the status list resource.
-      - [ISO 18013-5#9.1.2.6]
-
-.. note::
-  The private key related to the public key stored in the `deviceKey` map is used to sign the `DeviceSignedItems` and to prove the possession of the Digital Credential during the presentation phase (see the presentation phase with mdoc-CBOR).
+.. literalinclude:: ../../examples/pid-mdoc-cbor-example.txt
+  :language: text
 
 mdoc-CBOR Examples
 ^^^^^^^^^^^^^^^^^^
