@@ -50,7 +50,7 @@
 .. _OIDC: https://openid.net/specs/openid-connect-core-1_0.html
 .. _OPENID4VC-HAIP: https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-1_0-01.html
 .. _OpenID4VC-SecTrust: https://openid.github.io/OpenID4VC_SecTrust/draft-oid4vc-security-and-trust.html
-.. _OpenID4VCI: https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-15.html
+.. _OpenID4VCI: https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html
 .. _OpenID4VP: https://openid.net/specs/openid-4-verifiable-presentations-1_0-23.html
 .. _PDND: https://www.agid.gov.it/sites/agid/files/2025-06/Linee_guida_Infrastruttura_Interoperabilit%C3%A0_PDND_v2_maggio_2025.pdf
 .. _RFC 2898: http://tools.ietf.org/html/rfc2898.html
@@ -58,8 +58,8 @@
 .. _RFC 9449: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop
 .. _RFC 5280: https://datatracker.ietf.org/doc/html/rfc5280
 .. _RFC 7763: https://www.rfc-editor.org/rfc/rfc7763.html
-.. _SD-JWT-VC: https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/06/
-.. _SD-JWT: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-14
+.. _SD-JWT-VC: https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/11/
+.. _SD-JWT: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-selective-disclosure-jwt-22
 .. _Secure Enclave: https://support.apple.com/en-gb/guide/security/sec59b0b31ff/web
 .. _Signal Hub Guide: https://developer.pagopa.it/pdnd-interoperabilita/guides/manuale-operativo-signal-hub
 .. _Signal Hub pull: https://developer.pagopa.it/pdnd-interoperabilita/guides/manuale-operativo-signal-hub/1.0/tutorial/come-recuperare-i-segnali
@@ -79,6 +79,7 @@
 .. _Wallet Instance Initialization and Registration: wallet-solution.html#wallet-instance-initialization-and-registration
 .. _Wallet Provider metadata: wallet-solution.html#wallet-provider-metadata
 .. _OIDC-RP-Metadata: https://openid.net/specs/openid-connect-rp-metadata-choices-1_0.html
+.. _OAS3: https://spec.openapis.org/oas/v3.0.3
 .. _ICAO 9303: https://www.icao.int/publications/doc-series/doc-9303
 .. _BSI-03110: https://www.bundesanzeiger.de/download/BAnzAT1142010B1/03_BSI_TR-03110.pdf
 
