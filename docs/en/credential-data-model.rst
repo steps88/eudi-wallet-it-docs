@@ -13,19 +13,33 @@ The Digital Credential Data Model structures Digital Credentials for secure, int
     - Claims: Information about the subject, such as identity or qualifications.
     - Proof: Cryptographic verification of authenticity and legitimate ownership.
 
-The Person Identification Data (PID) is issued by the PID Provider according to national laws. The main scope of the PID is allowing natural persons to be authenticated for access to a service or to a protected resource.
-The User attributes provided within the Italian PID are the ones listed below:
+The Person Identification Data (PID) is issued by the PID Provider according to national laws and it MUST be provided in SD-JWT-VC and mdoc-CBOR data format. The main scope of the PID is allowing natural persons to be authenticated for access to a service or to a protected resource.
+The PID MUST be provided according to data model requirements defined in  `EU_2024/2977`_ and **Section 2 of the ARF PID Rulebook v1.3** [`EIDAS-ARF`_], the User attributes provided within the Italian PID are the ones listed below:
 
     - Current Family Name
     - Current First Name
     - Date of Birth
     - Place of Birth
     - Nationality
-    - Taxpayer identification number
+    - Taxpayer identification number (data identifier: `tax_id_code`)
+
+In addition to the User attributes listed above, the PID includes also the following metadata attributes (`EU_2024/2977`_ and **Section 2 of the ARF PID Rulebook v1.3** [`EIDAS-ARF`_]):
+
+  - Expiry Date
+  - Issuing authority
+  - Issuing country
+  - Identity proofing information (data identifier: `verification`)
+
+The *taxpayer identification number* and the *identity proofing information* are provided as **domestic extensions** defined by the Italian IT-Wallet specification. It is NOT part of the ARF PID Rulebook (Annex 3.01, PID Rulebook v1.3), but is **permitted under ARF requirement PID_06**, which allows Member States to define additional domestic attributes beyond those specified in Commission Implementing Regulation (CIR) 2024/2977 (`EU_2024/2977`_). In particular, the identity proofing information is REQUIRED for Italian PIDs to ensure:
+
+- Traceability of User authentication method.
+- Level of assurance compliance (LoA High/Substantial per eIDAS Regulation).
+- Auditability of identity verification processes.
+
+Both claims are included in the **domestic namespaces** that are defined in Section :ref:`credential-data-model:PID Data Model in SD-JWT-VC Format` and Section :ref:`credential-data-model:PID Data Model in mdoc-CBOR Format` for SD-JWT-VC and mdoc-CBOR PIDs respectively.
 
 The (Q)EAAs are issued by (Q)EAA Issuers to a Wallet Instance and MUST be provided in SD-JWT-VC or mdoc-CBOR data format.
-
-The Digital Credential data format and the mechanism through which a Digital Credential is issued to the Wallet Instance and presented to a Relying Party are described in the following sections.
+While the (Q)EAA data model is use-case driven and may include different User attributes, the metadata attributes specific for each data format are provided in the following sections.  
 
 SD-JWT-VC Credential Format
 ---------------------------
@@ -64,12 +78,12 @@ The Disclosures are provided to the Holder together with the SD-JWT in the *Comb
 See `SD-JWT-VC`_ and `SD-JWT`_ for additional details.
 
 
-Credential SD-JWT Parameters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Digital Credential SD-JWT parameters and metadata attributes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The JOSE header contains the following mandatory parameters:
 
-.. _table_sd-wt-vc_jose_header:
+.. _table_sd-jwt-vc_jose_header:
 .. list-table::
   :class: longtable
   :widths: 20 60 20
@@ -94,7 +108,7 @@ The JOSE header contains the following mandatory parameters:
     - REQUIRED. Contains the X.509 public key certificate or certificate chain [:rfc:`5280`] corresponding to the key used to digitally sign the JWT.
     - :rfc:`7515` Section 4.1.8 and [`SD-JWT-VC`_] Section 3.5.
 
-The JWT payload contains the following claims. Some of these claims can be disclosed, these are listed in the following tables that specify whether a claim is selectively disclosable [SD] or not [NSD].
+The JWT payload contains the following claims. Unless otherwise specifed, the following clains MUST NOT be selectively disclosable. 
 
 .. _table_sd-jwt-vc_parameters:
 .. list-table::
@@ -106,79 +120,68 @@ The JWT payload contains the following claims. Some of these claims can be discl
       - **Description**
       - **Reference**
     * - **iss**
-      - [NSD]. REQUIRED. URL string representing the Credential Issuer unique identifier.
+      - REQUIRED. URL string representing the Credential Issuer unique identifier.
       - `[RFC7519, Section 4.1.1] <https://www.iana.org/go/rfc7519>`_.
     * - **sub**
-      - [NSD]. OPTIONAL. The identifier of the subject of the Digital Credential, the User, MUST be opaque and MUST NOT correspond to any anagraphic data or be derived from the User's anagraphic data via pseudonymization. Additionally, it is required that two different Credentials issued MUST NOT use the same ``sub`` value.
+      - OPTIONAL. The identifier of the subject of the Digital Credential, the User, MUST be opaque and MUST NOT correspond to any anagraphic data or be derived from the User's anagraphic data via pseudonymization. Additionally, it is required that two different Credentials issued MUST NOT use the same ``sub`` value.
       - `[RFC7519, Section 4.1.2] <https://www.iana.org/go/rfc7519>`_.
     * - **iat**
-      - [NSD]. OPTIONAL. UNIX Timestamp with the time of JWT issuance, coded as NumericDate as indicated in :rfc:`7519`.
+      - OPTIONAL. UNIX Timestamp with the time of JWT issuance, coded as NumericDate as indicated in :rfc:`7519`.
       - `[RFC7519, Section 4.1.6] <https://www.iana.org/go/rfc7519>`_.
     * - **exp**
-      - [NSD]. REQUIRED. UNIX Timestamp with the expiry time of the JWT, coded as NumericDate as indicated in :rfc:`7519`.
+      - REQUIRED. UNIX Timestamp with the expiry time of the JWT, coded as NumericDate as indicated in :rfc:`7519`.
       - `[RFC7519, Section 4.1.4] <https://www.iana.org/go/rfc7519>`_.
     * - **nbf**
-      - [NSD]. OPTIONAL. UNIX Timestamp with the start time of validity of the JWT, coded as NumericDate as indicated in :rfc:`7519`.
+      - OPTIONAL. UNIX Timestamp with the start time of validity of the JWT, coded as NumericDate as indicated in :rfc:`7519`.
       - `[RFC7519, Section 4.1.4] <https://www.iana.org/go/rfc7519>`_.
     * - **issuing_authority**
-      - [NSD]. REQUIRED. Name of the administrative authority that has issued the Credential.
+      - REQUIRED. Name of the administrative authority that has issued the Credential.
       - Commission Implementing Regulation `EU_2024/2977`_.
     * - **issuing_country**
-      - [NSD]. REQUIRED. Alpha-2 country code, as specified in ISO 3166-1, of the country or territory of the Credential Issuer.
+      - REQUIRED. Alpha-2 country code, as specified in ISO 3166-1, of the country or territory of the Credential Issuer.
       - Commission Implementing Regulation `EU_2024/2977`_.
     * - **date_of_expiry**
-      - [NSD]. CONDITIONAL. REQUIRED if Credential type is set to `pid`, otherwise is OPTIONAL. Date (and if possible time) when the person identification data will expire. ISO 8601-1 YYYY-MM-DD format. This attribute pertains to the administrative validity period of the PID, which is typically different from the technical validity period expressed by the JWT ``exp`` claim.
+      - OPTIONAL. Date (and if possible time) when the Digital Credential will expire. ItMUST be according to ISO 8601-1 YYYY-MM-DD format. This attribute pertains to the administrative validity period of the Digital Credential, which is typically different from the technical validity period expressed by the JWT ``exp`` claim.
       - Commission Implementing Regulation `EU_2024/2977`_.
     * - **status**
-      - [NSD]. REQUIRED only if the Digital Credential is long-lived. JSON object containing the information on how to read the status of the Verifiable Credential. It MUST contain either the JSON member *status_assertion* or *status_list*.
+      - REQUIRED only if the Digital Credential is long-lived. JSON object containing the information on how to read the status of the Verifiable Credential. It MUST contain either the JSON member *status_assertion* or *status_list*.
       - Section 3.2.2.2 `SD-JWT-VC`_ and Section 11 `OAUTH-STATUS-ASSERTION`_.
     * - **cnf**
-      - [NSD]. REQUIRED. JSON object containing the proof-of-possession key materials. By including a **cnf** (confirmation) claim in a JWT, the Issuer of the JWT declares that the Holder is in control of the private key related to the public one defined in the **cnf** parameter. The recipient MUST cryptographically verify that the Holder is in control of that key.
+      - REQUIRED. JSON object containing the proof-of-possession key materials. By including a **cnf** (confirmation) claim in a JWT, the Issuer of the JWT declares that the Holder is in control of the private key related to the public one defined in the **cnf** parameter. The recipient MUST cryptographically verify that the Holder is in control of that key.
       - `[RFC7800, Section 3.1] <https://www.iana.org/go/rfc7800>`_ and Section 3.2.2.2 `SD-JWT-VC`_.
     * - **vct**
-      - [NSD]. REQUIRED. Credential type value MUST be a URN and it MUST be set using one of the values obtained from the Credential Issuer metadata, matching of the literals included in this URN MUST be performed in a case-sensitive manner. It is the identifier of the SD-JWT VC type and it MUST be set with a collision-resistant value as defined in Section 2 of :rfc:`7515`. It MUST contain also the number of version of the Credential type. The following structure MUST be used: ``urn:eudi:{credential_type}:it:{version}``. For PIDs, the value MUST be ``urn:eudi:pid:it:1``. If the Digital Credential is published within the Digital Credential Catalog, ``vct`` value MUST correspond with the value indicated in the Catalog, see :ref:`registry:Digital Credentials Catalog Structure`.
+      - REQUIRED. Credential type value MUST be a URN and it MUST be set using one of the values obtained from the Credential Issuer metadata, matching of the literals included in this URN MUST be performed in a case-sensitive manner. It is the identifier of the SD-JWT VC type and it MUST be set with a collision-resistant value as defined in Section 2 of :rfc:`7515`. It MUST contain also the number of version of the Credential type. Unless otherwhise specified by `EIDAS-ARF`_ and EUDI Rulebooks, the `vct` SHOULD follow a structure like `urn:it-wallet:{credential_type}:{credential_type_version}`. 
       - Section 3.2.2.2 `SD-JWT-VC`_.
     * - **vct#integrity**
-      - [NSD]. REQUIRED. The value MUST be an "integrity metadata" string as defined in Section 3 of [`W3C-SRI`_]. *SHA-256*, *SHA-384* and *SHA-512* MUST be supported as cryptographic hash functions. *MD5* and *SHA-1* MUST NOT be used. This claim MUST be verified according to Section 3.3.5 of [`W3C-SRI`_].
+      - REQUIRED. The value MUST be an "integrity metadata" string as defined in Section 3 of [`W3C-SRI`_]. *SHA-256*, *SHA-384* and *SHA-512* MUST be supported as cryptographic hash functions. *MD5* and *SHA-1* MUST NOT be used. This claim MUST be verified according to Section 3.3.5 of [`W3C-SRI`_].
       - Section 6.1 `SD-JWT-VC`_, [`W3C-SRI`_]
     * - **verification**
-      - [SD]. CONDITIONAL. REQUIRED if Credential type is set to `pid`, otherwise is OPTIONAL. Object containing User authentication and User data verification information. If present MUST include the following sub-value:
+      - OPTIONAL. Object containing User authentication and User data verification information. It includes the following sub-value:
 
-          * ``trust_framework``: String identifying the trust framework used for User authentication. It MUST be set using one of the values described in the `trust_frameworks_supported` map provided within the Credential Issuer Metadata.
-          * ``assurance_level``: String identifying the level of identity assurance guaranteed during the User authentication process.
-          * ``evidence``: Each entry of the array MUST contain the following members:
+          * ``trust_framework``: REQUIRED. String identifying the trust framework used for User authentication. It MUST be set using one of the values described in the `trust_frameworks_supported` map provided within the Credential Issuer Metadata.
+          * ``assurance_level``: REQUIRED. String identifying the level of identity assurance guaranteed during the User authentication process.
+          * ``evidence``: OPTIONAL. Each entry of the array MUST contain the following members:
 
-            - ``type``: It represents evidence type. It MUST be set to ``vouch``.
-            - ``time``: UNIX Timestamps with the time of the authentication or verification.
-            - ``attestation``: It MUST contain the following members:
+            - ``type``: OPTIONAL. It represents evidence type. It MUST be set to ``vouch``.
+            - ``time``: OPTIONAL. UNIX Timestamps with the time of the authentication or verification.
+            - ``attestation``: OPTIONAL. It contains the following members:
 
-                - ``type``: It MUST be set to ``digital_attestation``.
-                - ``reference_number``: identifier of the authentication or verification response.
-                - ``date_of_issuance``: date of issuance of the attestation.
-                - ``voucher``: It MUST contains ``organization`` claim.
+                - ``type``: OPTIONAL. It MUST be set to ``digital_attestation``.
+                - ``reference_number``: OPTIONAL. identifier of the authentication or verification response.
+                - ``date_of_issuance``: OPTIONAL. date of issuance of the attestation.
+                - ``voucher``: OPTIONAL. It MUST contains ``organization`` claim.
 
-      - `OIDC-IDA`_.
+      - Domestic extension.
     * - **_sd**
-      - [NSD]. REQUIRED. Array of strings, where each string represents a digest of a Disclosure.
+      - REQUIRED. Array of strings, where each string represents a digest of a Disclosure.
       - 4.2.4.1 `SD-JWT`_
     * - **_sd_alg**
-      - [NSD]. REQUIRED. Hash algorithm used by the Issuer to generate the digests.
+      - REQUIRED. Hash algorithm used by the Issuer to generate the digests.
       - 4.1.1 `SD-JWT`_
 
 
 .. note::
   The standard JWT claims ``nbf`` and ``exp`` are used to express the technical validity period of a SD-JWT VC-compliant Digital Credential.
-
-.. note::
-   The ``verification`` claim is a **domestic extension** defined by the Italian IT-Wallet specification. It is NOT part of the ARF PID Rulebook (EUDI Wallet Architecture Reference Framework, Annex 3.01, PID Rulebook v1.3), but is **permitted under ARF requirement PID_06**, which allows Member States to define additional domestic attributes beyond those specified in Commission Implementing Regulation (CIR) 2024/2977.
-
-   This claim is REQUIRED for Italian PIDs to ensure:
-
-   - Traceability of User authentication method.
-   - Level of assurance compliance (LoA High/Substantial per eIDAS Regulation).
-   - Auditability of identity verification processes.
-
-   For mdoc-CBOR encoding, this claim is included in the **domestic namespace** as ``nameSpaces.elementIdentifier.verification`` (see cross-format mapping table).
 
 If the ``status`` parameter is set to ``status_list``, it is a JSON Object containing the following sub-parameters:
 
@@ -201,10 +204,13 @@ If the ``status`` parameter is set to ``status_list``, it is a JSON Object conta
 If the ``status`` parameter is set to ``status_assertion``, it is a JSON Object containing the *credential_hash_alg* claim indicating the Algorithm used for hashing the Digital Credential to which the Status Assertion is bound. It is RECOMMENDED to use *sha-256*.
 
 
-PID Claims (SD-JWT-VC)
-^^^^^^^^^^^^^^^^^^^^^^^
+PID Data Model in SD-JWT-VC Format
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Depending on the Digital Credential type **vct**, additional claims data MAY be added. The PID supports the following data:
+As the Italian PID is provided as a domestic extension attributes, the `vct` claim value MUST extend the base type defined in the ARF PID Rulebook v1.3, using type in the namespace `urn:eudi:pid:`, as allowed by `EIDAS-ARF`_ requirement *PID_14* and specified in Section 4.2 of ARF PID Rulebook v1.3. 
+For the SD-JWT-VC PID defined in this specification, the `vct` value MUST be `urn:eudi:pid:it:1`.
+
+According to `EU_2024/2977`_ and **Section 4 of the ARF PID Rulebook v1.3** [`EIDAS-ARF`_], the PID in SD-JWT-VC format MUST supports the following User Attributes: 
 
 .. _table_sd-jwt-vc_pid_parameters:
 .. list-table::
@@ -216,30 +222,34 @@ Depending on the Digital Credential type **vct**, additional claims data MAY be 
       - **Description**
       - **Reference**
     * - **given_name**
-      - [SD]. REQUIRED. Current First Name. (*String*)
+      - REQUIRED. Current First Name. (*String*)
       - Section 5.1 of `OIDC`_ and Commission Implementing Regulation `EU_2024/2977`_
     * - **family_name**
-      - [SD]. REQUIRED. Current Family Name. (*String*)
+      - REQUIRED. Current Family Name. (*String*)
       - Section 5.1 of `OIDC`_ and Commission Implementing Regulation `EU_2024/2977`_
     * - **birthdate**
-      - [SD]. REQUIRED. Date of Birth. (*String, [ISO8601‑1] YYYY-MM-DD format*)
+      - REQUIRED. Date of Birth. (*String, [ISO8601‑1] YYYY-MM-DD format*)
       - Commission Implementing Regulation `EU_2024/2977`_
     * - **place_of_birth**
-      - [SD]. REQUIRED. Place of Birth. (*JSON structure; at least one of country, region, locality MUST be present*)
+      - REQUIRED. Place of Birth. (*JSON structure; at least one of country, region, locality MUST be present*)
       - Commission Implementing Regulation `EU_2024/2977`_
     * - **nationalities**
-      - [SD]. REQUIRED. One or more alpha-2 country codes as specified in ISO 3166-1. (*Array of strings*)
+      - REQUIRED. One or more alpha-2 country codes as specified in ISO 3166-1. (*Array of strings*)
       - Commission Implementing Regulation `EU_2024/2977`_
     * - **personal_administrative_number**
-      - [SD]. CONDITIONAL. REQUIRED if ``tax_id_code`` is not present. National unique identifier of a natural person generated by ANPR in string format. (*String*)
+      - REQUIRED if ``tax_id_code`` is not present, OPTIONAL otherwise. National unique identifier of a natural person generated by ANPR in string format. (*String*)
       - Commission Implementing Regulation `EU_2024/2977`_
     * - **tax_id_code**
-      - [SD]. CONDITIONAL. REQUIRED if ``personal_administrative_number`` is not present. National tax identification code of natural person as a String format. It MUST be set according to ETSI EN 319 412-1. For example ``TINIT-<ItalianTaxIdentificationNumber>``. (*String*)
-      -
+      - REQUIRED if ``personal_administrative_number`` is not present, OPTIONAL otherwise. National tax identification code of natural person as a String format. It MUST be set according to ETSI EN 319 412-1. For example ``TINIT-<ItalianTaxIdentificationNumber>``. (*String*)
+      - Domestic extension 
 
-.. note::
-   The ``tax_id_code`` claim is a **domestic extension** specific to Italian PIDs. It is NOT defined in the ARF PID Rulebook (EUDI Wallet Architecture Reference Framework, Annex 3.01, PID Rulebook v1.3), but is permitted under ARF requirement **PID_06**, which allows Member States to define additional domestic attributes beyond those specified in Commission Implementing Regulation (CIR) 2024/2977.
+All the User attributed listed above MUST be selectively disclosable.
+In addition to the mandatory metadata attributes defined in :ref:`SD-JWT Parameters Table <table_sd-jwt-vc_jose_header>` and :ref:`SD-JWT Parameters Table <table_sd-jwt-vc_parameters>`, the following metadata attributes are REQUIRED for a PID:
 
+  - **date_of_expiry**
+  - **sub**
+  - **iat**
+  - **verification**
 
 PID Non-Normative Examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -259,140 +269,71 @@ The corresponding SD-JWT version for PID is given by
 
 The disclosure list is presented below.
 
-**Claim** ``iat``:
-
-- SHA-256 Hash: ``Yrc-s-WSr4exEYtqDEsmRl7spoVfmBxixP12e4syqNE``
-- Disclosure:
-   ``WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImlhdCIsIDE2ODMwMDAwMDBd``
-- Contents: ``["2GLC42sKQveCfGfryNRN9w", "iat", 1683000000]``
-
-**Claim** ``verification``:
-
-- SHA-256 Hash: ``h7Egl5H9gTPC_FCU845aadvsC--dTjy9Nrstxh-caRo``
-- Disclosure:
-   ``WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgInZlcmlmaWNhdGlvbiIsIHsi``
-   ``dHJ1c3RfZnJhbWV3b3JrIjogIml0X2NpZSIsICJhc3N1cmFuY2VfbGV2ZWwi``
-   ``OiAiaGlnaCIsICJldmlkZW5jZSI6IHsidHlwZSI6ICJ2b3VjaCIsICJ0aW1l``
-   ``IjogIjIwMjAtMDMtMTlUMTI6NDJaIiwgImF0dGVzdGF0aW9uIjogeyJ0eXBl``
-   ``IjogImRpZ2l0YWxfYXR0ZXN0YXRpb24iLCAicmVmZXJlbmNlX251bWJlciI6``
-   ``ICI2NDg1LTE2MTktMzk3Ni02NjcxIiwgImRhdGVfb2ZfaXNzdWFuY2UiOiAi``
-   ``MjAyMC0wMy0xOVQxMjo0M1oiLCAidm91Y2hlciI6IHsib3JnYW5pemF0aW9u``
-   ``IjogIk1pbmlzdGVybyBkZWxsJ0ludGVybm8ifX19fV0``
-- Contents: ``["eluV5Og3gSNII8EYnsxA_A", "verification",``
-   ``{"trust_framework": "it_cie", "assurance_level": "high", "evidence": {"type": "vouch",``
-   ``"time": "2020-03-19T12:42Z", "attestation": {"type":``
-   ``"digital_attestation", "reference_number":``
-   ``"6485-1619-3976-6671", "date_of_issuance":``
-   ``"2020-03-19T12:43Z", "voucher": {"organization": "Ministero``
-   ``dell'Interno"}}}}]``
-
 **Claim** ``given_name``:
 
-- SHA-256 Hash: ``zVdghcmClMVWlUgGsGpSkCPkEHZ4u9oWj1SlIBlCc1o``
-- Disclosure:
-   ``WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImdpdmVuX25hbWUiLCAiTWFy``
+ * SHA-256 Hash: ``Jkbj8aLr-z2_c-HVxCbiw6YXFNHiyLSv1xGjN8lRogI``
+ * Disclosure:
+   ``WyJrZ2h0ZTVNRE5IYlFmZEpIcDg4cENBIiwgImdpdmVuX25hbWUiLCAiTWFy``
    ``aW8iXQ``
-- Contents: ``["6Ij7tM-a5iVPGboS5tmvVA", "given_name", "Mario"]``
+ * Contents:
+   ``["kghte5MDNHbQfdJHp88pCA", "given_name", "Mario"]``
+
 
 **Claim** ``family_name``:
 
-- SHA-256 Hash: ``VQI-S1mT1Kxfq2o8J9io7xMMX2MIxaG9M9PeJVqrMcA``
-- Disclosure:
-   ``WyJlSThaV205UW5LUHBOUGVOZW5IZGhRIiwgImZhbWlseV9uYW1lIiwgIlJv``
+ * SHA-256 Hash: ``MWJufQz_DFWc9cR4yxq8XqmTZfglkg2D2Sxa3UFN4Qk``
+ * Disclosure:
+   ``WyJoWDFURXpfejg3N19YQXRyM0NPYVdnIiwgImZhbWlseV9uYW1lIiwgIlJv``
    ``c3NpIl0``
-- Contents: ``["eI8ZWm9QnKPpNPeNenHdhQ", "family_name", "Rossi"]``
+ * Contents:
+   ``["hX1TEz_z877_XAtr3COaWg", "family_name", "Rossi"]``
+
 
 **Claim** ``birthdate``:
 
-- SHA-256 Hash: ``s1XK5f2pM3-aFTauXhmvd9pyQTJ6FMUhc-JXfHrxhLk``
-- Disclosure:
-   ``WyJRZ19PNjR6cUF4ZTQxMmExMDhpcm9BIiwgImJpcnRoZGF0ZSIsICIxOTg``
-   ``wLTAxLTEwIl0``
-- Contents: ``["Qg_O64zqAxe412a108iroA", "birthdate", "1980-01-10"]``
+ * SHA-256 Hash: ``uIapUlDTKsB5wN7BF6xuBNTtl74gl5iCu_aQ5nj3YL8``
+ * Disclosure:
+   ``WyJZV3RJMDZ4RGRDeXZUYWxjSW5URTNBIiwgImJpcnRoZGF0ZSIsICIxOTgw``
+   ``LTAxLTEwIl0``
+ * Contents:
+   ``["YWtI06xDdCyvTalcInTE3A", "birthdate", "1980-01-10"]``
 
-**Claim** ``place_of_birth``:
-
-- SHA-256 Hash: ``tSL-e1nLdWOU9sFMTCUu5P1tCzxA-TW-VWbHGzYtU7E``
-- Disclosure:
-  ``WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgInBsYWNlX29mX2JpcnRoIiwg``
-  ``eyJsb2NhbGl0eSI6ICJSb21hIn1d``
-- Contents: ``["AJx-095VPrpTtN4QMOqROA", "place_of_birth", {"locality": "Roma"}]``
-
-**Claim** ``personal_administrative_number``:
-
-- SHA-256 Hash: ``6WLNc09rBr-PwEtnWzxGKdzImjrpDxbr4qoIx838a88``
-- Disclosure:
-   ``WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInBlcnNvbmFsX2FkbWluaXN0``
-   ``cmF0aXZlX251bWJlciIsICJYWDAwMDAwWFgiXQ``
-- Contents: ``["G02NSrQfjFXQ7Io09syajA", "personal_administrative_number",``
-   ``"XX00000XX"]``
 
 **Claim** ``tax_id_code``:
 
-- SHA-256 Hash: ``LqrtU2rlA51U97cMiYhqwa-is685bYiOJImp8a5KGNA``
-- Disclosure:
-   ``WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgInRheF9pZF9jb2RlIiwgIlRJ``
+ * SHA-256 Hash: ``_C7hoKFt0kV190v2GXIwLUIiDbc_7LcyofQmgDfute8``
+ * Disclosure:
+   ``WyItejM0Y0oxZ0M1VUJQQ0l4OE9oTmlRIiwgInRheF9pZF9jb2RlIiwgIlRJ``
    ``TklULVhYWFhYWFhYWFhYWFhYWFgiXQ``
-- Contents: ``["lklxF5jMYlGTPUovMNIvCA", "tax_id_code",``
+ * Contents:
+   ``["-z34cJ1gC5UBPCIx8OhNiQ", "tax_id_code",``
    ``"TINIT-XXXXXXXXXXXXXXXX"]``
 
-**Array Entry** of ``nationalities``:
 
-- SHA-256 Hash: ``yKeP1CWTQK8Sd9BeNvFhkLXgEu/1G3QQz4CWSlqEOFw``
-- Disclosure: ``WyJQYzMzSk0yTGNoY1VfbEhnZ3ZfdWZRIiwgIklUIl0``
-- Contents: ``["Pc33JM2LchcU_lHggv_ufQ", "IT"]``
+**Claim** ``place_of_birth``:
+
+ * SHA-256 Hash: ``tI5s2A_Ez6oZv6plZzUPjYAL-SJGiAUFyRbhzLsluGU``
+ * Disclosure:
+   ``WyJYY1hsUFZDcWpITnZlQkNubFZQWWdBIiwgInBsYWNlX29mX2JpcnRoIiwg``
+   ``eyJsb2NhbGl0eSI6ICJSb21hIn1d``
+ * Contents:
+   ``["XcXlPVCqjHNveBCnlVPYgA", "place_of_birth", {"locality":``
+   ``"Roma"}]``
+
+
+**Claim** ``nationalities``:
+
+ * SHA-256 Hash: ``GHYjuGUthjtB4q4Oz_ZSGPmCokLOpv2kpFNzz1LfFUY``
+ * Disclosure:
+   ``WyJLTmM1LUdrOUNRaF9UZEdicUJLSTdBIiwgIm5hdGlvbmFsaXRpZXMiLCBb``
+   ``IklUIl1d``
+ * Contents:
+   ``["KNc5-Gk9CQh_TdGbqBKI7A", "nationalities", ["IT"]]``
 
 The combined format for the PID issuance is given by:
 
-.. code-block:: text
-
-  ew0KICAidHlwIjoiZGMrc2Qtand0IiwNCiAgImFsZyI6IkVTMjU2IiwNCiAgImtpZCI6
-  ImRCNjdnTDdjazNURmlJQWY3TjZfN1NIdnFrME1EWU1FUWNvR0dsa1VBQXciLA0KICAi
-  dHJ1c3RfY2hhaW4iIDogWw0KICAgIk5FaFJkRVJwWW5sSFkzTTVXbGRXVFdaMmFVaG0g
-  Li4uIiwNCiAgICJleUpoYkdjaU9pSlNVekkxTmlJc0ltdHBaQ0k2IC4uLiIsDQogICAi
-  SWtKWWRtWnliRzVvUVUxMVNGSXdOMkZxVlcxQiAuLi4iDQogIF0sDQogICJ4NWMiIDog
-  Ww0KICAgIjxDcmVkZW50aWFsIElzc3VlciBYNTA5IENlcnRpZmljYXRlPiINCiAgXQ0K
-  fQ.ewogICJfc2QiOiBbCiAgICAiNldMTmMwOXJCci1Qd0V0bld6eEdLZHpJbWpycER4Y
-  nI0cW9JeDgzOGE4OCIsCiAgICAiTHFydFUycmxBNTFVOTdjTWlZaHF3YS1pczY4NWJZa
-  U9KSW1wOGE1S0dOQSIsCiAgICAiVlFJLVMxbVQxS3hmcTJvOEo5aW83eE1NWDJNSXhhR
-  zlNOVBlSlZxck1jQSIsCiAgICAiWXJjLXMtV1NyNGV4RVl0cURFc21SbDdzcG9WZm1Ce
-  Gl4UDEyZTRzeXFORSIsCiAgICAiaDdFZ2w1SDlnVFBDX0ZDVTg0NWFhZHZzQy0tZFRqe
-  TlOcnN0eGgtY2FSbyIsCiAgICAiczFYSzVmMnBNMy1hRlRhdVhobXZkOXB5UVRKNkZNV
-  WhjLUpYZkhyeGhMayIsCiAgICAidFNMLWUxbkxkV09VOXNGTVRDVXU1UDF0Q3p4QS1UV
-  y1WV2JIR3pZdFU3RSIsCiAgICAielZkZ2hjbUNsTVZXbFVnR3NHcFNrQ1BrRUhaNHU5b
-  1dqMVNsSUJsQ2MxbyIKICBdLAogICJleHAiOiAxODgzMDAwMDAwLAogICJpc3MiOiAia
-  HR0cHM6Ly9waWRwcm92aWRlci5leGFtcGxlLm9yZyIsCiAgInN1YiI6ICJOemJMc1hoO
-  HVEQ2NkN25vV1hGWkFmSGt4WnNSR0M5WHMiLAogICJpc3N1aW5nX2F1dGhvcml0eSI6I
-  CJJc3RpdHV0byBQb2xpZ3JhZmljbyBlIFplY2NhIGRlbGxvIFN0YXRvIiwKICAiaXNzd
-  WluZ19jb3VudHJ5IjogIklUIiwKICAic3RhdHVzIjogewogICAgInN0YXR1c19hc3Nlc
-  nRpb24iOiB7CiAgICAgICJjcmVkZW50aWFsX2hhc2hfYWxnIjogInNoYS0yNTYiCiAgI
-  CB9CiAgfSwKICAibmF0aW9uYWxpdGllcyI6IFsKCXsKICAgICAgIi4uLiI6ICJ5S2VQM
-  UNXVFFLOFNkOUJlTnZGaGtMWGdFdS8xRzNRUXo0Q1dTbHFFT0Z3IgogICAgfQogIF0sC
-  iAgInZjdCI6ICJodHRwczovL3RydXN0LXJlZ2lzdHJ5LmVpZC13YWxsZXQuZXhhbXBsZ
-  S5pdC9jcmVkZW50aWFscy92MS4wL3BlcnNvbmlkZW50aWZpY2F0aW9uZGF0YSIsCiAgI
-  nZjdCNpbnRlZ3JpdHkiOiAiYzVmNzNlMjUwZmU4NjlmMjRkMTUxMThhY2NlMjg2YzliY
-  jU2YjYzYTQ0M2RjODVhZjY1M2NkNzNmNjA3OGIxZiIsCiAgIl9zZF9hbGciOiAic2hhL
-  TI1NiIsCiAgImNuZiI6IHsKICAgICJqd2siOiB7CiAgICAgICJrdHkiOiAiRUMiLAogI
-  CAgICAiY3J2IjogIlAtMjU2IiwKICAgICAgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXN
-  HZmU1ZvSElQMUlMaWxEbHM3dkNlR2VtYyIsCiAgICAgICJ5IjogIlp4amlXV2JaTVFHS
-  FZXS1ZRNGhiU0lpcnNWZnVlY0NFNnQ0alQ5RjJIWlEiCiAgICB9CiAgfQp9.ISeLw-Tq
-  pmcos9ms7KQTfUhSm4srAtGOMNQe3M-toaYhCcT4JnvZANmtBb8rOXdJ60oTtya4krCO
-  jFNirEg3-g~WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImlhdCIsIDE2ODMwMDAwM
-  DBd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgInZlcmlmaWNhdGlvbiIsIHsidHJ1
-  c3RfZnJhbWV3b3JrIjogIml0X2NpZSIsICJhc3N1cmFuY2VfbGV2ZWwiOiAiaGlnaCIs
-  ICJldmlkZW5jZSI6IHsidHlwZSI6ICJ2b3VjaCIsICJ0aW1lIjogIjIwMjAtMDMtMTlU
-  MTI6NDJaIiwgImF0dGVzdGF0aW9uIjogeyJ0eXBlIjogImRpZ2l0YWxfYXR0ZXN0YXRp
-  b24iLCAicmVmZXJlbmNlX251bWJlciI6ICI2NDg1LTE2MTktMzk3Ni02NjcxIiwgImRh
-  dGVfb2ZfaXNzdWFuY2UiOiAiMjAyMC0wMy0xOVQxMjo0M1oiLCAidm91Y2hlciI6IHsi
-  b3JnYW5pemF0aW9uIjogIk1pbmlzdGVybyBkZWxsJ0ludGVybm8ifX19fV0~WyI2SWo3
-  dE0tYTVpVlBHYm9TNXRtdlZBIiwgImdpdmVuX25hbWUiLCAiTWFyaW8iXQ~WyJlSThaV
-  205UW5LUHBOUGVOZW5IZGhRIiwgImZhbWlseV9uYW1lIiwgIlJvc3NpIl0~WyJRZ19PN
-  jR6cUF4ZTQxMmExMDhpcm9BIiwgImJpcnRoX2RhdGUiLCAiMTk4MC0wMS0xMCJd~WyJB
-  SngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImJpcnRoX3BsYWNlIiwgIlJvbWEiXQ~WyJQY
-  zMzSk0yTGNoY1VfbEhnZ3ZfdWZRIiwgIklUIl0~WyJHMDJOU3JRZmpGWFE3SW8wOXN5Y
-  WpBIiwgInBlcnNvbmFsX2FkbWluaXN0cmF0aXZlX251bWJlciIsICJYWDAwMDAwWFgiX
-  Q~WyJsa2x4RjVqTVlsR1RQVW92TU5JdkNBIiwgInRheF9pZF9jb2RlIiwgIlRJTklULV
-  hYWFhYWFhYWFhYWFhYWFgiXQ~
+.. literalinclude:: ../../examples/pid-sd-jwt-example-combined.txt
+  :language: text
 
 (Q)EAA non-normative Examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -412,114 +353,82 @@ The corresponding SD-JWT for the previous data is represented as follow, as deco
 
 In the following the disclosure list is given:
 
-**Claim** ``iat``:
-
-- SHA-256 Hash: ``Yrc-s-WSr4exEYtqDEsmRl7spoVfmBxixP12e4syqNE``
-- Disclosure:
-   ``WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImlhdCIsIDE2ODMwMDAwMDBd``
-- Contents: ``["2GLC42sKQveCfGfryNRN9w", "iat", 1683000000]``
-
 **Claim** ``document_number``:
 
-- SHA-256 Hash: ``Dx-6hjvrcxNzF0slU6ukNmzHoL-YvBN-tFa0T8X-bY0``
-- Disclosure:
-   ``WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImRvY3VtZW50X251bWJlciIs``
+ * SHA-256 Hash: ``D4VkWjnA0WON7HdCGFtU869MSvORHPf8p5fQRD5gNj0``
+ * Disclosure:
+   ``WyJrZ2h0ZTVNRE5IYlFmZEpIcDg4cENBIiwgImRvY3VtZW50X251bWJlciIs``
    ``ICJYWFhYWFhYWFhYIl0``
-- Contents:
-   ``["eluV5Og3gSNII8EYnsxA_A", "document_number", "XXXXXXXXXX"]``
+ * Contents:
+   ``["kghte5MDNHbQfdJHp88pCA", "document_number", "XXXXXXXXXX"]``
+
 
 **Claim** ``given_name``:
 
-- SHA-256 Hash: ``zVdghcmClMVWlUgGsGpSkCPkEHZ4u9oWj1SlIBlCc1o``
-- Disclosure:
-   ``WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImdpdmVuX25hbWUiLCAiTWFy``
+ * SHA-256 Hash: ``qbRtUHp9Oax9dm5GeKnw_W12Yu1E2DoU6wrFPee7aBo``
+ * Disclosure:
+   ``WyJoWDFURXpfejg3N19YQXRyM0NPYVdnIiwgImdpdmVuX25hbWUiLCAiTWFy``
    ``aW8iXQ``
-- Contents: ``["6Ij7tM-a5iVPGboS5tmvVA", "given_name", "Mario"]``
+ * Contents:
+   ``["hX1TEz_z877_XAtr3COaWg", "given_name", "Mario"]``
+
 
 **Claim** ``family_name``:
 
-- SHA-256 Hash: ``VQI-S1mT1Kxfq2o8J9io7xMMX2MIxaG9M9PeJVqrMcA``
-- Disclosure:
-   ``WyJlSThaV205UW5LUHBOUGVOZW5IZGhRIiwgImZhbWlseV9uYW1lIiwgIlJv``
+ * SHA-256 Hash: ``Q7TX7kL8CNUp3BFBKP5xxIuPu5gRgkO6HplM3E1iMIc``
+ * Disclosure:
+   ``WyJZV3RJMDZ4RGRDeXZUYWxjSW5URTNBIiwgImZhbWlseV9uYW1lIiwgIlJv``
    ``c3NpIl0``
-- Contents: ``["eI8ZWm9QnKPpNPeNenHdhQ", "family_name", "Rossi"]``
+ * Contents:
+   ``["YWtI06xDdCyvTalcInTE3A", "family_name", "Rossi"]``
 
-**Claim** ``birthdate``:
 
-- SHA-256 Hash: ``s1XK5f2pM3-aFTauXhmvd9pyQTJ6FMUhc-JXfHrxhLk``
-- Disclosure:
-   ``WyJRZ19PNjR6cUF4ZTQxMmExMDhpcm9BIiwgImJpcnRoZGF0ZSIsICIxOTg``
-   ``wLTAxLTEwIl0``
-- Contents: ``["Qg_O64zqAxe412a108iroA", "birthdate", "1980-01-10"]``
+**Claim** ``birth_date``:
 
-**Claim** ``date_of_expiry``:
+ * SHA-256 Hash: ``oF2qeWAbKO_qWGQ5z-HGKeifl2PMIEMbJe8L-PJ-wko``
+ * Disclosure:
+   ``WyItejM0Y0oxZ0M1VUJQQ0l4OE9oTmlRIiwgImJpcnRoX2RhdGUiLCAiMTk4``
+   ``MC0wMS0xMCJd``
+ * Contents:
+   ``["-z34cJ1gC5UBPCIx8OhNiQ", "birth_date", "1980-01-10"]``
 
-- SHA-256 Hash: ``aBVdfcnxT0Z5RrwdxZSUhuUxz3gM2vcEZLeYIj61Kas``
-- Disclosure:
-   ``WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImRhdGVfb2ZfZXhwaXJ5Iiwg``
-   ``IjIwMjQtMDEtMDEiXQ``
-- Contents: ``["AJx-095VPrpTtN4QMOqROA", "date_of_expiry", "2024-01-01"]``
 
-**Claim** ``personal_administrative_number``:
+**Claim** ``expiry_date``:
 
-- SHA-256 Hash: ``o1cHG8JbEEYv0HeJINYKbFLd-TnEDUuNzI1XpzV32aU``
-- Disclosure:
-   ``WyJQYzMzSk0yTGNoY1VfbEhnZ3ZfdWZRIiwgInBlcnNvbmFsX2FkbWluaXN0``
-   ``cmF0aXZlX251bWJlciIsICJYWDAwMDAwWFgiXQ``
-- Contents: ``["Pc33JM2LchcU_lHggv_ufQ", "personal_administrative_number",``
-   ``"XX00000XX"]``
+ * SHA-256 Hash: ``_ckhwGvTwFceg8jAFrQwqbw978ZHsaLJE_hs-rqV9lQ``
+ * Disclosure:
+   ``WyJYY1hsUFZDcWpITnZlQkNubFZQWWdBIiwgImV4cGlyeV9kYXRlIiwgIjIw``
+   ``MjQtMDEtMDEiXQ``
+ * Contents:
+   ``["XcXlPVCqjHNveBCnlVPYgA", "expiry_date", "2024-01-01"]``
+
+
+**Claim** ``tax_id_code``:
+
+ * SHA-256 Hash: ``Wq3gFfmC0I9Lefw1mh-Bk5XPRtoSCg9aE23uOhxakas``
+ * Disclosure:
+   ``WyJLTmM1LUdrOUNRaF9UZEdicUJLSTdBIiwgInRheF9pZF9jb2RlIiwgIlRJ``
+   ``TklULVhYWFhYWFhYWFhYWFhYWFgiXQ``
+ * Contents:
+   ``["KNc5-Gk9CQh_TdGbqBKI7A", "tax_id_code",``
+   ``"TINIT-XXXXXXXXXXXXXXXX"]``
+
 
 **Claim** ``constant_attendance_allowance``:
 
-- SHA-256 Hash: ``GE3Sjy_zAT34f8wa5DUkVB0FslaSJRAAc8I3lN11Ffc``
-- Disclosure:
-   ``WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgImNvbnN0YW50X2F0dGVuZGFu``
+ * SHA-256 Hash: ``JOQk0kuBSVk80rFlv9VGY-yiIzsfzEJKk3d4RROfzkM``
+ * Disclosure:
+   ``WyIyaFFtWXBIeVgtbVpKaHoyeHNVWWNRIiwgImNvbnN0YW50X2F0dGVuZGFu``
    ``Y2VfYWxsb3dhbmNlIiwgdHJ1ZV0``
-- Contents:
-   ``["G02NSrQfjFXQ7Io09syajA", "constant_attendance_allowance",``
+ * Contents:
+   ``["2hQmYpHyX-mZJhz2xsUYcQ", "constant_attendance_allowance",``
    ``true]``
 
 
 The combined format for the (Q)EAA issuance is represented below:
 
-.. code-block:: text
-
-  ew0KICAidHlwIjoiZGMrc2Qtand0IiwNCiAgImFsZyI6IkVTMjU2IiwNCiAgImtpZCI6
-  ImQxMjZhNmE4NTZmNzcyNDU2MDQ4NGZhOWRjNTlkMTk1IiwNCiAgInRydXN0X2NoYWlu
-  IiA6IFsNCiAgICJORWhSZEVScFlubEhZM001V2xkV1RXWjJhVWhtIC4uLiIsDQogICAi
-  ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNiAuLi4iLA0KICAgIklrSllkbVp5Ykc1
-  b1FVMTFTRkl3TjJGcVZXMUIgLi4uIg0KICBdLA0KICAieDVjIiA6IFsNCiAgICI8Q3Jl
-  ZGVudGlhbCBJc3N1ZXIgWDUwOSBDZXJ0aWZpY2F0ZT4iDQogIF0NCn0.eyJfc2QiOiBb
-  IkR4LTZoanZyY3hOekYwc2xVNnVrTm16SG9MLVl2Qk4tdEZhMFQ4WC1iWTAiLCAiR0Uz
-  U2p5X3pBVDM0Zjh3YTVEVWtWQjBGc2xhU0pSQUFjOEkzbE4xMUZmYyIsICJWUUktUzFt
-  VDFLeGZxMm84Sjlpbzd4TU1YMk1JeGFHOU05UGVKVnFyTWNBIiwgIllyYy1zLVdTcjRl
-  eEVZdHFERXNtUmw3c3BvVmZtQnhpeFAxMmU0c3lxTkUiLCAiYUJWZGZjbnhUMFo1UnJ3
-  ZHhaU1VodVV4ejNnTTJ2Y0VaTGVZSWo2MUthcyIsICJvMWNIRzhKYkVFWXYwSGVKSU5Z
-  S2JGTGQtVG5FRFV1TnpJMVhwelYzMmFVIiwgInMxWEs1ZjJwTTMtYUZUYXVYaG12ZDlw
-  eVFUSjZGTVVoYy1KWGZIcnhoTGsiLCAielZkZ2hjbUNsTVZXbFVnR3NHcFNrQ1BrRUha
-  NHU5b1dqMVNsSUJsQ2MxbyJdLCAiZXhwIjogMTg4MzAwMDAwMCwgImlzcyI6ICJodHRw
-  czovL2lzc3Vlci5leGFtcGxlLm9yZyIsICJzdWIiOiAiTnpiTHNYaDh1RENjZDdub1dY
-  RlpBZkhreFpzUkdDOVhzIiwgImlzc3VpbmdfYXV0aG9yaXR5IjogIklzdGl0dXRvIFBv
-  bGlncmFmaWNvIGUgWmVjY2EgZGVsbG8gU3RhdG8iLCAiaXNzdWluZ19jb3VudHJ5Ijog
-  IklUIiwgInN0YXR1cyI6IHsic3RhdHVzX2Fzc2VydGlvbiI6IHsiY3JlZGVudGlhbF9o
-  YXNoX2FsZyI6ICJzaGEtMjU2In19LCAidmN0IjogImh0dHBzOi8vdHJ1c3QtcmVnaXN0
-  cnkuZWlkLXdhbGxldC5leGFtcGxlLml0L2NyZWRlbnRpYWxzL3YxLjAvRXVyb3BlYW5E
-  aXNhYmlsaXR5Q2FyZCIsICJ2Y3QjaW50ZWdyaXR5IjogIjJlNDBiY2Q2Nzk5MDA4MDg1
-  ZmZiMWExZjM1MTdlZmVlMzM1Mjk4ZmQ5NzZiM2U2NTViZmIzZjRlYWExMWQxNzEiLCAi
-  X3NkX2FsZyI6ICJzaGEtMjU2IiwgImNuZiI6IHsiandrIjogeyJrdHkiOiAiRUMiLCAi
-  Y3J2IjogIlAtMjU2IiwgIngiOiAiVENBRVIxOVp2dTNPSEY0ajRXNHZmU1ZvSElQMUlM
-  aWxEbHM3dkNlR2VtYyIsICJ5IjogIlp4amlXV2JaTVFHSFZXS1ZRNGhiU0lpcnNWZnVl
-  Y0NFNnQ0alQ5RjJIWlEifX19.2Dt5a6CFNv-YAmfewZGERmlIOdYybaNtZP6Va1zHZ_I
-  qZAGM8S6M4mcTU-RO3X4cU4j20xif2Ocf1jvd2L5CRQ~WyIyR0xDNDJzS1F2ZUNmR2Zy
-  eU5STjl3IiwgImlhdCIsIDE2ODMwMDAwMDBd~WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9
-  BIiwgImRvY3VtZW50X251bWJlciIsICJYWFhYWFhYWFhYIl0~WyI2SWo3dE0tYTVpVlB
-  HYm9TNXRtdlZBIiwgImdpdmVuX25hbWUiLCAiTWFyaW8iXQ~WyJlSThaV205UW5LUHBO
-  UGVOZW5IZGhRIiwgImZhbWlseV9uYW1lIiwgIlJvc3NpIl0~WyJRZ19PNjR6cUF4ZTQx
-  MmExMDhpcm9BIiwgImJpcnRoX2RhdGUiLCAiMTk4MC0wMS0xMCJd~WyJBSngtMDk1VlB
-  ycFR0TjRRTU9xUk9BIiwgImV4cGlyeV9kYXRlIiwgIjIwMjQtMDEtMDEiXQ~WyJQYzMz
-  Sk0yTGNoY1VfbEhnZ3ZfdWZRIiwgInBlcnNvbmFsX2FkbWluaXN0cmF0aXZlX251bWJl
-  ciIsICJYWDAwMDAwWFgiXQ~WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgImNvbnN0Y
-  W50X2F0dGVuZGFuY2VfYWxsb3dhbmNlIiwgdHJ1ZV0~
+.. literalinclude:: ../../examples/qeaa-sd-jwt-example-combined.txt
+  :language: text
 
 Digital Credential Metadata Type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -831,6 +740,10 @@ The following **elementIdentifiers** are defined for Digital Credentials encoded
        The value shall only use Latin1b characters and shall have a maximum length of 150 characters.
      - [ISO 18013-5#7.2]
 
+   * - **expiry_date**
+     - *(tdate or full-date, OPTIONAL)*. Date (and if possible time) when the Digital Credential will expire. It MUST be according to ISO 8601-1 YYYY-MM-DD format.
+     - Section 3 of the ARF PID Rulebook v1.3 [`EIDAS-ARF`_]
+
    * - **sub**
      - *(uuid, OPTIONAL)*. Identifies the subject of the mdoc Digital Credential (the User). The identifier MUST be opaque, MUST NOT correspond to any anagraphic data, and MUST NOT be derived from the User's anagraphic data through pseudonymization. Additionally, different Credentials issued to the same User or to different Users MUST NOT use the same `sub` value.
      -
@@ -860,8 +773,8 @@ The following **elementIdentifiers** are defined for Digital Credentials encoded
 .. note::
   Regardless of the Digital Credential type, the `sub` value MUST NOT be shown to the User, as it is not a User attribute. It is used for identification purposes by the Credential Issuers.
 
-PID Attributes (mdoc-CBOR)
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+PID Data Model in mdoc-CBOR Format
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The PID in mdoc-CBOR format (ISO/IEC 18013-5 compliant) SHALL use the **docType** ``eu.europa.ec.eudi.pid.1`` as specified in ARF requirement **PID_04**.
 
