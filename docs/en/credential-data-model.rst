@@ -108,7 +108,7 @@ The JOSE header contains the following mandatory parameters:
     - REQUIRED. Contains the X.509 public key certificate or certificate chain [:rfc:`5280`] corresponding to the key used to digitally sign the JWT.
     - :rfc:`7515` Section 4.1.8 and [`SD-JWT-VC`_] Section 3.5.
 
-The JWT payload contains the following claims. Unless otherwise specifed, the following clains MUST NOT be selectively disclosable. 
+The JWT payload contains the following claims. Unless otherwise specifed, the following claims MUST NOT be selectively disclosable. 
 
 .. _table_sd-jwt-vc_parameters:
 .. list-table::
@@ -141,7 +141,7 @@ The JWT payload contains the following claims. Unless otherwise specifed, the fo
       - REQUIRED. Alpha-2 country code, as specified in ISO 3166-1, of the country or territory of the Credential Issuer.
       - Commission Implementing Regulation `EU_2024/2977`_.
     * - **date_of_expiry**
-      - OPTIONAL. Date (and if possible time) when the Digital Credential will expire. ItMUST be according to ISO 8601-1 YYYY-MM-DD format. This attribute pertains to the administrative validity period of the Digital Credential, which is typically different from the technical validity period expressed by the JWT ``exp`` claim.
+      - OPTIONAL. Date (and if possible time) when the Digital Credential will expire. It MUST be according to ISO 8601-1 YYYY-MM-DD format. This attribute pertains to the administrative validity period of the Digital Credential, which is typically different from the technical validity period expressed by the JWT ``exp`` claim.
       - Commission Implementing Regulation `EU_2024/2977`_.
     * - **status**
       - REQUIRED only if the Digital Credential is long-lived. JSON object containing the information on how to read the status of the Verifiable Credential. It MUST contain either the JSON member *status_assertion* or *status_list*.
@@ -651,7 +651,14 @@ The `MobileSecurityObject` MUST have the following attributes, unless otherwise 
       - **Description**
       - **Reference**
     * - **docType**
-      - *(tstr)*. Defines the type of mdoc Digital Credential being issued. For example, for an mDL, the value MUST be ``org.iso.18013.5.1.mDL``. Specific `docType` MAY be defined for Digital Credential other than mDL.
+      - *(tstr)*. Defines the type of mdoc Digital Credential being issued. If the Credential is:
+
+        - defined by an ISO standard, It MUST be a string of the form ``iso.org.{iso-number}.{part}.{version}.{credential_type}`` (e.g. for an mDL, the value MUST be ``org.iso.18013.5.1.mDL``).
+
+        - defined at the european level, it MUST be a string of the form ``eu.europa.ec.{credential_type}.{version}`` (e.g., ``eu.europa.ec.loyaltycard.1.0``).
+
+        - defined by a national standard, it MUST be a string of the form ``{Trust Anchor reverse domain}.{credential_type}.{version}`` (e.g., ``it.wallet.trust-registry.pid.1``).
+
       - [ISO 18013-5#9.1.2.4]
     * - **version**
       - *(tstr)*. Version of the `MobileSecurityObject`.
@@ -917,9 +924,11 @@ For SD-JWT-VC, parameters are marked with `(hdr)` if they are located in the JOS
      - | iat (pld)
        | exp (pld)
        | nbf (pld)
+       | expiry_date (pld)
      - | issuerAuth.validityInfo.signed
        | issuerAuth.validityInfo.validUntil
        | issuerAuth.validityInfo.validFrom
+       | nameSpaces.elementIdentifier.expiry_date
    * - Status mechanism
      - | status_assertion (pld)
        | status_list (pld)
