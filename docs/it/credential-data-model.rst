@@ -10,7 +10,7 @@ Un modello di dati dell'Attestato Elettronico ha la seguente struttura:
 
   - **Format-Agnostic**: Sono attributi di metadati di alto livello che descrivono l'Attestato Elettronico indipendentemente dal suo formato di codifica. Rappresentano le informazioni semantiche sulla credenziale (ad esempio, credential_type, issuing_authority, expiry_date) e rimangono concettualmente coerenti tra i diversi formati. Quando una credenziale viene codificata, questi attributi di metadati comuni vengono mappati a parametri tecnici specifici del formato secondo le regole di codifica di ciascun formato (SD-JWT-VC o mdoc-CBOR).
   - **Format-Specific**: Sono parametri di metadati intrinseci al formato di codifica specifico e servono a scopi tecnici relativi al modello di sicurezza e ai requisiti di protocollo del formato.
-  
+
 - **Attributi dell'Utente**: Informazioni sull'Utente, come identità o qualifiche.
 
 L'Attestato Elettronico di Dati di Identificazione Personale (PID) è rilasciato dal Fornitore di Attestati Elettronici di Dati di Identificazione Personale secondo le leggi nazionali e DEVE essere fornito in formato SD-JWT-VC e mdoc-CBOR. Lo scopo principale del PID è consentire alle persone fisiche di essere autenticate per accedere a un servizio o a una risorsa protetta.
@@ -94,8 +94,8 @@ Le Disclosure vengono fornite al Titolare insieme all'SD-JWT nel *Combined Forma
 Vedere `SD-JWT-VC`_ e `SD-JWT`_ per ulteriori dettagli.
 
 
-Parametri SD-JWT dell'Attestato Elettronico
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Attributi Metadata degli Attestati Elettronici SD-JWT
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Il JOSE Header contiene i seguenti parametri obbligatori:
 

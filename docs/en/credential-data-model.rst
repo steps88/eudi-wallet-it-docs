@@ -11,7 +11,7 @@ A Digital Credential data model has the following structure:
 
   - **Format-Agnostic**: These are high-level metadata attributes that describe the Digital Credential independently of its encoding format. They represent the semantic information about the credential (e.g., credential_type, issuing_authority, expiry_date) and remain conceptually consistent across different formats. When a credential is encoded, these common metadata attributes are mapped to format-specific technical parameters according to the encoding rules of each format (SD-JWT-VC or mdoc-CBOR).
   - **Format-Specific**: These are metadata parameters that are intrinsic to the specific encoding format and serve technical purposes related to the format's security model and protocol requirements.
-  
+
 - **User attributes**: Information about the User, such as identity or qualifications.
 
 The Person Identification Data (PID) is issued by the PID Provider according to national laws and it MUST be provided in SD-JWT-VC and mdoc-CBOR data format. The main scope of the PID is allowing natural persons to be authenticated for access to a service or to a protected resource.
@@ -95,7 +95,7 @@ The Disclosures are provided to the Holder together with the SD-JWT in the *Comb
 See `SD-JWT-VC`_ and `SD-JWT`_ for additional details.
 
 
-Digital Credential SD-JWT parameters 
+Digital Credential SD-JWT Metadata Attributes 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The JOSE header contains the following mandatory parameters:
