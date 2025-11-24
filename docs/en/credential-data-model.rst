@@ -80,7 +80,7 @@ SD-JWT-VC Credential Format
 
 When Digital Credentials are issued in the SD-JWT-VC format, they MUST be compliant to `SD-JWT`_ and `SD-JWT-VC`_ specifications.
 
-SD-JWT MUST be signed using the Issuer's private key. SD-JWT MUST be provided along with a Type Metadata related to the issued Digital Credential according to Sections 6 and 6.3 of [`SD-JWT-VC`_]. The payload MUST contain the **_sd_alg** claim described in Section 4.1.1 `SD-JWT`_ and other claims specified in this section.
+SD-JWT-VC Digital Credentials MUST be signed using the Issuer's private key. SD-JWT-VC Digital Credentials MAY be provided along with a Type Metadata Document related to the issued Credential according to Sections 6 and 6.3 of [`SD-JWT-VC`_]. The payload of Digital Credentials MUST contain the **_sd_alg** claim described in Section 4.1.1 `SD-JWT`_ and other claims specified in this section.
 
 The claim **_sd_alg** indicates the hash algorithm used by the Issuer to generate the digests as described in Section 4.1.1 of `SD-JWT`_. **_sd_alg** MUST be set to one of the specified algorithms in Section :ref:`Cryptographic Algorithms <algorithms:Cryptographic Algorithms>`.
 
@@ -451,99 +451,15 @@ The combined format for the (Q)EAA issuance is represented below:
 .. literalinclude:: ../../examples/qeaa-sd-jwt-example-combined.txt
   :language: text
 
-Digital Credential Metadata Type
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Digital Credential Type Metadata Document
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Metadata type document MUST be a *JSON object* and contains the following parameters.
-
-.. _table_metadata_type_json_obj:
-.. list-table::
-    :class: longtable
-    :widths: 20 60 20
-    :header-rows: 1
-
-    * - **Claim**
-      - **Description**
-      - **Reference**
-    * - **name**
-      - REQUIRED. Human-readable name of the Digital Credential type. In case of multiple languages, the language tags are added to the member name, delimited with the character `#` as defined in :rfc:`5646` (e.g. *name#it-IT*).
-      - [`SD-JWT-VC`_] Section 6.2 and [`OIDC`_] Section 5.2.
-    * - **description**
-      - REQUIRED. A human-readable description of the Digital Credential type. In case of multiple languages, the language tags are added to the member name, delimited by a `#` character as defined in :rfc:`5646`.
-      - [`SD-JWT-VC`_] Section 6.2 and [`OIDC`_] Section 5.2.
-    * - **extends**
-      - OPTIONAL. String Identifier of an extended metadata type document.
-      - [`SD-JWT-VC`_] Section 6.2.
-    * - **extends#integrity**
-      - CONDITIONAL. REQUIRED if **extends** is present.
-      - [`SD-JWT-VC`_] Section 6.2.
-    * - **data_source**
-      - REQUIRED. Object containing information about the data origin. It MUST contain the object ``verification`` with the following sub-value:
-
-          * ``trust_framework``: MUST contain trust framework used for digital authentication towards Authentic Source system.
-          * ``authentic_source``: MUST contain the following claims related to information about the Authentic Source:
-
-               * ``organization_name`` name of the Authentic Source.
-               * ``organization_code`` code identifier of the Authentic Source.
-               * ``homepage_uri`` uri pointing to the Authentic Source's homepage.
-               * ``contacts`` contact list for info and assistance.
-               * ``logo_uri`` URI pointing to the logo image.
-
-      - This specification
-    * - **display**
-      - REQUIRED. Array of objects, one for each language supported, containing display information for the Digital Credential type. It contains for each object the following properties:
-
-          * ``lang``: language tag as defined in :rfc:`5646` Section 2. [REQUIRED].
-          * ``name``: human-readable label for the Digital Credential type. [REQUIRED].
-          * ``description``: human-readable description for the Digital Credential type. [REQUIRED].
-          * ``rendering``: object containing rendering methods supported by the Digital Credential type. [REQUIRED]. The rendering method `svg_template` MUST be supported.
-            
-            The ``svg_templates`` array of objects contains for each SVG template supported the following properties:
-
-                * ``uri``: URI pointing to the SVG template. [REQUIRED].
-                * ``uri#integrity``: integrity metadata as defined in Section 3 of `W3C-SRI`_. [REQUIRED].
-                * ``properties``: object containing SVG template properties. This property is REQUIRED if more than one SVG template is present. The object MUST contain at least one of the properties defined in `SD-JWT-VC`_ Section 8.1.2.1.
-
-            If rendering method `simple` is also supported, the ``simple`` object contains the following properties:
-
-                * ``logo``: object containing information about the logo to display. This property is REQUIRED. The object contains the following sub-values:
-
-                    * ``uri``: URI pointing to the logo image. [REQUIRED]
-                    * ``uri#integrity``: integrity metadata as defined in Section 3 of `W3C-SRI`_. [REQUIRED].
-                    * ``alt_text``: A string containing alternative text to display instead of the logo image. [OPTIONAL].
-
-                * ``background_color``: RGB color value as defined in `W3C.CSS-COLOR`_ for the background of the Digital Credential. [OPTIONAL]. 
-                * ``background_image``: Object containing information about the background image to be displayed for the type. This property is OPTIONAL [Aligned with SD-JWT-VC Draft 12]. The object contains the following sub-values:
-
-                    * ``uri``: A URI pointing to the background image. [REQUIRED]
-                    * ``uri#integrity``: integrity metadata as defined in Section 3 of `W3C-SRI`_. [REQUIRED].
-
-                * ``text_color``: RGB color value as defined in `W3C.CSS-COLOR`_ for the text of the Digital Credential. [OPTIONAL].
-
-          .. note::
-            The use of the SVG template is RECOMMENDED for all applications that support it.
-      - [`SD-JWT-VC`_] Section 8.
-    * - **claims**
-      - REQUIRED. Array of objects containing information for displaying and validating Digital Credential claims. It contains for each Credential claim the following properties:
-
-          * ``path``: array indicating the claim or claims that are being addressed. [REQUIRED].
-          * ``display``: array containing display information about the claim indicated in the ``path``. The array contains an object for each language supported by the Digital Credential type. This property is REQUIRED. It contains the following members:
-             * ``lang``: language tag as defined in :rfc:`5646` Section 2. [REQUIRED].
-             * ``label``: human-readable label for the claim. [REQUIRED].
-             * ``description``: human-readable description for the claim. [REQUIRED].
-          * ``sd``: string indicating whether the claim is selectively disclosable. It MUST be set to `always` if the claim is selectively disclosure or `never` if not. [REQUIRED].
-          * ``svg_id``: alphanumeric string containing ID of the claim referenced in the SVG template as defined in [`SD-JWT-VC`_] Section 9. [REQUIRED].
-      - [`SD-JWT-VC`_] Section 9.
-
+When provided, the Type Metadata Document MUST be a *JSON object* compliant with Section 6.2 of [`SD-JWT-VC`_].
 
 A non-normative Digital Credential metadata type is provided below.
 
 .. literalinclude:: ../../examples/vc-metadata-type.json
   :language: JSON
-
-
-Digital Credential Type Metadata retrieval
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Credential Type Metadata JSON Document MAY be retrieved through a *well-known* endpoint. See Section 6.3.3 of `SD-JWT-VC`_
 This endpoint, provided by the Credential Issuer, MUST have the following format: ``https://{Credential Issuer Domain}/.well-known/vct/{vct}``.

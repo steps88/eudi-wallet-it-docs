@@ -623,7 +623,7 @@ This section provides the set of test cases designed for technical implementers 
   * - CI_136
     - Data Model and lifecycle, Interoperability
     - Metadata Document JSON Object Structure
-    - The Type Metadata document is a JSON object containing the parameters in the :ref:`Digital Credential Type Metadata Table <table_metadata_type_json_obj>`.
+    - The Type Metadata document, if provided, is a JSON object containing the parameters defined in Section 6.2 of `SD-JWT-VC`_.
   * - CI_137
     - Data Model and lifecycle, Interoperability
     - Additional PID Claims
