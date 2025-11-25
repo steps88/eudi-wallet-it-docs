@@ -230,7 +230,7 @@ The details of each step shown in the previous picture are described below.
 
   It then processes the Relying Party metadata and applies the relevant policies to determine which Digital Credentials and User data the Relying Party is authorized to request (:ref:`WP_087 <wallet-credential-presentation-testcases>`).
 
-**Steps 16-17 (User Consent)**: The Wallet Instance requests the User's consent to disclose the requested Credentials by showing the Relying Party's identity and the requested attributes. The User authorizes and consents the presentation of the Credentials by selecting/deselecting the personal data to release (:ref:`WP_088 <wallet-credential-presentation-testcases>`).
+**Steps 16-17 (User Consent)**: The Wallet Instance requests the User's consent to disclose the requested Credentials by showing the Relying Party's identity and the requested attributes. The User authorizes and consents the presentation of the Credentials by selecting and or deselecting the personal data to release (:ref:`WP_088 <wallet-credential-presentation-testcases>`).
 
 **Step 18 (Authorization Response)**: The Wallet Instance provides the Authorization Response to the Relying Party using an HTTP request with the method POST (response mode "direct_post.jwt").
 
@@ -256,7 +256,7 @@ The details of each step shown in the previous picture are described below.
         }
       }
 
-**Steps 19-23 (RP Checks)**: The Relying Party verifies the Authorization Response, extracts the Wallet Attestation to establish trust with the Wallet Solution. It then extracts the ``vp_token``, which contains one or more Digital Credentials presentations, and validates the overall format of the VP Token. For each Presentation, the Relying Party verifies its integrity and authenticity, ensures that it satisfies the DCQL query criteria defined in the Authorization Request, attests trust with the corresponding Credentials Issuer, and validates the Wallet Instance's proof of possession of the presented Digital Credentials. Finally, the Relying Party verifies the revocation status of the presented Digital Credentials as described in :ref:`credential-revocation:Digital Credential Revocation and Suspension`. If all previous verifications yelded positive result, the Relying Party updates the User session.
+**Steps 19-23 (RP Checks)**: The Relying Party verifies the Authorization Response, extracts the Wallet Attestation to establish trust with the Wallet Solution. It then extracts the ``vp_token``, which contains one or more Digital Credentials presentations, and validates the overall format of the VP Token. For each credential presentation, the Relying Party verifies its integrity according to the DCQL query criteria defined in the Authorization Request. The Relying Party MUST also attest trust with the corresponding Credentials Issuer, and validate the Wallet Instance's proof of possession of each presented Digital Credential. Finally, the Relying Party verifies the revocation status of each presented Digital Credential, as described in :ref:`credential-revocation:Digital Credential Revocation and Suspension`. If all previous verifications yelded positive result, the Relying Party updates the User session.
 
 **Steps 24-25 or 26 (Relying Party Response)**: The Relying Party provides to the Wallet Instance the response about the presentation, which informs the User.
 
@@ -658,7 +658,7 @@ In the following table are listed error codes and descriptions that are supporte
    * - ``invalid_request_uri_method``
      - The value of the ``request_uri_method`` parameter is neither ``get`` nor ``post``. `OpenID4VP`_
    * - ``invalid_request``
-     - The request is malformed or inconsistent (e.g., it uses the ``vp_token`` Response Type but does not include a ``dcql_query`` parameter), the Client Identifier Prefix is unsupported, or requirements of a prefix are violated (e.g., ``client_id`` with the ``x509_hash`` prefix without the required ``client_metadata``). `OpenID4VP`_
+     - The request is malformed or inconsistent (e.g., it uses the ``vp_token`` Response Type but it does not include a ``dcql_query`` parameter), the Client Identifier Prefix is unsupported, or requirements of a prefix are violated (e.g., ``client_id`` with the ``x509_hash`` prefix without the required ``client_metadata``). `OpenID4VP`_
    * - ``access_denied``
      - The Wallet did not have the requested credential, the User did not consent, or the Wallet failed to authenticate the User. `OpenID4VP`_
    * - ``invalid_client``
