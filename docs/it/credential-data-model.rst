@@ -164,7 +164,7 @@ Il payload JWT contiene i seguenti claim. Salvo diversamente specificato, i segu
       - OBBLIGATORIO solo se l'Attestato Elettronico è long-lived. *Oggetto JSON*. Identificativo del dato `location_status` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`. DEVE contenere il membro JSON `status_assertion` o `status_list`.
       - Sezione 3.2.2.2 `SD-JWT-VC`_ e Sezione 11 `OAUTH-STATUS-ASSERTION`_.
     * - **cnf**
-      - OBBLIGATORIO. *Oggetto JSON*. Identificativo del dato `cryptographic_binding` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`, contenente il materiale crittografico per la prova di possesso. Includendo un claim **cnf** (confirmation) in un JWT, il Fornitore del JWT dichiara che il Titolare ha il controllo della chiave privata relativa a quella pubblica definita nel parametro **cnf**. Il destinatario DEVE verificare crittograficamente che il Titolare abbia effettivamente il controllo di quella chiave.
+      - OPZIONALE. *Oggetto JSON*. Identificativo del dato `cryptographic_binding` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`, contenente il materiale crittografico per la prova di possesso. Includendo un claim **cnf** (confirmation) in un JWT, il Fornitore del JWT dichiara che il Titolare ha il controllo della chiave privata relativa a quella pubblica definita nel parametro **cnf**. Il destinatario DEVE verificare crittograficamente che il Titolare abbia effettivamente il controllo di quella chiave.
       - `[RFC7800, Sezione 3.1] <https://www.iana.org/go/rfc7800>`_ e Sezione 3.2.2.2 `SD-JWT-VC`_.
     * - **vct**
       - OBBLIGATORIO. *Stringa*. Identificativo del dato `credential_type_identifier` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`. Il valore del tipo di Attestato Elettronico DEVE essere una URN e DEVE essere impostato utilizzando uno dei valori ottenuti dai metadata del Fornitore di Attestati Elettronici, il confronto dei caratteri letterali inclusi in questa URN DEVE essere eseguito in modo case-sensitive. È l'identificativo del tipo di SD-JWT VC e DEVE essere impostato con un valore resistente alle collisioni come definito nella Sezione 2 di :rfc:`7515`. DEVE contenere anche il numero di versione del tipo di Attestato Elettronico. A meno che non sia diversamente specificato da `EIDAS-ARF`_ e dagli EUDI Rulebook, il ``vct`` DOVREBBE seguire una struttura come ``urn:it-wallet:{credential_type}:{credential_type_version}``.
@@ -244,6 +244,7 @@ Oltre agli attributi di metadati obbligatori definiti nella :ref:`Tabella Parame
   - **date_of_expiry**
   - **sub** (estensione domestica)
   - **iat**
+  - **cnf**
   - **verification** (estensione domestica)
 
 Esempi Non Normativi di PID
