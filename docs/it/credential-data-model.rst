@@ -131,6 +131,9 @@ Il payload JWT contiene i seguenti claim. Salvo diversamente specificato, i segu
     * - **issuing_country**
       - OBBLIGATORIO. *Stringa*. Identificativo del dato `issuing_country` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`.
       - Regolamento di esecuzione della Commissione `EU_2024/2977`_.
+    * - **issuance_date**
+      - OPZIONALE. *Stringa*. Identificativo del dato `issuance_date` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`. Questo attributo si riferisce alla data amministrativa di emissione dell'Attestato Elettronico, che è tipicamente diverso dalla data tecnica di emissione espresso dal claim JWT ``iat``.
+      - Sezione 2.6 dell'ARF PID Rulebook v1.3 [`EIDAS-ARF`_].
     * - **date_of_expiry**
       - OPZIONALE. *Stringa*. Identificativo del dato `expiry_date` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`. Questo attributo si riferisce al periodo di validità amministrativa dell'Attestato Elettronico, che è tipicamente diverso dal periodo di validità tecnica espresso dal claim JWT ``exp``.
       - Regolamento di esecuzione della Commissione `EU_2024/2977`_.
@@ -495,6 +498,10 @@ I seguenti **elementIdentifiers** che rappresentano attributi metadata format-en
    * - **issuing_authority**
      - *(tstr, OBBLIGATORIO)*. Identificativo del dato format-encoded `issuing_authority` come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`. Il valore DEVE contenere solo caratteri Latin1b e deve avere una lunghezza massima di 150 caratteri.
      - [ISO 18013-5#7.2]
+
+   * - **issuance_date**
+      - *(tdate o full-date, OPZIONALE)*. Identificativo del dato `issuance_date` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`. Questo attributo si riferisce alla data amministrativa di emissione dell'Attestato Elettronico, che è tipicamente diverso dalla data tecnica di emissione espresso dai parametri ``signed`` or ``validFrom`` del `MobileSecurityObject`.
+      - Sezione 2.6 dell'ARF PID Rulebook v1.3 [`EIDAS-ARF`_].
 
    * - **expiry_date**
      - *(tdate o full-date, OPZIONALE)*. Identificativo del dato format-encoded `expiry_date` come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`. DEVE essere conforme al formato ISO 8601-1 YYYY-MM-DD.

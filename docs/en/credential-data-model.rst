@@ -131,6 +131,9 @@ The JWT payload contains the following claims. Unless otherwise specifed, the fo
     * - **issuing_country**
       - REQUIRED. *String*. Format-encoded data identifier `issuing_country` as defined in Section :ref:`credential-data-model:Format-Agnostic Credential Metadata Attributes`. 
       - Commission Implementing Regulation `EU_2024/2977`_.
+    * - **issuance_date**
+      - OPTIONAL. *String*. Format-encoded data identifier `issuance_date` as defined in Section :ref:`credential-data-model:Format-Agnostic Credential Metadata Attributes`.  This attribute pertains to the administrative issuance date, which is typically different from the technical issuance date expressed by the JWT ``iat`` claim.
+      - Section 2.6 of the ARF PID Rulebook v1.3 [`EIDAS-ARF`_].  
     * - **date_of_expiry**
       - OPTIONAL. *String*. Format-encoded data identifier `expiry_date` as defined in Section :ref:`credential-data-model:Format-Agnostic Credential Metadata Attributes`.  This attribute pertains to the administrative validity period of the Digital Credential, which is typically different from the technical validity period expressed by the JWT ``exp`` claim.
       - Commission Implementing Regulation `EU_2024/2977`_.
@@ -495,6 +498,10 @@ The following **elementIdentifiers** representing format-encoded metadata attrib
    * - **issuing_authority**
      - *(tstr, REQUIRED)*. Format-encoded data identifier `issuing_authority` as defined in Section :ref:`credential-data-model:Format-Agnostic Credential Metadata Attributes`. The value MUST only use Latin1b characters and shall have a maximum length of 150 characters.
      - [ISO 18013-5#7.2]
+
+   * - **issuance_date**
+      - *(tdate or full-date, OPTIONAL)*. Format-encoded data identifier `issuance_date` as defined in Section :ref:`credential-data-model:Format-Agnostic Credential Metadata Attributes`.  This attribute pertains to the administrative issuance date, which is typically different from the technical issuance date expressed by the `MobileSecurityObject` parameters ``signed`` or ``validFrom``.
+      - Section 2.6 of the ARF PID Rulebook v1.3 [`EIDAS-ARF`_].  
 
    * - **expiry_date**
      - *(tdate or full-date, OPTIONAL)*. Format-encoded data identifier `expiry_date` as defined in Section :ref:`credential-data-model:Format-Agnostic Credential Metadata Attributes`. It MUST be according to ISO 8601-1 YYYY-MM-DD format.
