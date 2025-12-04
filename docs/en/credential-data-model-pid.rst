@@ -178,7 +178,7 @@ The combined format for the PID issuance is given by:
 PID Data Model in mdoc-CBOR Format
 ----------------------------------------
 
-The PID in mdoc-CBOR format MUST use the **docType** ``eu.europa.ec.eudi.pid.1`` in compliance with ARF requirement **PID_04**.
+The PID in mdoc-CBOR format MUST use the **docType** ``eu.europa.ec.eudi.pid.1`` in compliance with ARF HLR **PID_04**.
 
 The PID attributes MUST be encoded as specified in **Section 3 of the ARF PID Rulebook v1.3** [`EIDAS-ARF`_] and organized in the following namespaces:
 
