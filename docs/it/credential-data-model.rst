@@ -438,7 +438,7 @@ Il `MobileSecurityObject` DEVE avere i seguenti attributi, se non diversamente s
 
       - [ISO 18013-5#9.1.2.4]
     * - **status**
-      - *(map, CONDIZIONALE)*. OBBLIGATORIO solo se l'Attestato Elettronico ha durata maggiore di 24 ore (long-lived). Contiene le informazioni relative allo stato di revoca del MSO. Se presente, include una *status_list* basata sul meccanismo definito nella Sezione6.3 di TOKEN-STATUS-LIST_.
+      - *(map, CONDIZIONALE)*. OBBLIGATORIO solo se l'Attestato Elettronico ha durata maggiore di 24 ore (long-lived). Identificativo del dato `location_status` codificato nel formato come definito nella Sezione :ref:`credential-data-model:Attributi di Metadati Format-Agnostic dell'Attestato Elettronico`.  Contiene le informazioni relative allo stato di revoca del MSO. Se presente, include una *status_list* basata sul meccanismo definito nella Sezione6.3 di TOKEN-STATUS-LIST_.
       - [ISO 18013-5#9.1.2.6]
 
 .. note::
