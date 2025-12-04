@@ -15,12 +15,12 @@ A Digital Credential data model has the following structure:
 - **User attributes**: Information about the User, such as identity or qualifications.
 
 The (Q)EAAs are issued by (Q)EAA Issuers to a Wallet Instance and MUST be provided in SD-JWT-VC or mdoc-CBOR data format.
-While the (Q)EAA data model is use-case driven and may include different User attributes, the metadata attributes specific for each data format are provided in the following sections.  
+The (Q)EAA data model is use-case driven and may include different User attributes according to its specific purpose. The (Q)EAA metadata attributes are specific for each data format, as described in the following sections.  
 
 Format-Agnostic Credential Metadata Attributes
 -----------------------------------------------
 
-The following table defines the common metadata attributes that are applicable to Digital Credentials regardless of their encoding format. These attributes represent the semantic information about the credential.  
+The following table defines the common metadata attributes that are applicable to Digital Credentials regardless of their encoding format. These attributes represent the semantic information about the Credential.  
 
 .. _table_format_agnostic_attributes:
 .. list-table::
