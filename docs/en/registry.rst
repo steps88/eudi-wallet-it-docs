@@ -523,13 +523,6 @@ Digital Credentials Hierarchy
 
 Digital Credentials recognized within the IT-Wallet ecosystem are classified and standardized according to the following multi-level hierarchical model designed to improve semantic clarity, credential discovery, and compatibility with both credential-specific and claim-based verification workflows.
 
-A Digital Credential MUST declare:
-
-- one Domain  
-- one Class  
-- one Credential Type (Subclass)
-
-
 The hierarchy is defined as follows:
 
 **Domain**
@@ -558,18 +551,25 @@ Each Credential Type SHALL include:
 
 Credential Types enable precise targeting for compliance-driven or regulation-mandated verification flows.
 
+A **Purpose (Verification Intent)** describes *why* a credential may be requested by a Relying Party (e.g., Identity Verification, Age Verification, Driving Authorization).  
+Purposes MUST NOT represent categories of credentials.  
+Purposes SHALL describe verification outcomes, independently of the credential type that fulfills them.
+
+The following table provides non-exhaustive examples illustrating Domain, Class, Credential Type, and Purpose relationships.
+Additional domains, classes, specific credentials, and verification purposes **MAY** be added over time as the IT-Wallet ecosystem evolves.
 
 
 .. _it-wallet-dc-domains:
 .. list-table:: Digital Credential Domains and Purposes
    :class: longtable
    :header-rows: 1
-   :widths: 25 25 25 25  
+   :widths: 20 20 20 20 20  
 
    * - **Domain**
      - **Class (Credential Family)**
      - **Subclass (Credential Type)**
      - **Description**
+     - **Purpose**
    * - *IDENTITY*
      - * Identification Documents
        * Civil Registry and Personal Status Certificates
@@ -588,7 +588,8 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Residence Permit
        - Certificate of Pending Charges
        - Criminal Record Certificate
-     - Credentials that establish or verify the identity of a person, including physical and digital identity documents legally recognized by national laws.
+     - Credentials that establish or confirm a person’s legal identity and personal status.
+     - Identity and age verification, civil status verification, access to services for minors, eligibility for services or benefits, right of residence.
    * - *HOME AND FAMILY*
      - * Property and Cadastral Documents
        * Family Documents
@@ -602,7 +603,8 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Family Status Certificate
        - IMU (Property Tax)
        - TARI (Waste Tax)
-     - Credentials that certify family composition, housing ownership or residency, and related legal, fiscal, and administrative relationships.
+     - Credentials that attest household composition, residence, and housing-related legal or fiscal relationships.
+     - Residence and household verification, determination of eligibility for housing, social or education services, compliance with local tax obligations.
    * - *EDUCATION*
      - * Educational Qualifications
        * Professional Certifications
@@ -616,7 +618,8 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Vocational Training Certificates (e.g. healthcare assistant)
        - Language Certifications (e.g. IELTS)
        - Academic Qualifications (e.g. Europass)
-     - Credentials related to educational achievements, qualifications, and professional training recognition.
+     - Credentials that attest educational achievements, academic qualifications, and professional training.
+     - Qualification and degree verification, skills and language assessment, eligibility for education pathways, competitions, licenses, or study and work opportunities.
    * - *HEALTH*
      - * Certifications and Eligibility
        * Medical Records
@@ -628,7 +631,8 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Work Fitness Certificate
        - Medical Prescriptions
        - Digital Medical Report
-     - Credentials related to healthcare access, medical history, insurance coverage, and health-related documents.
+     - Credentials related to healthcare coverage, medical status, and health-related certifications.
+     - Access to healthcare services, identification within health systems, verification of vaccination or fitness status, access to and sharing of medical records.
    * - *FINANCIAL*
      - * Payment Instruments
        * Payment Credentials and Authorisations
@@ -643,7 +647,8 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Tax and Fee Payment Certificate
        - Subscription Mandate
        - Recurring Payment Credential
-     - Credentials that attest to financial status, income levels, taxation, banking information, or economic situation of individuals or families.
+     - Credentials related to payment instruments, financial authorizations, and proof of payments.
+     - Payment authorization and execution, proof of payment, management of recurring payments, compliance with security or regulatory requirements.
    * - *CULTURE AND LEISURE*
      - * Cultural Cards and Benefits (associations, loyalty programm, membership)
        - Culture Card
@@ -653,7 +658,8 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Association Membership Cards
        - Library Card
        - City Pass
-     - Credentials that confirm affiliation with organizations, participation in programs, or membership status.
+     - Credentials that attest membership, affiliation, or participation in cultural or recreational programs.
+     - Access to cultural or leisure services, application of discounts or benefits linked to memberships or programs.
    * - *EMPLOYMENT*
      - * Employment Documents
        * Employment Status
@@ -662,13 +668,13 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Residence Permit
        - Employment Status Certificate
        - INPS Contribution Record
-     - Credentials that provide official statements, confirmations of status, or certifications issued by authorities.
+     - Credentials that attest employment relationships, professional status, and contribution records.
+     - Employment status verification, professional profile validation, verification of contribution records, eligibility for employment-related services or benefits.
    * - *MOBILITY AND TRAVEL*
      - * Licenses and Authorizations
        * Vehicle Documents
        * Subscriptions
        * Travel Documents 
-       * Pet Travel Documents
        * Travel Insurance
        * Bookings
        * Discounts and Benefits
@@ -681,13 +687,13 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Public Transport Pass
        - Telepass Subscription
        - Passport
-       - European Pet Passport
        - Travel Tickets (air, train, etc.)
        - Travel Insurance Policy
        - Hotel Reservation
        - Discount Cards
        - Tourist Benefits
-     - Credentials that authorize, enable, or certify the right to move, drive, travel, or access transport services, including personal licenses, vehicle documents, travel         documents, and related insurance or entitlement proofs, as recognized by national or international regulations.
+     - Credentials that attest mobility rights, vehicle-related status, and travel-related entitlements.
+     - Driving and vehicle verification, right to travel or circulate, access to transport or accommodation services, verification of travel insurance or discounts.
    * - *BONUSES*
      - * Economic Benefits and Allowances
        * Incentives and Vouchers
@@ -700,10 +706,10 @@ Credential Types enable precise targeting for compliance-driven or regulation-ma
        - Healthcare Bonus Credential
        - Mental Health Support Voucher
        - Sports and Physical Activity Bonus
-     - Credentials that attest the right to access or receive economic benefits, subsidies, incentives, or vouchers, including eligibility criteria, allocation status, and          applicable usage constraints, as defined by relevant policies or regulations.
+     - Credentials that attest entitlement to economic benefits, incentives, or vouchers.
+     - Eligibility verification, allocation and use of benefits, application of usage conditions or limits.
 
-
-Each Credential MUST specify domains and classes to enable both **Credential-Specific Scenarios** and **Credential-Agnostic Scenarios** according to Relying Party's requirements and presentation request patterns:
+Each Credential MUST specify domains, classes and purpose to enable both **Credential-Specific Scenarios** and **Credential-Agnostic Scenarios** according to Relying Party's requirements and presentation request patterns:
 
   1. **Credential-Specific Scenarios** (Primary for Government/Regulated Sectors): RPs request specific credential types for compliance and audit requirements, including for example:
 
@@ -720,7 +726,7 @@ Each Credential MUST specify domains and classes to enable both **Credential-Spe
 
 This approach allows:
 
-  - **Policy-based authorization** by using domain/purpose mappings.
+  - **Policy-based authorization** by using domain/class/Subclass/credential Type/purpose mappings.
   - **Flexible RP registration** supporting both government compliance needs and business operational requirements.
 
 Digital Credentials Catalog Structure
